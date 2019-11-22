@@ -1,4 +1,4 @@
-# helloworld
+# MeTube
 
 ## Project setup
 ```
@@ -8,6 +8,7 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+localhost:8080
 ```
 
 ### Compiles and minifies for production
@@ -24,6 +25,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
