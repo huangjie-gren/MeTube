@@ -13,7 +13,7 @@
               个人主页
             </el-dropdown-item>
           </router-link>
-          <el-dropdown-item divided>
+          <el-dropdown-item divided v-if="islogin">
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -25,7 +25,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
-
+import { getToken } from '@/utils/auth'
+import getters from '../../store/getters'
 export default {
   components: {
     Hamburger
@@ -34,7 +35,7 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar'
-    ])
+    ]),
   },
   methods: {
     toggleSideBar() {
@@ -44,6 +45,14 @@ export default {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/`)
     }
+  },
+  data(){
+    return{
+      islogin : (getToken() == undefined)?(false):(true)
+    }
+  },
+  created(){
+    console.log(getToken())
   }
 }
 </script>
