@@ -38,3 +38,10 @@ export function reg(data) {
     data
   })
 }
+
+export function ping() {
+  return request({
+    url: 'http://127.0.0.1:3000/api/v1/ping',
+    method: 'get'
+  })
+}

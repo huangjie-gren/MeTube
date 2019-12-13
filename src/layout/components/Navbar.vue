@@ -23,6 +23,7 @@
 </template>
 
 <script>
+/* eslint-disable */ 
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 import { getToken } from '@/utils/auth'
