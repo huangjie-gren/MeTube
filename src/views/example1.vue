@@ -1,14 +1,9 @@
 <template>
-<div>
-  <p>{{ msg }}</p>
-  <el-button type="primary" @click="onClick">aa</el-button>
-  <!-- <el-button
-            :loading="loading"
-            type="primary"
-            style="width:100%;margin-bottom:30px;"
-            @click.native.prevent="handleLogin"
-  >Login</el-button>-->
-</div>
+  <div>
+    <p>{{ msg }}</p>
+    <el-button type="primary" @click="onClick">aa</el-button>
+
+  </div>
 </template>
 
 <script>
