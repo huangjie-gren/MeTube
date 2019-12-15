@@ -88,6 +88,19 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/rankinglist',
+    component: Layout,
+    children: [
+      {
+        path: '/rankinglist',
+        name: 'rankinglist',
+        component: () => import('@/views/rankinglist/index.vue'),
+        meta: { title: '排行榜', icon: 'list' }
+      }
+    ]
+  },
+
   // {
   //   path: '/example',
   //   component: Layout,
