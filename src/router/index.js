@@ -87,6 +87,18 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/video/upload',
+    component: Layout,
+    children: [
+      {
+        path: '/video/upload',
+        name: '视频上传',
+        component: () => import('@/views/video/upload.vue'),
+        meta: { title: '视频上传', icon: 'form' }
+      }
+    ]
+  },
 
   // {
   //   path: '/example',

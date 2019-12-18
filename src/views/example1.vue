@@ -14,6 +14,7 @@
 <script>
 /* eslint-disable */
 import { ping } from "@/api/user";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -24,8 +25,8 @@ export default {
     ping()
       .then(response => {
         const { data } = response;
-        const { Info } = data;
-        this.msg = Info;
+        // const { Info } = data;
+        this.msg = data;
       })
       .catch(error => {
         alert(error);
