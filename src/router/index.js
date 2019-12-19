@@ -99,6 +99,28 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/like',
+    component: Layout,
+    redirect: '/like/index',
+    children: [{
+      path: 'like',
+      name: 'Like',
+      component: () => import('@/views/like/index'),
+      meta: { title: 'Videoboard', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/myvideos',
+    component: Layout,
+    redirect: '/myvideos/index',
+    children: [{
+      path: 'myvideos',
+      name: 'Videos',
+      component: () => import('@/views/myvideos/index'),
+      meta: { title: 'Myvideosboard', icon: 'dashboard' }
+    }]
+  },
 
   // {
   //   path: '/example',
