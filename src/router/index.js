@@ -122,6 +122,12 @@ export const constantRoutes = [
     }]
   },
 
+  {
+    path: '/videoplay',
+    component: () => import('@/views/Player/playVideo.vue'),
+    hidden: false
+  },
+
   // {
   //   path: '/example',
   //   component: Layout,
