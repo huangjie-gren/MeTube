@@ -57,7 +57,7 @@ export default {
       console.log(this.videos[0].Title);
     },
     goVideo(video) {
-      this.$router.push({ name: "showVideo", params: { videoID: video.id } });
+      this.$router.push({ path: "/showVideo", params: { videoID: video.id } });
     }
   },
   created() {

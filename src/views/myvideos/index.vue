@@ -9,8 +9,8 @@
               class="image"
             />
           </el-col>
-          <el-col :span="6">
-            
+          <el-col :span="14">
+            <metatitle />
           </el-col>
         </el-row>
       </el-card>
@@ -20,6 +20,7 @@
 
 <script>
 /* eslint-disable */
+import Metatitle from "./meta-title.vue";
 export default {
   data() {
     return {
@@ -42,15 +43,15 @@ export default {
       ]
     };
   },
-  components:{
-
+  components: {
+    Metatitle
   }
 };
 </script>
 
 <style scoped>
-.article-body{
-  padding: 20px;
+.article-body {
+  padding: 10px;
   margin: 20px;
 }
 
@@ -65,7 +66,7 @@ export default {
 }
 
 .image {
-  margin: 20px;
+  margin: 10px;
   width: 100px;
   display: block;
 }
