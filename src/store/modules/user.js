@@ -43,9 +43,9 @@ const actions = {
 
   // user update
   update({ commit }, userInfo) {
-    const { username, nickname, oldpassword, newpassword } = userInfo
+    const { username, nickname, oldpassword, newpassword, avatarurl } = userInfo
     return new Promise((resolve, reject) => {
-      update({ username: username.trim(), nickname: nickname, oldpassword: oldpassword, newpassword: newpassword }).then(response => {
+      update({ username: username.trim(), nickname: nickname, oldpassword: oldpassword, newpassword: newpassword, avatarurl: avatarurl }).then(response => {
         const { data } = response
         const { nickname } = data
         commit('SET_NICKNAME', nickname)

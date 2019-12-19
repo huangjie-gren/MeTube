@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="welcome-line">{{ nickname }},欢迎你！</div>
+    <div class="welcome-line">{{ username }},欢迎你！</div>
     <div class="update-form">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="昵称">
@@ -11,6 +11,21 @@
         </el-form-item>
         <el-form-item label="新密码">
           <el-input v-model="form.newpassword"></el-input>
+        </el-form-item>
+        <el-form-item label="头像">
+          <el-upload
+            class="avatar-uploader"
+            label="描述"
+            action
+            ref="upload"
+            :before-upload="fnBeforeUpload"
+            :http-request="fnUploadRequest"
+            :show-file-list="false"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <div class="el-upload__tip" slot="tip">只能上传png/jpg文件，且不超过2M</div>
+          </el-upload>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -24,17 +39,22 @@
 <script>
 /* eslint-disable */
 import { mapGetters } from "vuex";
+import { upload } from "@/api/user.js";
 export default {
   computed: {
-    ...mapGetters(["nickname"])
+    ...mapGetters(["username"])
   },
   data() {
     return {
+      imageUrl: "",
+      dialogImageUrl: '',
+      dialogVisible: false,
       form: {
         username: "",
         nickname: "",
         oldpassword: "",
-        newpassword: ""
+        newpassword: "",
+        avatarurl: ""
       }
     };
   },
@@ -44,19 +64,88 @@ export default {
     this.form.username = this.$store.getters["username"];
   },
   methods: {
+    fnBeforeUpload(file) {
+      const isImage = file.type === "image/png" || file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isImage) {
+        this.$message.error("上传头像图片只能是图片!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isImage && isLt2M;
+    },
+    fnUploadRequest(option) {
+      console.log(option.file.name)
+      upload({filename:option.file.name})
+        .then(res => {
+          // console.log(res)
+          // console.log(option.file)
+          const oReq = new XMLHttpRequest();
+          oReq.open("PUT", res.data.put, true);
+          oReq.send(option.file);
+          oReq.onload = () => {
+            this.imageUrl = res.data.get;
+            this.form.avatarurl = res.data.key;
+          };
+        })
+        .catch(error => {
+          this.$notify.error({
+            title: "网路错误，或者服务器宕机",
+            message: error
+          });
+        });
+    },
     onSubmit() {
       // alert('clicked')
       this.$store
         .dispatch("user/update", this.form)
         .then(() => {
-          alert("update success")
+          // alert("update success");
+          this.$notify({
+            title: '更新成功',
+            message: '更新成功',
+            type: 'success',
+          });
           this.loading = false;
         })
         .catch(() => {
-          alert("update error")
+          // alert("update error");
+          this.$notify({
+            title: '更新失败',
+            message: '更新失败',
+            type: 'error',
+          });
           this.loading = false;
         });
     }
   }
 };
 </script>
+
+
+<style scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  max-width: 178px;
+  max-height: 178px;
+  display: block;
+}
+</style>

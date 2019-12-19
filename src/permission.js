@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const needsLogin = ['/mypage'] // 需要登陆才能访问的页面
+const needsLogin = ['/mypage', '/video/upload'] // 需要登陆才能访问的页面
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
