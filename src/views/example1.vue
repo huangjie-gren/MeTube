@@ -24,8 +24,7 @@ export default {
     ping()
       .then(response => {
         const { data } = response;
-        const { Info } = data;
-        this.msg = Info;
+        this.msg = data;
       })
       .catch(error => {
         alert(error);

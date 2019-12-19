@@ -76,6 +76,58 @@ export const constantRoutes = [
   },
 
   {
+    path: '/friendManagement',
+    component: Layout,
+    children: [
+      {
+        path: '/friendManagement',
+        name: 'friendManagement',
+        component: () => import('@/views/friendManagement/index.vue'),
+        meta: { title: '我的关注', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/myFollowers',
+    component: Layout,
+    children: [
+      {
+        path: '/myFollowers',
+        name: 'friendManagement',
+        component: () => import('@/views/friendManagement/followers.vue'),
+        meta: { title: '我的粉丝', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/activity',
+    component: Layout,
+    children: [
+      {
+        path: '/activity',
+        name: 'activity',
+        component: () => import('@/views/activity.vue'),
+        meta: { title: '动态', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/avatarTest',
+    component: Layout,
+    children: [
+      {
+        path: '/avatarTest',
+        name: 'avatarTest',
+        component: () => import('@/views/avatarTest/index.vue'),
+        meta: { title: '头像', icon: 'form' }
+      }
+    ]
+  },
+
+  {
     path: '/mypage',
     component: Layout,
     hidden: true,
