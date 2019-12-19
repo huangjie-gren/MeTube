@@ -19,6 +19,9 @@ const mutations = {
   SET_NICKNAME: (state, nickname) => {
     state.nickname = nickname
   },
+  SET_ID: (state, id) => {
+    state.id = id
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   }
@@ -82,11 +85,12 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { username, nickname, avatar } = data
-        console.log(username)
-        commit('SET_USERNAME', username)
-        commit('SET_NICKNAME', nickname)
-        commit('SET_AVATAR', avatar)
+        const { Username, Nickname, Avatar, ID } = data
+        // console.log(username)
+        commit('SET_USERNAME', Username)
+        commit('SET_NICKNAME', Nickname)
+        commit('SET_AVATAR', Avatar)
+        commit('SET_ID', ID)
         resolve(data)
       }).catch(error => {
         reject(error)

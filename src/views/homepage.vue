@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <p> aaa</p>
+    <div class="video-prefix">推荐视频</div>
     <div class="top">
       <el-row :gutter="20">
-        <el-col :xs="24" :sm="8" :md="8" v-for="video in videos" :key="video.id">
+        <el-col :xs="24" :sm="6" :md="6" v-for="video in videos" :key="video.id">
           <el-card class="video-card" @click.native="goVideo(video)">
-            <img class="video-avatar" :src="video.Avatar">
+            <img class="video-avatar" :src="video.Avatar" />
             <div>
               <div class="video-title">{{video.Title}}</div>
               <div class="video-bottom clearfix">
@@ -18,27 +18,27 @@
       </el-row>
       <div class="block">
         <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :page-size="6"
           layout="prev, pager, next"
-          :total="total">
-        </el-pagination>
+          :total="total"
+        ></el-pagination>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getVideos } from '@/api/video';
+/* eslint-disable */
+import { getVideos } from "@/api/video";
 export default {
-  name: 'home',
+  name: "home",
   data() {
     return {
       videos: [],
       start: 0,
       limit: 6,
-      total: 0,
+      total: 0
     };
   },
   methods: {
@@ -47,31 +47,33 @@ export default {
       this.load();
     },
     load() {
-    },
-    goVideo(video) {
-      this.$router.push({ name: 'showVideo', params: { videoID: video.id } });
-    },
-  },
-  created(){
-      console.log("zairu")
-      getVideos(this.start, this.limit).then((res) => {
+      console.log("zairu");
+      getVideos(this.start, this.limit).then(res => {
         this.videos = res.data.items.data;
         this.total = res.data.total;
-        console.log(this.videos)
+        console.log(this.videos);
       });
-      console.log(this.videos)
-      console.log(this.videos[0].Title)
-
+      console.log(this.videos);
+      console.log(this.videos[0].Title);
+    },
+    goVideo(video) {
+      this.$router.push({ name: "showVideo", params: { videoID: video.id } });
+    }
   },
-  components: {
-  },
-  beforeMount() {
+  created() {
     this.load();
   },
+  components: {}
 };
 </script>
 
 <style>
+.video-prefix {
+  /* background-color: red; */
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 36px 0 24px 24px;
+}
 .video-avatar {
   width: 100%;
 }
