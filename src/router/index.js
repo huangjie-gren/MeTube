@@ -76,25 +76,25 @@ export const constantRoutes = [
   },
 
   {
-    path: '/friendManagement',
+    path: '/followings',
     component: Layout,
     children: [
       {
-        path: '/friendManagement',
-        name: 'friendManagement',
-        component: () => import('@/views/friendManagement/index.vue'),
+        path: '/followings',
+        name: 'followings',
+        component: () => import('@/views/friendManagement/followings.vue'),
         meta: { title: '我的关注', icon: 'form' }
       }
     ]
   },
 
   {
-    path: '/myFollowers',
+    path: '/followers',
     component: Layout,
     children: [
       {
-        path: '/myFollowers',
-        name: 'friendManagement',
+        path: '/followers',
+        name: 'followers',
         component: () => import('@/views/friendManagement/followers.vue'),
         meta: { title: '我的粉丝', icon: 'form' }
       }

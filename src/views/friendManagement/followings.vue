@@ -1,6 +1,7 @@
 <template>
 <div>
-  <p><center><font size="5">我的粉丝</font></center></p>
+
+  <p><center><font size="5">全部关注</font></center></p>
 
   <el-table
     :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -11,13 +12,8 @@
         <img :src="scope.row.avatar" width="%5" class="head_pic"/>
       </template>
     </el-table-column>
-
-    <el-table-column label="Name" prop="username">
-    </el-table-column>
-
-    <el-table-column label="Nickname" prop="nickname">
-    </el-table-column>
-
+    <el-table-column label="Name" prop="username"> </el-table-column>
+    <el-table-column label="Nickname" prop="nickname"> </el-table-column>
     <el-table-column align="right">
       <template slot="header"> <!-- slot-scope="scope" -->
         <el-input
@@ -26,8 +22,13 @@
           placeholder="输入关键字搜索"/>
       </template>
       <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">Message</el-button>
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">Unfollow</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -38,7 +39,7 @@
 <script>
 /* eslint-disable */
 import { mapGetters } from 'vuex'
-import { showFollowers } from '@/api/friendManagement'
+import { showFollowings } from '@/api/friendManagement'
 import { unfollow } from '@/api/friendManagement'
 
 export default {
@@ -51,8 +52,8 @@ export default {
     }
   },
   created() {
-    // showFollowers(this.$store.getters['username'])
-    showFollowers(4)
+    // showFollowings(this.$store.getters['username'])
+    showFollowings(4)
       .then(response => {
         const { code } = response
         const { data } = response
