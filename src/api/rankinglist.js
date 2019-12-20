@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getVedioInfo(data) {
+export function getVideoInfo(data) {
   return request({
-    url: 'http://1901210360.zhangqx.com/api/getvedioinfo',
+    url: 'http://1901210360.zhangqx.com/api/getvideoinfo',
     method: 'get'
   })
 }
