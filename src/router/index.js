@@ -100,17 +100,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/like',
-    component: Layout,
-    redirect: '/like/index',
-    children: [{
-      path: 'like',
-      name: 'Like',
-      component: () => import('@/views/like/index'),
-      meta: { title: 'Videoboard', icon: 'dashboard' }
-    }]
-  },
-  {
     path: '/myvideos',
     component: Layout,
     redirect: '/myvideos/index',
@@ -121,11 +110,10 @@ export const constantRoutes = [
       meta: { title: 'Myvideosboard', icon: 'dashboard' }
     }]
   },
-
   {
-    path: '/videoplay',
-    component: () => import('@/views/Player/playVideo.vue'),
-    hidden: false
+    path: '/video/:videoID',
+    name: 'showVideo',
+    component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue'),
   },
 
   // {
