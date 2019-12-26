@@ -115,19 +115,6 @@ export const constantRoutes = [
   },
 
   {
-    path: '/avatarTest',
-    component: Layout,
-    children: [
-      {
-        path: '/avatarTest',
-        name: 'avatarTest',
-        component: () => import('@/views/avatarTest/index.vue'),
-        meta: { title: '头像', icon: 'form' }
-      }
-    ]
-  },
-
-  {
     path: '/mypage',
     component: Layout,
     hidden: true,
