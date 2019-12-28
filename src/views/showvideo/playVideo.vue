@@ -22,21 +22,19 @@ export default {
   data() {
     return {
       videoAvatar: "",
-      videoUrl: "",
+      videoUrl: ""
     };
   },
   methods: {},
-  beforeMount() {
-  },
+  beforeMount() {},
   created() {
-    /*
-    alert(this.vid)
-     if (this.vid == 1) {
-      this.videoAvatar =
-        "https://metube-backend.oss-cn-beijing.aliyuncs.com/WX20191213-195644.png";
-      this.videoUrl =
-        "https://metube-backend.oss-cn-beijing.aliyuncs.com/1576236687649500.mp4";
-    }*/
+    // alert(this.vid)
+    //  if (this.vid == 1) {
+    //   this.videoAvatar =
+    //     "https://metube-backend.oss-cn-beijing.aliyuncs.com/WX20191213-195644.png";
+    //   this.videoUrl =
+    //     "https://metube-backend.oss-cn-beijing.aliyuncs.com/1576236687649500.mp4";
+    // }
     getVideo(this.vid)
       .then(response => {
         // console.log('哈哈')

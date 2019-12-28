@@ -20,7 +20,6 @@ export default {
     ping()
       .then(response => {
         const { data } = response;
-        // const { Info } = data;
         this.msg = data;
       })
       .catch(error => {

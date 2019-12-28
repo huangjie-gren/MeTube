@@ -9,6 +9,13 @@
         <el-form-item label="视频简介">
           <el-input v-model="form.videodescribe"></el-input>
         </el-form-item>
+        <el-form-item label="视频分类">
+          <el-select v-model="form.typename" placeholder="请选择视频分类">
+            <el-option label="动画" value="anime"></el-option>
+            <el-option label="生活" value="life"></el-option>
+            <el-option label="科技" value="tech"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="视频">
           <el-upload
             class="video-uploader"
@@ -66,7 +73,8 @@ export default {
         videoname: "",
         videodescribe: "",
         videourl: "",
-        avatarurl: ""
+        avatarurl: "",
+        typename: ""
       }
     };
   },
@@ -147,7 +155,8 @@ export default {
         title: this.form.videoname,
         info: this.form.videodescribe,
         url: this.form.videourl,
-        avatar: this.form.avatarurl
+        avatar: this.form.avatarurl,
+        typename: this.form.typename
       })
         .then(response => {
           // alert(response);
@@ -156,7 +165,7 @@ export default {
           // alert(msg);
           this.$notify({
             title: "投稿成功",
-            message: `投稿成功，视频id为${response.data.id}`,
+            message: `投稿成功，视频id为${response.data.data.id}`,
             type: "success"
           });
         })
@@ -164,7 +173,7 @@ export default {
           // alert(error);
           this.$notify({
             title: "投稿",
-            message: `投稿失败:${response.msg}`,
+            message: `投稿失败:${response.data.msg}`,
             type: "error"
           });
         });
