@@ -3,9 +3,9 @@
         <div style="margin-top:10px;"></div>
         <div style="margin-left:50px; margin-right: 50px; ">
             <el-row :gutter="50">
-                <el-col style="margin-top:15px;" :span="2.1"><el-button style="width: 80px; height: 80px" type="info" circle @click.native.prevent="onClicktag(1)"><i style ="font-size: 40px" class="el-icon-video-camera-solid"></i></el-button><div style="font: 20px roboto,arial,sans-serif;">影视</div></el-col>
-                <el-col style="margin-top:15px;" :span="2.1"><el-button style="width: 80px; height: 80px" type="info" circle @click.native.prevent="onClicktag(2)"><i style ="font-size: 40px" class="el-icon-headset"></i></el-button><div style="font: 20px roboto,arial,sans-serif;">音乐</div></el-col>
-                <el-col style="margin-top:15px;" :span="2.1"><el-button style="width: 80px; height: 80px" type="info" circle @click.native.prevent="onClicktag(3)"><i style ="font-size: 40px" class="el-icon-basketball"></i></el-button><div style="font: 20px roboto,arial,sans-serif;">体育</div></el-col>
+                <el-col style="margin-top:15px;" :span="2.1"><el-button style="width: 80px; height: 80px" type="info" circle @click.native.prevent="onClicktag(1)"><i style ="font-size: 40px" class="el-icon-video-camera-solid"></i></el-button><div style="font: 20px roboto,arial,sans-serif;">Tech</div></el-col>
+                <el-col style="margin-top:15px;" :span="2.1"><el-button style="width: 80px; height: 80px" type="info" circle @click.native.prevent="onClicktag(2)"><i style ="font-size: 40px" class="el-icon-headset"></i></el-button><div style="font: 20px roboto,arial,sans-serif;">Life</div></el-col>
+                <el-col style="margin-top:15px;" :span="2.1"><el-button style="width: 80px; height: 80px" type="info" circle @click.native.prevent="onClicktag(3)"><i style ="font-size: 40px" class="el-icon-basketball"></i></el-button><div style="font: 20px roboto,arial,sans-serif;">Anime</div></el-col>
             </el-row>
         </div>
         <div style="margin-left:75px; margin-right: 150px;"><el-divider></el-divider></div>
@@ -58,32 +58,32 @@ export default {
         return {
             vData: '',
             totalData: '',
-            total: '', //数据总数
+            total: 0, //数据总数
             pagesize:10, //默认每页的数据条数
             currentPage:1, //默认开始页面
         }
     },
     methods: {
         onClicktag(tag) {
-            /*
+            //console.log(this.totalData.length)
+            //console.log(this.totalData[0]);
             if(tag == 1) {
                 this.vData = this.totalData.filter(function (video) {
-                    return video.tag == 1;
+                    return video.typename === "tech";
                 });
             }
             else if(tag == 2) {
                 this.vData = this.totalData.filter(function (video) {
-                    return video.tag == 2;
+                    return video.typename === "life";
                 });
             }
             else if(tag == 3) {
                 this.vData = this.totalData.filter(function (video) {
-                    return video.tag == 3;
+                    return video.typename === "anime";
                 });
             }
             this.total = this.vData.length;
             this.currentPage = 1;
-            */
         },
         handlePlay(id) {
             this.$router.push({ name: "showVideo", params: { videoID: id } });
