@@ -32,7 +32,7 @@ export function getVideo(videoid) {
 export function getVideoInfo(videoid) {
   return request({
     // url: 'http://1901210759.zhangqx.com/api/v1/user/login',
-    url: 'http://127.0.0.1:3001/api/v1/video/info?vid=' + videoid,
+    url: 'http://123.56.96.92:3001/api/v1/video/info?vid=' + videoid,
     method: 'get'
   })
 }

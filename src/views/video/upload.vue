@@ -63,7 +63,7 @@ import { mapGetters } from "vuex";
 import { uploadoss } from "@/api/video";
 export default {
   computed: {
-    ...mapGetters(["id"])
+    ...mapGetters(["username","id"])
   },
   data() {
     return {

@@ -84,11 +84,11 @@ export default {
     getMyVideo(this.uid).then(res =>{
       for(var i=0;i<res.data.length;i++){
         var video = {
-          vid: res.data[i].ID,
-          name: res.data[i].Title,
-          img: res.data[i].Avatar,
-          typename: res.data[i].Typename,
-          createtime: res.data[i].CreatedAt.split('T')[0]
+          vid: res.data[i].id,
+          name: res.data[i].title,
+          img: res.data[i].avatar,
+          typename: res.data[i].typename,
+          createtime: res.data[i].created_at.split('T')[0]
         }
         this.videos.push(video)
       }
