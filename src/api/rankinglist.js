@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getVideoInfo(data) {
+export function getVideoInfo() {
   return request({
-    url: 'http://1901210360.zhangqx.com/api/getvideoinfo',
+    url: 'http://114.115.149.142:8083/rankinglist',
     method: 'get'
   })
 }

@@ -13,8 +13,7 @@
             <div style="margin-top:10px; margin-left: 50px; cursor:pointer" @click="handlePlay(video.id)">
                 <el-image
                 style="width: 250px; height: 150px"
-                :src="video.avatar"
-                :fit="fill"></el-image>
+                :src="video.avatar"></el-image>
             </div>
             <div style="margin-top:10px; margin-left: 20px; width: 600px" >
                 <el-dropdown style="float: right; padding: 3px 0">
@@ -29,11 +28,11 @@
                     <div><span>{{video.title}}</span></div>
                 </div>
                 <div style="width: 500px; font: 15px roboto,arial,sans-serif; color: #606060; padding:0px 1.3px 0px 0px;">
-                    <span style="margin:0px 1.3px 0px 0px;">{{video.username}}</span>
+                    <span style="margin:0px 1.3px 0px 0px;">Up主 {{video.owner}}</span>
                     <el-divider direction="vertical"></el-divider>
-                    <span style="margin:0px 1.3px 300px 0px;">{{video.visited}}</span>
+                    <span style="margin:0px 1.3px 300px 0px;">播放量 {{video.views}}</span>
                     <el-divider direction="vertical"></el-divider>
-                    <span>{{video.createdtime}}</span>
+                    <span>更新时间 {{video.updated_at}}</span>
                 </div>
                 <div style="width: 500px; font: 15px roboto,arial,sans-serif; color: #606060; padding:8px 0px 0px">
                     <span>{{video.info}}</span>
@@ -45,48 +44,12 @@
 </template>
 
 <script>
-import { getvideoInfo } from '@/api/rankinglist'
+import { getVideoInfo } from '@/api/rankinglist'
 export default {
     data() {
         return {
-            vData: [{
-                title: '123',
-                info: '456',
-                visited: '789',
-                id: '233',
-                avatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                username: 'name1',
-                createdtime: '789',
-                tag: '1'
-            }, {
-                title: '999',
-                info: '456',
-                visited: '999',
-                id: '233',
-                avatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                username: 'name2',
-                createdtime: '789',
-                tag: '2'
-            }],
-            totalData: [{
-                title: '123',
-                info: '456',
-                visited: '789',
-                id: '233',
-                avatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                username: 'name1',
-                createdtime: '789',
-                tag: '1'
-            }, {
-                title: '999',
-                info: '456',
-                visited: '999',
-                id: '233',
-                avatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                username: 'name2',
-                createdtime: '789',
-                tag: '2'
-            }],
+            vData: '',
+            totalData: '',
         }
     },
     methods: {
@@ -110,19 +73,19 @@ export default {
         handlePlay(id) {
             /* 如何路由到具体的播放页 */
             //
-            alert('ok')
+            this.$router.push({ name: "showVideo", params: { videoID: id } });
         },
     },
     created:function(){
-        getvideoInfo()    // 一次性获得所有信息，后端还未实现
+        getVideoInfo()    // 一次性获得所有信息
                 .then(response => {
-                    // console.log('haha')
-                    const { data } = response
-                    this.totalData = data
+                    //console.log('haha');
+                    const { data } = response;
+                    this.totalData = data;
                     this.vData = this.totalData;
                 })
                 .catch(error => {
-                    alert(error)
+                    console.log(error);
                 })
     }
 }
