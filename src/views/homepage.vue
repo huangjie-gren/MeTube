@@ -16,14 +16,14 @@
           </el-card>
         </el-col>
       </el-row>
-      <div class="block">
+      <!-- <div class="block">
         <el-pagination
           @current-change="handleCurrentChange"
           :page-size="6"
           layout="prev, pager, next"
           :total="total"
         ></el-pagination>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
     return {
       videos: [],
       start: 0,
-      limit: 6,
+      limit: 8,
       total: 0
     };
   },
@@ -47,14 +47,10 @@ export default {
       this.load();
     },
     load() {
-      console.log("zairu");
       getVideos(this.start, this.limit).then(res => {
         this.videos = res.data.items.data;
         this.total = res.data.total;
-        console.log(this.videos);
       });
-      console.log(this.videos);
-      console.log(this.videos[0].Title);
     },
     goVideo(video) {
       // alert(video.ID)

@@ -144,7 +144,7 @@ export const constantRoutes = [
     redirect: '/myvideos/index',
     children: [{
       path: 'myvideos',
-      name: 'Videos',
+      name: 'MyVideos',
       component: () => import('@/views/myvideos/index'),
       meta: { title: '我的视频', icon: 'dashboard' }
     }]

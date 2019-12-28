@@ -5,14 +5,14 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <img
-              src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              v-bind:src="video.img"
               class="image"
             />
           </el-col>
           <el-col :span="12">
             <el-row class="meta-title">
               <span class="typename">{{ video.typename }}</span>
-              <a class="name ellipsis">{{ video.name }}</a>
+              <a v-on:click="goVideo(vid)" class="name ellipsis">{{ video.name }}</a>
             </el-row>
             <el-row class="meta-status">
               <span class="pubdate">{{ video.createtime }}</span>
@@ -37,41 +37,64 @@
 
 <script>
 /* eslint-disable */
-import Metatitle from "./meta-title.vue";
+import { getMyVideo } from "@/api/video";
+import { mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters(["id"])
+  },
   data() {
     return {
+      uid : this.$store.getters["id"],
       videos: [
-        {
-          vid:1,
-          name: "video1",
-          img: "",
-          url: "/",
-          typename: "aaa",
-          createtime: "19-12-08 15:23:48",
-        },
-        {
-          name: "video2",
-          img: "",
-          url: "/",
-          typename: "aaa",
-          createtime: "2019-07-12"
-        },
-        {
-          name: "video3",
-          img: "",
-          url: "/",
-          typename: "aaa",
-          createtime: "2019-07-12"
-        }
+        // {
+        //   vid: 1,
+        //   name: "video1",
+        //   img: "",
+        //   url: "/",
+        //   typename: "aaa",
+        //   createtime: "19-12-08 15:23:48"
+        // },
+        // {
+        //   name: "video2",
+        //   img: "",
+        //   url: "/",
+        //   typename: "aaa",
+        //   createtime: "2019-07-12"
+        // },
+        // {
+        //   name: "video3",
+        //   img: "",
+        //   url: "/",
+        //   typename: "aaa",
+        //   createtime: "2019-07-12"
+        // }
       ]
     };
   },
-  methods:{
-    doUpdate: function (vid) {
-      // alert(vid)
+  methods: {
+    doUpdate: function(vid) {
       this.$router.push({ name: "UpdateVideo", params: { videoID: vid } });
+    },
+    goVideo: function(vid){
+      alert(vid)
     }
+  },
+  created() {
+    getMyVideo(this.uid).then(res =>{
+      for(var i=0;i<res.data.length;i++){
+        var video = {
+          vid: res.data[i].ID,
+          name: res.data[i].Title,
+          img: res.data[i].Avatar,
+          typename: res.data[i].Typename,
+          createtime: res.data[i].CreatedAt.split('T')[0]
+        }
+        this.videos.push(video)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   },
   components: {}
 };
@@ -95,7 +118,7 @@ export default {
 
 .image {
   margin: 10px;
-  width: 100px;
+  width: 150px;
   display: block;
 }
 
