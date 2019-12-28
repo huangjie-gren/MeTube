@@ -30,11 +30,17 @@
 
 <script>
 /* eslint-disable */
-import { mapGetters } from "vuex";
 import PlayVideo from "./playVideo.vue";
+import { mapGetters } from "vuex";
+import { upload } from "@/api/user.js";
+import { addLike } from "@/api/like_collection";
+import { cancleLike } from "@/api/like_collection";
+import { addCollect } from "@/api/like_collection";
+import { cancleCollect } from "@/api/like_collection";
+
 export default {
     computed: {
-    ...mapGetters(["id"])
+    ...mapGetters(["username","nickname","id"])
   },
   data() {
     return {
@@ -48,34 +54,72 @@ export default {
       likeIcon: "like-off"
     };
   },
+  created() {
+    this.uid = this.$store.getters["id"];
+    console.log("用户id"+this.uid)
+  },
   methods: {
     handleLike: function() {
-      alert(this.vid)
+      //alert(this.vid)
       if (!this.isLike) {
         this.isLike = true;
         this.likeIcon = "like-on";
         this.likeTitle = "取消点赞";
+
+        addLike(this.uid,this.vid)
+        .then(response=>{
+        })
+        .catch(error => {
+          alert('add_like_error')
+      })
+        
       } else {
         this.isLike = false;
         this.likeIcon = "like-off";
         this.likeTitle = "点赞";
+
+        cancleLike(this.uid,this.vid)
+        .then(response=>{
+         const { code }=response
+          console.log(code)
+        })
+        .catch(error => {
+          alert('cancle_like_error')
+      })
       }
     },
     handleCollection: function() {
-      if (!this.isCollection) {
+
+       
+
+        if (!this.isCollection) {
+
         this.isCollection = true;
         this.collectionIcon = "collection-on";
         this.collectionTitle = "取消收藏";
+
+        addCollect(this.uid,this.vid)
+        .then(response=>{
+        
+        })
+        .catch(error => {
+          alert('add_collect_error')
+      })
+
       } else {
+        
         this.isCollection = false;
         this.collectionIcon = "collection-off";
         this.collectionTitle = "收藏";
+
+        cancleCollect(this.uid,this.vid)
+        .then(response=>{
+        })
+        .catch(error => {
+          alert('handle_collect_error')
+      })
       }
     }
-  },
-  created(){
-    this.uid = this.$store.getters["id"];
-    alert(this.uid)
   },
   components:{
     PlayVideo,
