@@ -1,38 +1,27 @@
 import request from '@/utils/request'
 
-export function ping() {
-  return request({
-    url: 'http://127.0.0.1:3000/api/v1/ping',
-    method: 'get'
-  })
-}
-
-export function hello() {
-    return request({
-      url: 'http://127.0.0.1:8080/hello',
-      method: 'get'
-    })
-  }
+const preUrl = 'http://49.233.170.51:8080'
 
   export function showFollowings(id) {
     return request({
-      url: 'http://localhost:8080/showFollowings',
-      method: 'get',
-      params: { id }
-    })
-  }
-  export function showFollowers(id) {
-    return request({
-      url: 'http://localhost:8080/showFollowers',
+      url: preUrl + '/showFollowings',
       method: 'get',
       params: { id }
     })
   }
 
-  export function unfollow(from, to) {
+  export function showFollowers(id) {
     return request({
-      url: 'http://localhost:8080/unfollow',
+      url: preUrl + '/showFollowers',
       method: 'get',
-      params: { from, to }
+      params: { id }
+    })
+  }
+
+  export function unfollow(uid1, uid2) {
+    return request({
+      url: preUrl + '/unfollow',
+      method: 'get',
+      params: { uid1, uid2 }
     })
   }

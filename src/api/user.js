@@ -33,7 +33,7 @@ export function update(data) {
 
 export function reg(data) {
   return request({
-    url: 'http://123.56.96.92:3001/api/v1/user/reg',
+    url: 'http://127.0.0.1/register',
     method: 'post',
     data
   })
