@@ -115,6 +115,18 @@ export const constantRoutes = [
     name: 'showVideo',
     component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue')
   },
+  {
+    path: '/updatevideo/:videoID',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/updatevideo/:videoID',
+        name: 'UpdateVideo',
+        component: () => import('@/views/myvideos/update.vue')
+      }
+    ]
+  },
 
   // {
   //   path: '/example',

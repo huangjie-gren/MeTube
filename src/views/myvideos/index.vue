@@ -12,7 +12,7 @@
           <el-col :span="12">
             <el-row class="meta-title">
               <span class="typename">{{ video.typename }}</span>
-              <a href="http://baidu.com" class="name ellipsis">{{ video.name }}</a>
+              <a class="name ellipsis">{{ video.name }}</a>
             </el-row>
             <el-row class="meta-status">
               <span class="pubdate">{{ video.createtime }}</span>
@@ -20,7 +20,7 @@
           </el-col>
           <el-col :span="6" class="meta-btn">
             <el-row>
-              <el-button type="primary" style="margin-top:10px;">编辑</el-button>
+              <el-button type="primary" @click.native="doUpdate(video.vid)">编辑</el-button>
             </el-row>
             <el-row>
               <el-button type="info" style="margin-top:10px;">数据</el-button>
@@ -42,11 +42,12 @@ export default {
     return {
       videos: [
         {
+          vid:1,
           name: "video1",
           img: "",
           url: "/",
           typename: "aaa",
-          createtime: "19-12-08 15:23:48"
+          createtime: "19-12-08 15:23:48",
         },
         {
           name: "video2",
@@ -64,6 +65,12 @@ export default {
         }
       ]
     };
+  },
+  methods:{
+    doUpdate: function (vid) {
+      // alert(vid)
+      this.$router.push({ name: "UpdateVideo", params: { videoID: vid } });
+    }
   },
   components: {}
 };
