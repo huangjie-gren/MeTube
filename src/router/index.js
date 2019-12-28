@@ -126,6 +126,34 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/video/upload',
+    component: Layout,
+    children: [
+      {
+        path: '/video/upload',
+        name: '视频上传',
+        component: () => import('@/views/video/upload.vue'),
+        meta: { title: '视频上传', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/myvideos',
+    component: Layout,
+    redirect: '/myvideos/index',
+    children: [{
+      path: 'myvideos',
+      name: 'Videos',
+      component: () => import('@/views/myvideos/index'),
+      meta: { title: '我的视频', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/video/:videoID',
+    name: 'showVideo',
+    component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue')
+  },
 
   // {
   //   path: '/example',

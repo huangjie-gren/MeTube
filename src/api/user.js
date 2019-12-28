@@ -33,7 +33,7 @@ export function update(data) {
 
 export function reg(data) {
   return request({
-    url: 'http://127.0.0.1/register',
+    url: 'http://123.56.96.92:3001/api/v1/user/reg',
     method: 'post',
     data
   })
@@ -41,7 +41,15 @@ export function reg(data) {
 
 export function ping() {
   return request({
-    url: 'http://127.0.0.1:8080/hello',
+    url: 'http://123.56.96.92:3001/api/v1/ping',
     method: 'get'
+  })
+}
+
+export function upload(data) {
+  return request({
+    url: 'http://123.56.96.92:3001/api/v1/upload/token',
+    method: 'post',
+    data
   })
 }

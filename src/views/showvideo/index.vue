@@ -1,0 +1,128 @@
+<template>
+  <div class="video-container">
+    <el-container>
+      <el-main>
+        <PlayVideo :vid="vid"/>
+      </el-main>
+      <el-footer>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div @click="handleLike" :title="likeTitle">
+              <svg-icon :icon-class="likeIcon" />
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div @click="handleCollection" :title="collectionTitle">
+              <svg-icon :icon-class="collectionIcon" />
+            </div>
+          </el-col>
+          <!-- <el-col :span="6"><div @click="handleCollection" :title="collectionTitle"><i :class="collectionIcon"></i></div></el-col> -->
+          <el-col :span="6">
+            <div :title="分享">
+              <i class="el-icon-share"></i>
+            </div>
+          </el-col>
+        </el-row>
+      </el-footer>
+    </el-container>
+  </div>
+</template>
+
+<script>
+/* eslint-disable */
+import { mapGetters } from "vuex";
+import PlayVideo from "./playVideo.vue";
+export default {
+    computed: {
+    ...mapGetters(["id"])
+  },
+  data() {
+    return {
+      uid:'',
+      vid:this.$route.params.videoID,
+      likeTitle: "点赞",
+      collectionTitle: "收藏",
+      isLike: false,
+      isCollection: false,
+      collectionIcon: "collection-off",
+      likeIcon: "like-off"
+    };
+  },
+  methods: {
+    handleLike: function() {
+      alert(this.vid)
+      if (!this.isLike) {
+        this.isLike = true;
+        this.likeIcon = "like-on";
+        this.likeTitle = "取消点赞";
+      } else {
+        this.isLike = false;
+        this.likeIcon = "like-off";
+        this.likeTitle = "点赞";
+      }
+    },
+    handleCollection: function() {
+      if (!this.isCollection) {
+        this.isCollection = true;
+        this.collectionIcon = "collection-on";
+        this.collectionTitle = "取消收藏";
+      } else {
+        this.isCollection = false;
+        this.collectionIcon = "collection-off";
+        this.collectionTitle = "收藏";
+      }
+    }
+  },
+  created(){
+    this.uid = this.$store.getters["id"];
+    alert(this.uid)
+  },
+  components:{
+    PlayVideo,
+  }
+};
+</script>
+@import url("//unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css");
+<style scoped>
+.el-header,
+.el-footer {
+  background-color: #b3c0d1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+
+.el-aside {
+  background-color: #d3dce6;
+  color: #333;
+  text-align: center;
+  line-height: 200px;
+}
+
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
+.el-row {
+  margin-bottom: 20px;
+}
+.el-col {
+  border-radius: 4px;
+}
+</style>

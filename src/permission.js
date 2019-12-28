@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const needsLogin = ['/mypage'] // 需要登陆才能访问的页面
+const needsLogin = ['/mypage', '/video/upload'] // 需要登陆才能访问的页面
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -33,7 +33,6 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
-
           next()
         } catch (error) {
           // remove token and go to login page to re-login
@@ -46,6 +45,7 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
+    console.log(needsLogin.indexOf(to.path))
 
     if (needsLogin.indexOf(to.path) === -1) {
       // in the free login whitelist, go directly

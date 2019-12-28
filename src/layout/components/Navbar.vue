@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <img :src="logopath" class="logo-container" />
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -49,7 +50,8 @@ export default {
   },
   data(){
     return{
-      islogin : (getToken() == undefined)?(false):(true)
+      islogin : (getToken() == undefined)?(false):(true),
+      logopath: require("@/assets/logo.png")
     }
   },
   created(){
@@ -66,6 +68,10 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
+  .logo-container {
+    background-color: red;
+    margin: 10px;
+  }
   .hamburger-container {
     line-height: 46px;
     height: 100%;

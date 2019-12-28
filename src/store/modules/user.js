@@ -19,6 +19,9 @@ const mutations = {
   SET_NICKNAME: (state, nickname) => {
     state.nickname = nickname
   },
+  SET_ID: (state, id) => {
+    state.id = id
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   }
@@ -43,9 +46,9 @@ const actions = {
 
   // user update
   update({ commit }, userInfo) {
-    const { username, nickname, oldpassword, newpassword } = userInfo
+    const { username, nickname, oldpassword, newpassword, avatarurl } = userInfo
     return new Promise((resolve, reject) => {
-      update({ username: username.trim(), nickname: nickname, oldpassword: oldpassword, newpassword: newpassword }).then(response => {
+      update({ username: username.trim(), nickname: nickname, oldpassword: oldpassword, newpassword: newpassword, avatarurl: avatarurl }).then(response => {
         const { data } = response
         const { nickname } = data
         commit('SET_NICKNAME', nickname)
@@ -82,11 +85,12 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { username, nickname, avatar } = data
-        console.log(username)
-        commit('SET_USERNAME', username)
-        commit('SET_NICKNAME', nickname)
-        commit('SET_AVATAR', avatar)
+        const { Username, Nickname, Avatar, Id } = data
+        commit('SET_USERNAME', Username)
+        commit('SET_NICKNAME', Nickname)
+        commit('SET_AVATAR', Avatar)
+        commit('SET_ID', Id)
+        console.log(Id)
         resolve(data)
       }).catch(error => {
         reject(error)
