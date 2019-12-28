@@ -37,6 +37,7 @@
 
 <script>
 /* eslint-disable */
+import Metatitle from "./meta-title.vue";
 export default {
   data() {
     return {
@@ -93,7 +94,7 @@ export default {
 }
 
 .image {
-  margin: 20px;
+  margin: 10px;
   width: 100px;
   display: block;
 }

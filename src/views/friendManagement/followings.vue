@@ -1,0 +1,89 @@
+<template>
+<div>
+
+  <p><center><font size="5">全部关注</font></center></p>
+
+  <el-table
+    :data="tableData.filter(data => !search || 
+      data.username.toLowerCase().includes(search.toLowerCase()) ||
+      data.nickname.toLowerCase().includes(search.toLowerCase()))"
+    style="width: 100%"
+    class="list-item">
+    <el-table-column label="Avatar" prop="avatar">
+      <template slot-scope="scope">
+        <img :src="scope.row.avatar" width="%5" class="head_pic"/>
+      </template>
+    </el-table-column>
+    <el-table-column label="Name" prop="username"> </el-table-column>
+    <el-table-column label="Nickname" prop="nickname"> </el-table-column>
+    <el-table-column align="right">
+      <template slot="header" slot-scope="scope">
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="输入关键字搜索"/>
+      </template>
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">Unfollow</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+
+</div>
+</template>
+
+<script>
+/* eslint-disable */
+import { mapGetters } from 'vuex'
+import { showFollowings } from '@/api/friendManagement'
+import { unfollow } from '@/api/friendManagement'
+
+export default {
+  computed: {
+    ...mapGetters(['username'])
+  },
+  data() {
+    return {
+      tableData: '',
+      search: ''
+    }
+  },
+  created() {
+    // showFollowings(this.$store.getters['username'])
+    showFollowings(4)
+      .then(response => {
+        const { code } = response
+        const { data } = response
+        this.tableData = data   // 必须带this
+      })
+      .catch(error => {
+        alert('created error')
+      })
+  },
+  methods: {
+    handleDelete(index, row) {
+      console.log(index, row)
+      unfollow(4, row.id)
+      .then(response => {
+        const { code } = response
+        const { data } = response
+        this.tableData = data   // 必须带this 
+      })
+      .catch(error => {
+          alert('created error')
+      })
+    }
+  }
+}
+</script>
+
+<style>
+  .list-item img {
+    border-radius: 60px;
+    width: 60px;
+    height: 60px;
+  }
+</style>

@@ -76,6 +76,45 @@ export const constantRoutes = [
   },
 
   {
+    path: '/followings',
+    component: Layout,
+    children: [
+      {
+        path: '/followings',
+        name: 'followings',
+        component: () => import('@/views/friendManagement/followings.vue'),
+        meta: { title: '我的关注', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/followers',
+    component: Layout,
+    children: [
+      {
+        path: '/followers',
+        name: 'followers',
+        component: () => import('@/views/friendManagement/followers.vue'),
+        meta: { title: '我的粉丝', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/activity',
+    component: Layout,
+    children: [
+      {
+        path: '/activity',
+        name: 'activity',
+        component: () => import('@/views/activity.vue'),
+        meta: { title: '动态', icon: 'form' }
+      }
+    ]
+  },
+
+  {
     path: '/mypage',
     component: Layout,
     hidden: true,
@@ -124,6 +163,19 @@ export const constantRoutes = [
         path: '/updatevideo/:videoID',
         name: 'UpdateVideo',
         component: () => import('@/views/myvideos/update.vue')
+      }
+    ]
+  },
+
+  {
+    path: '/rankinglist',
+    component: Layout,
+    children: [
+      {
+        path: '/rankinglist',
+        name: 'rankinglist',
+        component: () => import('@/views/rankinglist/index.vue'),
+        meta: { title: '排行榜', icon: 'list' }
       }
     ]
   },
