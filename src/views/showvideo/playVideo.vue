@@ -22,12 +22,11 @@ export default {
   data() {
     return {
       videoAvatar: "",
-      videoUrl: "",
+      videoUrl: ""
     };
   },
   methods: {},
-  beforeMount() {
-  },
+  beforeMount() {},
   created() {
     // alert(this.vid)
     //  if (this.vid == 1) {

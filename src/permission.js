@@ -33,7 +33,6 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
-
           next()
         } catch (error) {
           // remove token and go to login page to re-login
@@ -46,6 +45,7 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
+    console.log(needsLogin.indexOf(to.path))
 
     if (needsLogin.indexOf(to.path) === -1) {
       // in the free login whitelist, go directly

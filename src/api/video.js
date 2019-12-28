@@ -2,6 +2,7 @@ import request from '@/utils/request'
 
 export function upload(data) {
   return request({
+    // url: 'http://127.0.0.1:3000/api/v1/video/add',
     url: 'http://123.56.96.92:3001/api/v1/video/add',
     method: 'post',
     data
@@ -10,6 +11,7 @@ export function upload(data) {
 export function uploadoss(data) {
   return request({
     url: 'http://123.56.96.92:3001/api/v1/upload/token',
+    // url: 'http://127.0.0.1:3000/api/v1/upload/token',
     method: 'post',
     data
   })
