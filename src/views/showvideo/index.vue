@@ -30,10 +30,15 @@
 
 <script>
 /* eslint-disable */
+import { mapGetters } from "vuex";
 import PlayVideo from "./playVideo.vue";
 export default {
+    computed: {
+    ...mapGetters(["id"])
+  },
   data() {
     return {
+      uid:'',
       vid:this.$route.params.videoID,
       likeTitle: "点赞",
       collectionTitle: "收藏",
@@ -67,6 +72,10 @@ export default {
         this.collectionTitle = "收藏";
       }
     }
+  },
+  created(){
+    this.uid = this.$store.getters["id"];
+    alert(this.uid)
   },
   components:{
     PlayVideo,

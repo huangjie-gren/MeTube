@@ -107,13 +107,13 @@ export const constantRoutes = [
       path: 'myvideos',
       name: 'Videos',
       component: () => import('@/views/myvideos/index'),
-      meta: { title: 'Myvideosboard', icon: 'dashboard' }
+      meta: { title: '我的视频', icon: 'dashboard' }
     }]
   },
   {
     path: '/video/:videoID',
     name: 'showVideo',
-    component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue'),
+    component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue')
   },
 
   // {

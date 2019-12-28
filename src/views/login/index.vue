@@ -75,6 +75,7 @@
 
 <script>
 export default {
+  /* eslint-disable */
   name: "Login",
   data() {
     const validatePassword = (rule, value, callback) => {
