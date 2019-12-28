@@ -9,7 +9,7 @@
             </el-row>
         </div>
         <div style="margin-left:75px; margin-right: 150px;"><el-divider></el-divider></div>
-        <el-container v-for="video in vData" :key="video.id" style="margin-left:30px; margin-right: 100px; height: 170px;" >
+        <el-container v-for="video in vData.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="video.id" style="margin-left:30px; margin-right: 100px; height: 170px;" >
             <div style="margin-top:10px; margin-left: 50px; cursor:pointer" @click="handlePlay(video.id)">
                 <el-image
                 style="width: 250px; height: 150px"
@@ -38,8 +38,16 @@
                     <span>{{video.info}}</span>
                 </div>
             </div>
-            
         </el-container>
+        <el-pagination
+            layout="total, sizes, prev, pager, next"
+            @current-change="current_change"
+            @size-change="size_change"
+            :page-sizes="[10, 20, 30, 40]"
+            :total="total"
+            background
+            style="text-align:center">
+        </el-pagination>
     </div>
 </template>
 
@@ -50,10 +58,14 @@ export default {
         return {
             vData: '',
             totalData: '',
+            total: '', //数据总数
+            pagesize:10, //默认每页的数据条数
+            currentPage:1, //默认开始页面
         }
     },
     methods: {
         onClicktag(tag) {
+            /*
             if(tag == 1) {
                 this.vData = this.totalData.filter(function (video) {
                     return video.tag == 1;
@@ -69,20 +81,27 @@ export default {
                     return video.tag == 3;
                 });
             }
+            this.total = this.vData.length;
+            this.currentPage = 1;
+            */
         },
         handlePlay(id) {
-            /* 如何路由到具体的播放页 */
-            //
             this.$router.push({ name: "showVideo", params: { videoID: id } });
+        },
+        current_change:function(currentPage) {
+            this.currentPage = currentPage;
+        },
+        size_change:function(pagesize) {
+            this.pagesize = pagesize;
         },
     },
     created:function(){
         getVideoInfo()    // 一次性获得所有信息
                 .then(response => {
-                    //console.log('haha');
                     const { data } = response;
                     this.totalData = data;
                     this.vData = this.totalData;
+                    this.total = this.vData.length;
                 })
                 .catch(error => {
                     console.log(error);
