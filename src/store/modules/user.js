@@ -85,12 +85,12 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { Username, Nickname, Avatar, ID } = data
+        const { Username, Nickname, Avatar, Id } = data
         commit('SET_USERNAME', Username)
         commit('SET_NICKNAME', Nickname)
         commit('SET_AVATAR', Avatar)
-        commit('SET_ID', ID)
-        console.log(ID)
+        commit('SET_ID', Id)
+        console.log(Id)
         resolve(data)
       }).catch(error => {
         reject(error)

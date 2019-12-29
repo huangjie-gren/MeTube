@@ -2,7 +2,7 @@
   <div class="video-container">
     <el-container>
       <el-main>
-        <PlayVideo :vid="vid"/>
+        <PlayVideo :vid="vid" />
       </el-main>
       <el-footer>
         <el-row :gutter="20">
@@ -72,7 +72,7 @@ export default {
         .catch(error => {
           alert('add_like_error')
       })
-        
+
       } else {
         this.isLike = false;
         this.likeIcon = "like-off";
@@ -90,7 +90,7 @@ export default {
     },
     handleCollection: function() {
 
-       
+
 
         if (!this.isCollection) {
 
@@ -100,14 +100,14 @@ export default {
 
         addCollect(this.uid,this.vid)
         .then(response=>{
-        
+
         })
         .catch(error => {
           alert('add_collect_error')
       })
 
       } else {
-        
+
         this.isCollection = false;
         this.collectionIcon = "collection-off";
         this.collectionTitle = "收藏";

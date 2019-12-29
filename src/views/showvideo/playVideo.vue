@@ -1,54 +1,87 @@
 <template>
-  <div class="demo1-video">
-    <video
-      id="myVideo"
-      class="video-js vjs-default-skin vjs-big-play-centered"
-      muted="muted"
-      controls
-      autoplay
-      preload="auto"
-      :poster="videoAvatar"
-      :src="videoUrl"
-    />
+  <div>
+    <div>
+      <video
+        id="myVideo"
+        class="video-js vjs-default-skin vjs-big-play-centered"
+        muted
+        controls
+        preload="auto"
+        :poster="videoAvatar"
+        :src="videoSourceUrl"
+        style="width:100%; height:100%; object-fit:fill"
+      >您的浏览器版本不支持播放视频！</video>
+    </div>
+    <h1 class="title style-scope ytd-video-primary-info-renderer">{{ title }}</h1>
+    <p>{{ views }}次观看</p>
+    <p>{{ uploadDate }}</p>
+    <el-button>{{ likes }}</el-button>
+    <a>
+      <img :src="ownerAvatar" alt="">
+    </a>
+    <p>{{ owner }}</p>
+    <p>{{ collects }}</p>
+    <el-button>收藏</el-button>
+    <p>{{ info }}</p>
+    <p>{{ typeName }}</p>
   </div>
 </template>
 
 <script>
+import { getVideo } from '@/api/video'
 /* eslint-disable */
-import { getVideo } from "@/api/video";
 export default {
   name: "PlayVideo",
-  props: ["vid"],
+	props: ["vid"],
   data() {
     return {
-      videoAvatar: "",
-      videoUrl: ""
-    };
+      uploadDate: '',
+      title: '',
+      info: '',
+      videoSourceUrl: '',
+      videoAvatar: '',
+      views: 0,
+      owner: '',
+      ownerAvatar: '',
+      collects: 0,
+      likes: 0,
+      typeName: '',
+    }
   },
-  methods: {},
-  beforeMount() {},
   created() {
-    // alert(this.vid)
-    //  if (this.vid == 1) {
-    //   this.videoAvatar =
-    //     "https://metube-backend.oss-cn-beijing.aliyuncs.com/WX20191213-195644.png";
-    //   this.videoUrl =
-    //     "https://metube-backend.oss-cn-beijing.aliyuncs.com/1576236687649500.mp4";
-    // }
     getVideo(this.vid)
       .then(response => {
-        // console.log('哈哈')
         const { data } = response;
-        const { avatar } = data;
-        const { url } = data;
-        this.videoAvatar = avatar;
-        // console.log(this.videoAvatar)
-        this.videoUrl = url;
-        // console.log(this.videoUrl)
+        const { updatedAt } = data;
+        const uploadDateTmp = new Date(updatedAt);
+        const y = uploadDateTmp.getFullYear();
+        const m = uploadDateTmp.getMonth() + 1;
+        const d = uploadDateTmp.getDate();
+        this.uploadDate = y + "年" + m + "月" + d + "日";
+        const { title } = data;
+        this.title = title;
+        const { info } = data;
+        this.info = info;
+        const { videoSourceUrl } = data;
+        this.videoSourceUrl = videoSourceUrl;
+        const { videoAvatar } = data;
+        this.videoAvatar = videoAvatar;
+        const { views } = data;
+        this.views = views;
+        const { owner } = data;
+        this.owner = owner;
+        const { ownerAvatar } = data;
+        this.ownerAvatar = ownerAvatar;
+        const { collects } = data;
+        this.collects = collects;
+        const { likes } = data;
+        this.likes = likes;
+        const { typeName }= data;
+        this.typeName = typeName;
       })
       .catch(error => {
-        alert(error);
-      });
+        alert(error)
+      })
   }
 };
 </script>

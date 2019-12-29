@@ -3,26 +3,23 @@
     <div class="video-prefix">推荐视频</div>
     <div class="top">
       <el-row :gutter="20">
-        <el-col :span="6" v-for="video in videos" :key="video.id">
+        <el-col :xs="24" :sm="6" :md="6" v-for="video in videos" :key="video.id">
           <el-card class="video-card" @click.native="goVideo(video)">
-            <img class="video-avatar" :src="video.avatar" />
-            <el-row :gutter="20" class="owner-info">
-              <el-col :span="6">
-                <img class="owner-avatar" :src="video.owneravatar" />
-              </el-col>
-              <el-col :span="18">
-                <div class="video-title">{{video.title}}</div>
-                <div class="video-upname">{{video.ownername}}</div>
-                <div class="video-other">{{video.view}}次观看</div>
-              </el-col>
-            </el-row>
+            <img class="video-avatar" :src="video.Avatar" />
+            <div>
+              <div class="video-title">{{video.Title}}</div>
+              <div class="video-bottom clearfix">
+                <!-- <span class="video-info">{{video.info.substring(0, 40)}}</span> -->
+                <span class="video-info">{{video.Info}}</span>
+              </div>
+            </div>
           </el-card>
         </el-col>
       </el-row>
       <div class="block">
         <el-pagination
           @current-change="handleCurrentChange"
-          :page-size="8"
+          :page-size="6"
           layout="prev, pager, next"
           :total="total"
         ></el-pagination>
@@ -40,7 +37,7 @@ export default {
     return {
       videos: [],
       start: 0,
-      limit: 8,
+      limit: 6,
       total: 0
     };
   },
@@ -50,15 +47,18 @@ export default {
       this.load();
     },
     load() {
+      console.log("zairu");
       getVideos(this.start, this.limit).then(res => {
-        console.log(res);
         this.videos = res.data.items.data;
         this.total = res.data.total;
+        console.log(this.videos);
       });
+      console.log(this.videos);
+      console.log(this.videos[0].Title);
     },
     goVideo(video) {
       // alert(video.ID)
-      this.$router.push({ name: "showVideo", params: { videoID: video.id } });
+      this.$router.push({ name: "showVideo", params: { videoID: video.ID } });
     }
   },
   created() {
@@ -84,29 +84,14 @@ export default {
   white-space: nowrap;
   overflow: hidden;
 }
-.video-upname {
-  color: #606060;
+.video-bottom {
   margin-top: 4px;
-  font-size:14px;
 }
-.video-other {
-  font-size:14px;
-  color: #606060;
+.video-info {
+  color: #909399;
 }
 .video-card {
-  width: 100%;
   margin-bottom: 14px;
   cursor: pointer;
-}
-.owner-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: transparent;
-  overflow: hidden;
-}
-.owner-info {
-  padding-top: 10px;
-  padding-right: 24px;
 }
 </style>
