@@ -19,55 +19,24 @@ export default {
   name: 'PlayVideo',
   props: {
     vid: {
-      type: Number,
+      type: String,
       default: -1
     }
   },
   data() {
     return {
-      uploadDate: '',
-      title: '',
-      info: '',
       videoSourceUrl: '',
-      videoAvatar: '',
-      views: 0,
-      owner: '',
-      ownerAvatar: '',
-      collects: 0,
-      likes: 0,
-      typeName: ''
+      videoAvatar: ''
     }
   },
   created() {
     getVideo(this.vid)
       .then(response => {
         const { data } = response
-        const { updatedAt } = data
-        const uploadDateTmp = new Date(updatedAt)
-        const y = uploadDateTmp.getFullYear()
-        const m = uploadDateTmp.getMonth() + 1
-        const d = uploadDateTmp.getDate()
-        this.uploadDate = y + '年' + m + '月' + d + '日'
-        const { title } = data
-        this.title = title
-        const { info } = data
-        this.info = info
-        const { videoSourceUrl } = data
-        this.videoSourceUrl = videoSourceUrl
-        const { videoAvatar } = data
-        this.videoAvatar = videoAvatar
-        const { views } = data
-        this.views = views
-        const { owner } = data
-        this.owner = owner
-        const { ownerAvatar } = data
-        this.ownerAvatar = ownerAvatar
-        const { collects } = data
-        this.collects = collects
-        const { likes } = data
-        this.likes = likes
-        const { typeName } = data
-        this.typeName = typeName
+        const { url } = data
+        this.videoSourceUrl = url
+        const { avatar } = data
+        this.videoAvatar = avatar
       })
       .catch(error => {
         alert(error)
