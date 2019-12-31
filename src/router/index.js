@@ -151,9 +151,19 @@ export const constantRoutes = [
   },
   {
     path: '/video/:videoID',
-    name: 'showVideo',
-    component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue')
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '/video/:videoID',
+      name: 'showVideo',
+      component: () => import('@/views/showvideo/index.vue')
+    }]
   },
+  // {
+  //   path: '/video/:videoID',
+  //   name: 'showVideo',
+  //   component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue')
+  // },
   {
     path: '/updatevideo/:videoID',
     component: Layout,

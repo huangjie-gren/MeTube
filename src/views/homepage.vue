@@ -5,12 +5,12 @@
       <el-row :gutter="20">
         <el-col :xs="24" :sm="6" :md="6" v-for="video in videos" :key="video.id">
           <el-card class="video-card" @click.native="goVideo(video)">
-            <img class="video-avatar" :src="video.Avatar" />
+            <img class="video-avatar" :src="video.avatar" />
             <div>
-              <div class="video-title">{{video.Title}}</div>
+              <div class="video-title">{{video.title}}</div>
               <div class="video-bottom clearfix">
                 <!-- <span class="video-info">{{video.info.substring(0, 40)}}</span> -->
-                <span class="video-info">{{video.Info}}</span>
+                <span class="video-info">{{video.info}}</span>
               </div>
             </div>
           </el-card>
@@ -58,7 +58,7 @@ export default {
     },
     goVideo(video) {
       // alert(video.ID)
-      this.$router.push({ name: "showVideo", params: { videoID: video.ID } });
+      this.$router.push({ name: "showVideo", params: { videoID: video.id } });
     }
   },
   created() {

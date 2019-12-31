@@ -24,8 +24,8 @@ export function getVideos() {
 }
 export function getVideo(videoid) {
   return request({
-    // url: 'http://114.115.178.1:8081/getvideo/' + videoid,
-    url: 'http://localhost:8081/getvideo/' + videoid,
+    url: 'http://114.115.178.1:8081/getvideo/' + videoid,
+    // url: 'http://localhost:8081/getvideo/' + videoid,
     method: 'get'
   })
 }

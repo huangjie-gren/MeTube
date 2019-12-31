@@ -12,18 +12,18 @@
         style="width:100%; height:100%; object-fit:fill"
       >您的浏览器版本不支持播放视频！</video>
     </div>
-    <h1 class="title style-scope ytd-video-primary-info-renderer">{{ title }}</h1>
-    <p>{{ views }}次观看</p>
-    <p>{{ uploadDate }}</p>
-    <el-button>{{ likes }}</el-button>
-    <a>
-      <img :src="ownerAvatar" alt="">
-    </a>
-    <p>{{ owner }}</p>
-    <p>{{ collects }}</p>
-    <el-button>收藏</el-button>
-    <p>{{ info }}</p>
-    <p>{{ typeName }}</p>
+<!--    <h1 class="title style-scope ytd-video-primary-info-renderer">{{ title }}</h1>-->
+<!--    <p>{{ views }}次观看</p>-->
+<!--    <p>{{ uploadDate }}</p>-->
+<!--    <el-button>{{ likes }}</el-button>-->
+<!--    <a>-->
+<!--      <img :src="ownerAvatar" alt="">-->
+<!--    </a>-->
+<!--    <p>{{ owner }}</p>-->
+<!--    <p>{{ collects }}</p>-->
+<!--    <el-button>收藏</el-button>-->
+<!--    <p>{{ info }}</p>-->
+<!--    <p>{{ typeName }}</p>-->
   </div>
 </template>
 
