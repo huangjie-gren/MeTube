@@ -54,7 +54,8 @@
 <!--        <el-row class="userinfo" style="background-color: coral">cccc</el-row>-->
 <!--        <el-row class="recommend" style="background-color: cadetblue">ddd</el-row>-->
         <profile></profile>
-        <recommend-list></recommend-list>
+        <recommendList></recommendList>
+        123456
       </el-col>
     </el-row>
   </div>
