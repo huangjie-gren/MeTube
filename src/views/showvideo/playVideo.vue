@@ -1,29 +1,32 @@
 <template>
   <div>
-    <div>
-      <video
-        id="myVideo"
-        class="video-js vjs-default-skin vjs-big-play-centered"
-        muted
-        controls
-        preload="auto"
-        :poster="videoAvatar"
-        :src="videoSourceUrl"
-        style="width:100%; height:100%; object-fit:fill"
-      >您的浏览器版本不支持播放视频！</video>
-    </div>
-<!--    <h1 class="title style-scope ytd-video-primary-info-renderer">{{ title }}</h1>-->
-<!--    <p>{{ views }}次观看</p>-->
-<!--    <p>{{ uploadDate }}</p>-->
-<!--    <el-button>{{ likes }}</el-button>-->
-<!--    <a>-->
-<!--      <img :src="ownerAvatar" alt="">-->
-<!--    </a>-->
-<!--    <p>{{ owner }}</p>-->
-<!--    <p>{{ collects }}</p>-->
-<!--    <el-button>收藏</el-button>-->
-<!--    <p>{{ info }}</p>-->
-<!--    <p>{{ typeName }}</p>-->
+    <el-row class="title">
+      <el-row class="video-title">
+        <el-col class="tit">{{ title }}</el-col>
+      </el-row>
+      <el-row class="video-data" gutter="20">
+        <el-col class="a-crumbs" :span="1">{{ typeName }}</el-col>
+        <el-col class="" :span="2">{{ uploadDate }}}</el-col>
+      </el-row>
+      <el-row class="video-data">
+        <el-col :span="2">{{ views }}播放</el-col>
+        <!--      <el-col :span="2">2238弹幕</el-col>-->
+      </el-row>
+    </el-row>
+    <el-row style="">
+      <div>
+        <video
+          id="myVideo"
+          class="video-js vjs-default-skin vjs-big-play-centered"
+          muted
+          controls
+          preload="auto"
+          :poster="videoAvatar"
+          :src="videoSourceUrl"
+          style="width:100%; height:100%; object-fit:fill"
+        >您的浏览器版本不支持播放视频！</video>
+      </div>
+    </el-row>
   </div>
 </template>
 
@@ -87,4 +90,34 @@ export default {
 </script>
 
 <style scoped>
+  .video-title{
+    font-size: 18px;
+    font-weight: 500;
+    color: #212121;
+    line-height: 26px;
+    height: 26px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tit{
+    margin-left: -.5em;
+    vertical-align: middle;
+  }
+  .video-data{
+    margin-top: 11px;
+    font-size: 12px;
+    height: 16px;
+    color: #999;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .a-crumbs{
+    margin-right: 16px;
+  }
 </style>

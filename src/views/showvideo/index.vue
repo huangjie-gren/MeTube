@@ -27,8 +27,8 @@
 <!--    </el-container>-->
     <el-row :gutter="20" flex style="padding:20px 76px;">
       <el-col :span="18" style="height:50rem; background-color: white;">
-        <playVideo></playVideo>
-        <favor></favor>
+        <playVideo :vid="vid" />
+        <favor />
 <!--        <el-row class="title" style="" >-->
 <!--          <el-row class="video-title">-->
 <!--            <el-col class="tit">【登月计划】Fate/stay night深度解析Part10.正义的伙伴</el-col>-->
@@ -42,20 +42,15 @@
 <!--            <el-col :span="2">2238弹幕</el-col>-->
 
 <!--          </el-row>-->
-
-
-
-
 <!--        </el-row>-->
 <!--        <el-row style=""><PlayVideo :vid="vid" /></el-row>-->
 <!--        <el-row class="bottom" style="background-color: chartreuse">vvvv</el-row>-->
       </el-col>
-      <el-col :span="6" style="height:50rem; background-color: red;">
+      <el-col :span="6" style="height:50rem; background-color: white;">
 <!--        <el-row class="userinfo" style="background-color: coral">cccc</el-row>-->
 <!--        <el-row class="recommend" style="background-color: cadetblue">ddd</el-row>-->
-        <profile></profile>
-        <recommendList></recommendList>
-        123456
+        <profile />
+        <recommendList />
       </el-col>
     </el-row>
   </div>
@@ -158,10 +153,10 @@ export default {
     }
   },
   components:{
-    RecommendList,
-    Profile,
-    Favor,
-    PlayVideo,
+    recommendList,
+    profile,
+    favor,
+    playVideo,
   }
 };
 </script>
@@ -208,34 +203,4 @@ body > .el-container {
 .el-col {
   border-radius: 4px;
 }
-  .video-title{
-    font-size: 18px;
-    font-weight: 500;
-    color: #212121;
-    line-height: 26px;
-    height: 26px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .tit{
-    margin-left: -.5em;
-    vertical-align: middle;
-  }
-  .video-data{
-    margin-top: 11px;
-    font-size: 12px;
-    height: 16px;
-    color: #999;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .a-crumbs{
-    margin-right: 16px;
-  }
 </style>

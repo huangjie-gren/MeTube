@@ -1,21 +1,21 @@
 <template>
     <div style="background: #f6f5f7;">
         <div style="margin-top:10px;"></div>
-        <el-container v-for="video in vData" :key="video.id" style="margin-left:30px; margin-right: 100px; height: 170px;" >
-            <div style="margin-top:10px; margin-left: 50px; cursor:pointer" @click="handlePlay(video.id)">
+        <el-container v-for="video in vData" :key="video.id" :span="6">
+            <div style="margin-top:5px; margin-left: 5px; cursor:pointer" @click="handlePlay(video.id)">
                 <el-image
-                style="width: 250px; height: 150px"
+                style="width: 140px; height: 80px"
                 :src="video.avatar"></el-image>
             </div>
-            <div style="margin-top:10px; margin-left: 20px; width: 600px" >
-                <div style="width: 500px; font: 25px roboto,arial,sans-serif; color: #0D0D0D; cursor:pointer" @click.prevent="handlePlay(video.id)">
-                    <div><span>{{video.title}}</span></div>
+            <div style="height: 80px; margin-top:5px; margin-left: 8px;" >
+                <div style="width: 120px; font: 16px roboto,arial,sans-serif; color: #222222; cursor:pointer; max-width: 100%; overflow-wrap: break-word; overflow: hidden;" @click.prevent="handlePlay(video.id)">
+                    {{video.title}}
                 </div>
-                <div style="width: 500px; font: 15px roboto,arial,sans-serif; color: #606060; padding:0px 1.3px 0px 0px;">
-                    <span style="margin:0px 1.3px 0px 0px;">Up主 {{video.owner}}</span>
+                <div style="margin-top:4px; width: 120px; font: 12px roboto,arial,sans-serif; color: #999999;">
+                    <span>Up主 {{video.owner}}</span>
                 </div>
-                <div style="width: 500px; font: 15px roboto,arial,sans-serif; color: #606060; padding:8px 0px 0px">
-                    <span style="margin:0px 1.3px 300px 0px;">播放量 {{video.views}}</span>
+                <div style="margin-top:4px; width: 120px; font: 12px roboto,arial,sans-serif; color: #999999;">
+                    <span>播放量 {{video.views}}</span>
                 </div>
             </div>
         </el-container>
@@ -42,7 +42,7 @@ export default {
                 .then(response => {
                     const { data } = response;
                     this.totalData = data;
-                    this.vData = this.totalData;
+                    this.vData = this.totalData.slice(0,10);
                 })
                 .catch(error => {
                     console.log(error);
