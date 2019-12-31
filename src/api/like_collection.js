@@ -32,3 +32,20 @@ export function addLike(uid,vid) {
       params: { uid,vid }
     })
   }
+
+  export function countLike(vid) {
+    return request({
+      url: preUrl + '/showMyLikes',
+      method: 'get',
+      params: { vid }
+    })
+  }
+
+  export function countCollect(vid) {
+    return request({
+      url: preUrl + '/showMyCollections',
+      method: 'get',
+      params: { vid }
+    })
+  }
+
