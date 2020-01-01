@@ -42,7 +42,7 @@
 
 <script>
 /* eslint-disable */
-import { upload } from "@/api/video";
+import { updateVideo } from "@/api/video";
 import { ping } from "@/api/user";
 import { mapGetters } from "vuex";
 import { uploadoss } from "@/api/video";
@@ -138,7 +138,7 @@ export default {
           oReq.send(option.file);
           oReq.onload = () => {
             this.avatarImageUrl = res.data.get;
-            this.form.avatarurl = res.data.get;
+            this.form.avatarurl = res.data.key;
           };
         })
         .catch(error => {
@@ -149,11 +149,10 @@ export default {
         });
     },
     onSubmit() {
-      // alert('clicked')
-      upload({
+      updateVideo({
+        vid: parseInt(this.vid),
         title: this.form.videoname,
         info: this.form.videodescribe,
-        url: this.form.videourl,
         avatar: this.form.avatarurl,
         typename: this.form.typename
       })
@@ -163,16 +162,17 @@ export default {
           // const { Info } = data;
           // alert(msg);
           this.$notify({
-            title: "投稿成功",
-            message: `投稿成功，视频id为${response.data.data.id}`,
+            title: "修改成功",
+            message: `修改成功`,
             typename: "success"
           });
+          this.$router.push({ name: "myVideos"})
         })
         .catch(error => {
           // alert(error);
           this.$notify({
-            title: "投稿",
-            message: `投稿失败:${response.data.msg}`,
+            title: "投稿失败",
+            message: `投稿失败`,
             typename: "error"
           });
         });

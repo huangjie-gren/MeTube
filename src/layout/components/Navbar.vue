@@ -21,7 +21,10 @@
             <el-dropdown-item>个人主页</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided v-if="islogin">
-            <span style="display:block;" @click="logout">Log Out</span>
+            <span style="display:block;" @click="logout">登出</span>
+          </el-dropdown-item>
+          <el-dropdown-item divided v-if="!islogin">
+            <span style="display:block;" @click="gologin">登陆</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -51,6 +54,9 @@ export default {
         query: { input: this.inputsearch }
       });
     },
+    gologin(){
+      this.$router.push({path:"/login"})
+    },
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
@@ -61,6 +67,7 @@ export default {
   },
   data() {
     return {
+      avatar:'',
       inputsearch: "",
       islogin: getToken() == undefined ? false : true,
       logopath: require("@/assets/logo.png")
@@ -68,6 +75,11 @@ export default {
   },
   created() {
     console.log(getToken());
+    if(this.islogin){
+      this.avatar = this.$store.getters['avatar']
+    }else{
+      this.avatar = "https://metube-backend.oss-cn-beijing.aliyuncs.com/true.jpeg"
+    }
   }
 };
 </script>

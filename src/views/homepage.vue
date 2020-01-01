@@ -19,7 +19,7 @@
       <div class="block">
         <el-pagination
           @current-change="handleCurrentChange"
-          :page-size="6"
+          :page-size="8"
           layout="prev, pager, next"
           :total="total"
         ></el-pagination>
@@ -37,7 +37,7 @@ export default {
     return {
       videos: [],
       start: 0,
-      limit: 6,
+      limit: 8,
       total: 0
     };
   },

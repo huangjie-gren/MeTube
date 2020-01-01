@@ -47,7 +47,7 @@
       style="margin-left:30px; margin-right: 100px; height: 170px;"
     >
       <div style="margin-top:10px; margin-left: 50px; cursor:pointer" @click="handlePlay(video.id)">
-        <el-image style="width: 250px; height: 150px" :src="video.avatar"></el-image>
+        <img style="width: 250px; height: 150px" :src="video.avatar"/>
       </div>
       <div style="margin-top:10px; margin-left: 20px; width: 600px">
         <el-dropdown style="float: right; padding: 3px 0">

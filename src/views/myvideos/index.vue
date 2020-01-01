@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-row :xs="24" :sm="6" :md="6" v-for="video in videos" :key="video.id">
+    <el-row :xs="24" :sm="6" :md="6" style="margin-left:200px; margin-right:200px;" v-for="video in videos" :key="video.id">
       <el-card class="article-body">
         <el-row :gutter="20">
           <el-col :span="6">
@@ -17,14 +17,17 @@
             <el-row class="meta-status">
               <span class="pubdate">{{ video.createtime }}</span>
             </el-row>
+            <el-row class="meta-status">
+              <span class="pubdate"> 播放量：{{ video.view }}</span>
+            </el-row>
           </el-col>
           <el-col :span="6" class="meta-btn">
             <el-row>
               <el-button type="primary" @click.native="doUpdate(video.vid)">编辑</el-button>
             </el-row>
-            <el-row>
+            <!-- <el-row>
               <el-button type="info" style="margin-top:10px;">数据</el-button>
-            </el-row>
+            </el-row> -->
             <el-row>
               <el-button type="danger" style="margin-top:10px;" @click.native="doDelete(video.vid)" >删除</el-button>
             </el-row>
@@ -93,7 +96,8 @@ export default {
           name: res.data[i].title,
           img: res.data[i].avatar,
           typename: res.data[i].typename,
-          createtime: res.data[i].created_at.split('T')[0]
+          createtime: res.data[i].created_at.split('T')[0],
+          view: res.data[i].view
         }
         this.videos.push(video)
       }

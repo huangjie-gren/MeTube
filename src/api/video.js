@@ -11,7 +11,7 @@ export function upload(data) {
 export function deleteVideo(videoid) {
   return request({
     // url: 'http://1901210759.zhangqx.com/api/v1/user/login',
-    url: 'http://127.0.0.1:3001/api/v1/video/delete?vid=' + videoid,
+    url: 'http://123.56.96.92:3001/api/v1/video/delete?vid=' + videoid,
     method: 'get'
   })
 }
@@ -58,7 +58,7 @@ export function updateVideo(data) {
 }
 export function getSearch(input) {
   return request({
-    url: 'http://127.0.0.1:3001/api/v1/video/search?input=' + input,
+    url: 'http://123.56.96.92:3001/api/v1/video/search?input=' + input,
     method: 'get'
   })
 }
