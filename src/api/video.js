@@ -56,3 +56,10 @@ export function updateVideo(data) {
     data
   })
 }
+export function getSearch(input) {
+  return request({
+    url: 'http://127.0.0.1:3001/api/v1/video/search?input=' + input,
+    method: 'get'
+  })
+}
+
