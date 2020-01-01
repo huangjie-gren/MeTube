@@ -26,7 +26,7 @@
               <el-button type="info" style="margin-top:10px;">数据</el-button>
             </el-row>
             <el-row>
-              <el-button type="danger" style="margin-top:10px;">删除</el-button>
+              <el-button type="danger" style="margin-top:10px;" @click.native="doDelete(video.vid)" >删除</el-button>
             </el-row>
           </el-col>
         </el-row>
@@ -37,7 +37,7 @@
 
 <script>
 /* eslint-disable */
-import { getMyVideo } from "@/api/video";
+import { getMyVideo, deleteVideo } from "@/api/video";
 import { mapGetters } from "vuex";
 export default {
   computed: {
@@ -47,34 +47,38 @@ export default {
     return {
       uid : this.$store.getters["id"],
       videos: [
-        // {
-        //   vid: 1,
-        //   name: "video1",
-        //   img: "",
-        //   url: "/",
-        //   typename: "aaa",
-        //   createtime: "19-12-08 15:23:48"
-        // },
-        // {
-        //   name: "video2",
-        //   img: "",
-        //   url: "/",
-        //   typename: "aaa",
-        //   createtime: "2019-07-12"
-        // },
-        // {
-        //   name: "video3",
-        //   img: "",
-        //   url: "/",
-        //   typename: "aaa",
-        //   createtime: "2019-07-12"
-        // }
       ]
     };
   },
   methods: {
     doUpdate: function(vid) {
       this.$router.push({ name: "UpdateVideo", params: { videoID: vid } });
+    },
+    doDelete: function(vid){
+      this.$confirm('此操作将删除该视频, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteVideo(vid).then(res => {
+            console.log(res)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          }).catch(err => {
+            console.log(err)
+          this.$message({
+            type: 'eroor',
+            message: '删除失败!'
+          });
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
     },
     goVideo: function(vid){
       alert(vid)

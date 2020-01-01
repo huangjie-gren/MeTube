@@ -107,6 +107,7 @@ export default {
           oReq.send(option.file);
           oReq.onload = () => {
             this.videoImageUrl = option.file.name;
+
             this.form.videourl = res.data.key;
           };
         })
@@ -139,7 +140,7 @@ export default {
           oReq.send(option.file);
           oReq.onload = () => {
             this.avatarImageUrl = res.data.get;
-            this.form.avatarurl = res.data.get;
+            this.form.avatarurl = res.data.key;
           };
         })
         .catch(error => {

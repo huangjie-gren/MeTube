@@ -2,10 +2,17 @@ import request from '@/utils/request'
 
 export function upload(data) {
   return request({
-    // url: 'http://127.0.0.1:3000/api/v1/video/add',
+    // url: 'http://127.0.0.1:3001/api/v1/video/add',
     url: 'http://123.56.96.92:3001/api/v1/video/add',
     method: 'post',
     data
+  })
+}
+export function deleteVideo(videoid) {
+  return request({
+    // url: 'http://1901210759.zhangqx.com/api/v1/user/login',
+    url: 'http://127.0.0.1:3001/api/v1/video/delete?vid=' + videoid,
+    method: 'get'
   })
 }
 export function uploadoss(data) {
@@ -16,9 +23,9 @@ export function uploadoss(data) {
     data
   })
 }
-export function getVideos() {
+export function getVideos(start, limit) {
   return request({
-    url: 'http://123.56.96.92:3001/api/v1/videos',
+    url: 'http://123.56.96.92:3001/api/v1/videos?start=' + start + '&limit=' + limit,
     method: 'get'
   })
 }

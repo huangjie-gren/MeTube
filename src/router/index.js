@@ -179,6 +179,16 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/search',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '/search',
+      name: 'searchResult',
+      component: () => import('@/views/search/index')
+    }]
+  },
 
   // {
   //   path: '/example',
