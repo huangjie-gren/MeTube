@@ -63,11 +63,10 @@ import { mapGetters } from "vuex";
 import { uploadoss } from "@/api/video";
 export default {
   computed: {
-    ...mapGetters(["username","id"])
+    ...mapGetters(["username"])
   },
   data() {
     return {
-      uid:this.$store.getters['id'],
       videoImageUrl: "",
       avatarImageUrl: "",
       form: {
@@ -81,6 +80,7 @@ export default {
   },
   created() {
     // this.form.nickname = "a"
+    this.nickname = this.$store.getters["nickname"];
     // this.form.username = this.$store.getters["username"];
   },
   methods: {
@@ -151,10 +151,8 @@ export default {
         });
     },
     onSubmit() {
-      alert('clicked')
-      console.log(this.uid)
+      // alert('clicked')
       upload({
-        owner: this.uid,
         title: this.form.videoname,
         info: this.form.videodescribe,
         url: this.form.videourl,
@@ -168,8 +166,8 @@ export default {
           // alert(msg);
           this.$notify({
             title: "投稿成功",
-            message: `投稿成功`,
-            type: "success"
+            message: `投稿成功，视频id为${response.data.data.id}`,
+            typename: "success"
           });
         })
         .catch(error => {
@@ -177,7 +175,7 @@ export default {
           this.$notify({
             title: "投稿",
             message: `投稿失败:${response.data.msg}`,
-            type: "error"
+            typename: "error"
           });
         });
     }

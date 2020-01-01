@@ -105,7 +105,7 @@ export default {
           this.$notify({
             title: '更新成功',
             message: '更新成功',
-            type: 'success',
+            typename: 'success',
           });
           this.loading = false;
         })
@@ -114,7 +114,7 @@ export default {
           this.$notify({
             title: '更新失败',
             message: '更新失败',
-            type: 'error',
+            typename: 'error',
           });
           this.loading = false;
         });

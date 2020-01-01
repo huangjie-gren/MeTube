@@ -1,30 +1,41 @@
 <template>
   <div class="video-container">
-    <el-container>
-      <el-main>
-        <PlayVideo :vid="vid"/>
-      </el-main>
-      <el-footer>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <div @click="handleLike" :title="likeTitle">
-              <svg-icon :icon-class="likeIcon" />
-            </div>
-          </el-col>
-          <el-col :span="6">
-            <div @click="handleCollection" :title="collectionTitle">
-              <svg-icon :icon-class="collectionIcon" />
-            </div>
-          </el-col>
-          <!-- <el-col :span="6"><div @click="handleCollection" :title="collectionTitle"><i :class="collectionIcon"></i></div></el-col> -->
-          <el-col :span="6">
-            <div :title="分享">
-              <i class="el-icon-share"></i>
-            </div>
-          </el-col>
+    <el-row :gutter="20" flex style="padding:20px 76px;">
+      <el-col :span="18" style="height:50rem; background-color: white;">
+        <el-row>
+          <VideoInfo :vid="vid" />
         </el-row>
-      </el-footer>
-    </el-container>
+        <el-row>
+          <PlayVideo :vid="vid" />
+        </el-row>
+        <el-row>
+          <favor />
+        </el-row>
+        <!--        <el-row class="title" style="" >-->
+        <!--          <el-row class="video-title">-->
+        <!--            <el-col class="tit">【登月计划】Fate/stay night深度解析Part10.正义的伙伴</el-col>-->
+        <!--          </el-row>-->
+        <!--          <el-row class="video-data" gutter="20">-->
+        <!--            <el-col class="a-crumbs" :span="1">视频类别</el-col>-->
+        <!--            <el-col class="" :span="2">2019-12-29 15:21:05</el-col>-->
+        <!--          </el-row>-->
+        <!--          <el-row class="video-data">-->
+        <!--              <el-col :span="2"> 13.7万播放</el-col>-->
+        <!--            <el-col :span="2">2238弹幕</el-col>-->
+        <!--          </el-row>-->
+        <!--        </el-row>-->
+        <!--        <el-row style=""><PlayVideo :vid="vid" /></el-row>-->
+        <!--        <el-row class="bottom" style="background-color: chartreuse">vvvv</el-row>-->
+      </el-col>
+      <el-col :span="6" style="height:50rem">
+        <el-row>
+          <Profile />
+        </el-row>
+        <el-row>
+          <RecommendList />
+        </el-row>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -37,6 +48,10 @@ import { addLike } from "@/api/like_collection";
 import { cancleLike } from "@/api/like_collection";
 import { addCollect } from "@/api/like_collection";
 import { cancleCollect } from "@/api/like_collection";
+import Favor from "./favor"
+import RecommendList from './recommendList'
+import Profile from './profile'
+import VideoInfo from './videoInfo'
 
 export default {
     computed: {
@@ -72,7 +87,7 @@ export default {
         .catch(error => {
           alert('add_like_error')
       })
-        
+
       } else {
         this.isLike = false;
         this.likeIcon = "like-off";
@@ -90,7 +105,7 @@ export default {
     },
     handleCollection: function() {
 
-       
+
 
         if (!this.isCollection) {
 
@@ -100,14 +115,14 @@ export default {
 
         addCollect(this.uid,this.vid)
         .then(response=>{
-        
+
         })
         .catch(error => {
           alert('add_collect_error')
       })
 
       } else {
-        
+
         this.isCollection = false;
         this.collectionIcon = "collection-off";
         this.collectionTitle = "收藏";
@@ -122,7 +137,11 @@ export default {
     }
   },
   components:{
+    RecommendList,
+    Profile,
+    Favor,
     PlayVideo,
+    VideoInfo
   }
 };
 </script>

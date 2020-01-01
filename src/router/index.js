@@ -144,16 +144,26 @@ export const constantRoutes = [
     redirect: '/myvideos/index',
     children: [{
       path: 'myvideos',
-      name: 'MyVideos',
+      name: 'Videos',
       component: () => import('@/views/myvideos/index'),
       meta: { title: '我的视频', icon: 'dashboard' }
     }]
   },
   {
     path: '/video/:videoID',
-    name: 'showVideo',
-    component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue')
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '/video/:videoID',
+      name: 'showVideo',
+      component: () => import('@/views/showvideo/index.vue')
+    }]
   },
+  // {
+  //   path: '/video/:videoID',
+  //   name: 'showVideo',
+  //   component: () => import(/* webpackChunkName: "video" */ '@/views/showvideo/index.vue')
+  // },
   {
     path: '/updatevideo/:videoID',
     component: Layout,

@@ -41,17 +41,18 @@ import { unfollow } from '@/api/friendManagement'
 
 export default {
   computed: {
-    ...mapGetters(['username'])
+    ...mapGetters(['id'])
   },
   data() {
     return {
+      uid:'',
       tableData: '',
       search: ''
     }
   },
   created() {
-    // showFollowers(this.$store.getters['username'])
-    showFollowers(4)
+    this.uid = this.$store.getters['id']
+    showFollowers(this.uid)
       .then(response => {
         const { code } = response
         const { data } = response

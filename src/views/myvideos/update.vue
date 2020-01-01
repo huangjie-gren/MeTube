@@ -42,7 +42,7 @@
 
 <script>
 /* eslint-disable */
-import { updateVideo } from "@/api/video";
+import { upload } from "@/api/video";
 import { ping } from "@/api/user";
 import { mapGetters } from "vuex";
 import { uploadoss } from "@/api/video";
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      vid: this.$route.params.videoID,
+      vid:this.$route.params.videoID,
       avatarImageUrl: "",
       form: {
         videoname: "",
@@ -65,21 +65,22 @@ export default {
   },
   created() {
     // this.form.nickname = "a"
-    // this.nickname = this.$store.getters["nickname"];
+    this.nickname = this.$store.getters["nickname"];
     // this.form.username = this.$store.getters["username"];
     // alert(this.vid)
     getVideoInfo(this.vid)
-      .then(res => {
-        console.log(res);
+    .then(res => {
+        console.log(res)
         this.form.videoname = res.data.Title;
         this.form.videodescribe = res.data.Info;
         this.form.typename = res.data.Typename;
         this.avatarImageUrl = res.data.Avatar;
         this.form.avatarurl = res.data.Avatar;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    })
+    .catch(error =>{
+        console.log(error)
+    })
+
   },
   methods: {
     fnBeforeUploadVideo(file) {
@@ -148,27 +149,31 @@ export default {
         });
     },
     onSubmit() {
-      updateVideo({
-        vid: this.vid,
+      // alert('clicked')
+      upload({
         title: this.form.videoname,
         info: this.form.videodescribe,
+        url: this.form.videourl,
         avatar: this.form.avatarurl,
         typename: this.form.typename
       })
         .then(response => {
+          // alert(response);
+          // const { msg } = response;
+          // const { Info } = data;
+          // alert(msg);
           this.$notify({
-            title: "修改成功",
-            message: `修改成功`,
-            type: "success"
+            title: "投稿成功",
+            message: `投稿成功，视频id为${response.data.data.id}`,
+            typename: "success"
           });
-         this.$router.push({ name: "MyVideos" });
         })
         .catch(error => {
-        //   alert(error);
+          // alert(error);
           this.$notify({
-            title: "修改",
-            message: `修改失败`,
-            type: "error"
+            title: "投稿",
+            message: `投稿失败:${response.data.msg}`,
+            typename: "error"
           });
         });
     }

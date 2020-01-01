@@ -52,8 +52,8 @@ export default {
     }
   },
   created() {
-    // showFollowings(this.$store.getters['username'])
-    showFollowings(4)
+    this.uid = this.$store.getters['id']
+    showFollowings(this.uid)
       .then(response => {
         const { code } = response
         const { data } = response
