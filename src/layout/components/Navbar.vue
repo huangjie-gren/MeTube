@@ -49,13 +49,17 @@ export default {
   methods: {
     doSerach() {
       // alert(this.inputsearch);
-      this.$router.push({
-        name: "searchResult",
-        query: { input: this.inputsearch }
-      });
+      if (this.$router.name == "searchResult") {
+        location.reload();
+      } else {
+        this.$router.push({
+          name: "searchResult",
+          query: { input: this.inputsearch }
+        });
+      }
     },
-    gologin(){
-      this.$router.push({path:"/login"})
+    gologin() {
+      this.$router.push({ path: "/login" });
     },
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
@@ -63,23 +67,24 @@ export default {
     async logout() {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/`);
-      location.reload()
+      location.reload();
     }
   },
   data() {
     return {
-      avatar:'',
+      avatar: "",
       inputsearch: "",
-      islogin: (getToken() == '' || getToken() == undefined)? false : true,
+      islogin: getToken() == "" || getToken() == undefined ? false : true,
       logopath: require("@/assets/logo.png")
     };
   },
   created() {
     console.log(getToken());
-    if(this.islogin){
-      this.avatar = this.$store.getters['avatar']
-    }else{
-      this.avatar = "https://metube-backend.oss-cn-beijing.aliyuncs.com/true.jpeg"
+    if (this.islogin) {
+      this.avatar = this.$store.getters["avatar"];
+    } else {
+      this.avatar =
+        "https://metube-backend.oss-cn-beijing.aliyuncs.com/true.jpeg";
     }
   }
 };
