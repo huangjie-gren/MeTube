@@ -1,17 +1,17 @@
 import request from '@/utils/request'
+import { wscURL } from '@/utils/const'
 
-const preUrl = 'http://49.233.170.51:8080'
-
+/* eslint-disable */
 export function addLike(uid,vid) {
     return request({
-      url: preUrl + '/like',
+      url: wscURL + '/like',
       method: 'get',
       params: { uid,vid }
     })
   }
   export function cancleLike(uid,vid) {
     return request({
-      url: preUrl + '/unlike',
+      url: wscURL + '/unlike',
       method: 'get',
       params: { uid,vid }
     })
@@ -19,7 +19,7 @@ export function addLike(uid,vid) {
 
   export function addCollect(uid,vid) {
     return request({
-      url: preUrl + '/collect',
+      url: wscURL + '/collect',
       method: 'get',
       params: { uid,vid }
     })
@@ -27,7 +27,7 @@ export function addLike(uid,vid) {
 
   export function cancleCollect(uid,vid) {
     return request({
-      url: preUrl + '/uncollect',
+      url: wscURL + '/uncollect',
       method: 'get',
       params: { uid,vid }
     })
@@ -35,7 +35,7 @@ export function addLike(uid,vid) {
 
   export function countLike(vid) {
     return request({
-      url: preUrl + '/showMyLikes',
+      url: wscURL + '/showMyLikes',
       method: 'get',
       params: { vid }
     })
@@ -43,7 +43,7 @@ export function addLike(uid,vid) {
 
   export function countCollect(vid) {
     return request({
-      url: preUrl + '/showMyCollections',
+      url: wscURL + '/showMyCollections',
       method: 'get',
       params: { vid }
     })

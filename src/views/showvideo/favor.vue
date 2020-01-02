@@ -1,45 +1,42 @@
 <template>
-    <div>
-        <el-row :gutter="20">
-         <el-col :span="6">
-           <div @click="handleLike" :title="likeTitle">
-             <span>
-               <svg-icon :icon-class="likeIcon" />
-               {{num_like}}
-             </span>
-           </div>
-         </el-col>
-         <el-col :span="6">
-           <div @click="handleCollection" :title="collectionTitle">
-             <span>
-             <svg-icon :icon-class="collectionIcon" />
-             {{num_collect}}
-             </span>
-           </div>
-         </el-col>
-         <el-col :span="6">
-           <div :title="分享">
-             <i class="el-icon-share"></i>
-           </div>
-         </el-col>
-        <el-col :span="6">
-           <div :title="更多">
-             <i class="el-icon-more"></i>
-           </div>
-         </el-col>
-       </el-row> 
-       <el-row>
-         <div>
-            {{description}}
-          </div>
-       </el-row>
-    </div>
+  <div>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <div @click="handleLike" :title="likeTitle">
+          <span>
+            <svg-icon :icon-class="likeIcon" />
+            {{num_like}}
+          </span>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div @click="handleCollection" :title="collectionTitle">
+          <span>
+            <svg-icon :icon-class="collectionIcon" />{{ num_collect }}</span>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div :title="分享">
+          <i class="el-icon-share"></i>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div :title="更多">
+          <i class="el-icon-more"></i>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <div>
+        {{description}}
+      </div>
+    </el-row>
+  </div>
 </template>
 
 <script>
-import playVideo from "./playVideo.vue";
+/* eslint-disable */
 import { mapGetters } from "vuex";
-import { upload } from "@/api/user.js";
 import { addLike } from "@/api/like_collection";
 import { cancleLike } from "@/api/like_collection";
 import { addCollect } from "@/api/like_collection";
@@ -71,7 +68,7 @@ import { getVideo } from "@/api/video";
   created() {
     this.uid = this.$store.getters["id"];
     // console.log("用户id"+this.uid)
-   
+
     countLike(this.vid)
     .then(res=>{
       this.num_like=res.data.length
@@ -103,7 +100,7 @@ import { getVideo } from "@/api/video";
   methods: {
     handleLike: function() {
       //alert(this.vid)
-      
+
       if (!this.isLike) {
         this.isLike = true;
         this.likeIcon = "like-on";
@@ -160,8 +157,7 @@ import { getVideo } from "@/api/video";
         this.num_collect=this.num_collect-1;
 
         cancleCollect(this.uid,this.vid)
-        .then(response=>{
-        })
+          .then(response=>{})
         .catch(error => {
           alert('handle_collect_error')
       })

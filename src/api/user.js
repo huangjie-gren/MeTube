@@ -53,3 +53,11 @@ export function upload(data) {
     data
   })
 }
+
+export function commentVideo(data) {
+  return request({
+    url: 'http://123.56.96.92:3001/api/v1/upload/token',
+    method: 'post',
+    data
+  })
+}

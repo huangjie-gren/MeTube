@@ -33,6 +33,12 @@
 import { getVideos } from "@/api/video";
 export default {
   name: "home",
+  props : {
+    vid: {
+      type: String,
+      default: "-1"
+    }
+  },
   data() {
     return {
       videos: [],
@@ -53,8 +59,6 @@ export default {
         this.total = res.data.total;
         console.log(this.videos);
       });
-      console.log(this.videos);
-      console.log(this.videos[0].Title);
     },
     goVideo(video) {
       // alert(video.ID)

@@ -21,7 +21,7 @@ export default {
   props: {
     vid: {
       type: String,
-      default: -1
+      default: '-1'
     }
   },
   data() {
