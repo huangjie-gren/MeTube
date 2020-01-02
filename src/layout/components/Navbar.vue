@@ -18,8 +18,11 @@
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/mypage">
-            <el-dropdown-item>个人主页</el-dropdown-item>
+            <el-dropdown-item>个人设置</el-dropdown-item>
           </router-link>
+          <el-dropdown-item>
+            <span style="display:block;" @click="goMyspace">个人主页</span>
+          </el-dropdown-item>
           <el-dropdown-item divided v-if="islogin">
             <span style="display:block;" @click="logout">登出</span>
           </el-dropdown-item>
@@ -44,7 +47,7 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar"])
+    ...mapGetters(["sidebar", "avatar", "id", "username", "nickname"])
   },
   methods: {
     doSerach() {
@@ -68,6 +71,17 @@ export default {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/`);
       location.reload();
+    },
+    goMyspace(){
+      this.$router.push({
+        name: "space",
+        query: {
+          uid: this.$store.getters["id"],
+          uname: this.$store.getters["nickname"],
+          uavatar: this.avatar,
+        }
+      });
+
     }
   },
   data() {
