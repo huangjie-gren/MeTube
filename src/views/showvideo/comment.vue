@@ -168,7 +168,7 @@ export default {
       console.log(data)
       addVideoComment(data).then(res => {
         alert(res.msg)
-        this.reload()
+        location.reload()
       })
     },
     PostReply(comment) {
@@ -184,7 +184,7 @@ export default {
       }
       addReply(data).then(res => {
         alert(res.msg)
-        this.reload()
+        location.reload()
       })
     },
     ShowReplyArea(comment_id, recv_user) {

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { sjcURL, zjlURL } from '@/utils/const'
+import { sjcURL, zjlURL, wscURL } from '@/utils/const'
 
 export function upload(data) {
   return request({
@@ -35,7 +35,8 @@ export function getVideo(videoid) {
 }
 export function getVideoComments(data) {
   return request({
-    url: sjcURL + '/getvideocomments',
+    // url: sjcURL + '/getvideocomments',
+    url: wscURL + '/getvideocomments',
     method: 'post',
     data
   })
