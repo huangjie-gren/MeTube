@@ -171,8 +171,8 @@ export default {
         .catch(error => {
           // alert(error);
           this.$notify({
-            title: "投稿失败",
-            message: `投稿失败`,
+            title: "修改失败",
+            message: `修改失败`,
             typename: "error"
           });
         });
@@ -228,5 +228,15 @@ export default {
   max-width: 200px;
   max-height: 100px;
   display: block;
+}
+.update-form{
+  width:800px;
+  margin-left:400px;
+  margin-top:50px;
+}
+.welcome-line{
+  margin-left:400px;
+  margin-top:30px;
+  font-size:17px;
 }
 </style>

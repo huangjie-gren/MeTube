@@ -63,13 +63,14 @@ export default {
     async logout() {
       await this.$store.dispatch("user/logout");
       this.$router.push(`/`);
+      location.reload()
     }
   },
   data() {
     return {
       avatar:'',
       inputsearch: "",
-      islogin: getToken() == '' ? false : true,
+      islogin: (getToken() == '' || getToken() == undefined)? false : true,
       logopath: require("@/assets/logo.png")
     };
   },

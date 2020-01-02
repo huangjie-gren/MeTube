@@ -148,4 +148,14 @@ export default {
   max-height: 178px;
   display: block;
 }
+.update-form{
+  width:800px;
+  margin-left:400px;
+  margin-top:50px;
+}
+.welcome-line{
+  margin-left:400px;
+  margin-top:30px;
+  font-size:17px;
+}
 </style>

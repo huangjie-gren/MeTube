@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="welcome-line">{{ username }},欢迎你！</div>
-    <div class="update-form">
+    <div class="upload-form">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="视频名称">
           <el-input v-model="form.videoname"></el-input>
         </el-form-item>
         <el-form-item label="视频简介">
-          <el-input v-model="form.videodescribe"></el-input>
+          <el-input type="textarea" size="medium"  v-model="form.videodescribe"></el-input>
         </el-form-item>
         <el-form-item label="视频分类">
           <el-select v-model="form.typename" placeholder="请选择视频分类">
@@ -87,16 +87,12 @@ export default {
   },
   methods: {
     fnBeforeUploadVideo(file) {
-      // const isImage = file.type === "image/png" || file.type === "image/jpeg";
-      // const isLt2M = file.size / 1024 / 1024 < 2;
-      // if (!isImage) {
-      //   this.$message.error("上传头像图片只能是图片!");
-      // }
-      // if (!isLt2M) {
-      //   this.$message.error("上传头像图片大小不能超过 2MB!");
-      // }
-      // return isImage && isLt2M;
-      return true;
+      var ext = file.name.split('.')[1]
+      const isVideo = ext === 'mp4' || ext === 'mkv' || ext === 'rmvb'
+      if (!isVideo) {
+        this.$message.error("请选择视频!");
+      }
+      return isVideo
     },
     fnUploadRequestVideo(option) {
       console.log(option.file.name);
@@ -235,5 +231,15 @@ export default {
   max-width: 200px;
   max-height: 100px;
   display: block;
+}
+.upload-form{
+  width:800px;
+  margin-left:400px;
+  margin-top:50px;
+}
+.welcome-line{
+  margin-left:400px;
+  margin-top:30px;
+  font-size:17px;
 }
 </style>
