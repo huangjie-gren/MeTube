@@ -199,6 +199,18 @@ export const constantRoutes = [
       component: () => import('@/views/search/index')
     }]
   },
+  {
+    path: '/space',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/space',
+        name: 'space',
+        component: () => import('@/views/space/index.vue')
+      }
+    ]
+  },
 
   // {
   //   path: '/example',

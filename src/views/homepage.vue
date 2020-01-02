@@ -15,20 +15,24 @@
         </el-carousel>
       </div>
       <el-row :gutter="20">
-        <el-col :xs="24" :sm="6" :md="6" v-for="video in videos" :key="video.id">
-          <el-card class="video-card" @click.native="goVideo(video)">
+        <el-col :span="6" v-for="video in videos" :key="video.id">
+          <el-card class="video-card">
             <img
               class="video-avatar"
               :src="video.avatar"
-              style="display: inline-block;height:200px; max-width: 100%;"
+              style="display: inline-block;height:200px; max-width: 100%; cursor:pointer;"
+              @click="goVideo(video)"
             />
-            <div>
-              <div class="video-title">{{video.title}}</div>
-              <div class="video-bottom clearfix">
-                <!-- <span class="video-info">{{video.info.substring(0, 40)}}</span> -->
-                <span class="video-info">{{video.info.substring(0,15)}}</span>
-              </div>
-            </div>
+            <el-row :gutter="20" class="owner-info">
+              <el-col :span="6">
+                <img class="owner-avatar" :src="video.owneravatar" @click="goUser(video)" />
+              </el-col>
+              <el-col :span="18">
+                <div class="video-title" @click="goVideo(video)">{{video.title}}</div>
+                <div class="video-upname" @click="goVideo(video)">{{video.ownername}}</div>
+                <div class="video-other">{{video.view}}次观看</div>
+              </el-col>
+            </el-row>
           </el-card>
         </el-col>
       </el-row>
@@ -49,7 +53,7 @@
 import { getVideos } from "@/api/video";
 export default {
   name: "home",
-  props : {
+  props: {
     vid: {
       type: String,
       default: "-1"
@@ -79,6 +83,16 @@ export default {
     goVideo(video) {
       // alert(video.ID)
       this.$router.push({ name: "showVideo", params: { videoID: video.id } });
+    },
+    goUser(video) {
+      this.$router.push({
+        name: "space",
+        query: {
+          uid: video.ownerid,
+          uname: video.ownername,
+          uavatar: video.owneravatar
+        }
+      });
     }
   },
   created() {
@@ -103,15 +117,32 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  cursor: pointer;
 }
-.video-bottom {
-  margin-top: 4px;
+.video-upname {
+  font-size: 14px;
+  color: #606060;
+  cursor: pointer;
 }
-.video-info {
-  color: #909399;
+.video-other {
+  font-size: 14px;
+  color: #606060;
 }
 .video-card {
+  width: 100%;
   margin-bottom: 14px;
+  /* cursor: pointer; */
+}
+.owner-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: transparent;
+  overflow: hidden;
   cursor: pointer;
+}
+.owner-info {
+  padding-top: 10px;
+  padding-right: 24px;
 }
 </style>

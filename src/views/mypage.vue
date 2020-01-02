@@ -39,13 +39,15 @@
 <script>
 /* eslint-disable */
 import { mapGetters } from "vuex";
-import { upload } from "@/api/user.js";
+import { upload, getInfo} from "@/api/user.js";
+import { getToken } from '../utils/auth';
 export default {
   computed: {
     ...mapGetters(["username","nickname","id"])
   },
   data() {
     return {
+      uid:'',
       imageUrl: "",
       dialogImageUrl: '',
       dialogVisible: false,
@@ -62,6 +64,15 @@ export default {
     // this.form.nickname = "a"
     this.form.nickname = this.$store.getters["nickname"];
     this.form.username = this.$store.getters["username"];
+    getInfo(getToken()).then(res => {
+      console.log(res.data.Avatar)
+      this.form.avatarurl = res.data.Avatar
+      this.imageUrl = res.data.Avatar
+    }).catch(err =>{
+      console.log(err)
+    })
+
+
   },
   methods: {
     fnBeforeUpload(file) {
@@ -105,16 +116,17 @@ export default {
           this.$notify({
             title: '更新成功',
             message: '更新成功',
-            typename: 'success',
+            type: 'success',
           });
           this.loading = false;
+          this.$router.push({path:'/'})
         })
         .catch(() => {
           // alert("update error");
           this.$notify({
             title: '更新失败',
             message: '更新失败',
-            typename: 'error',
+            type: 'error',
           });
           this.loading = false;
         });
