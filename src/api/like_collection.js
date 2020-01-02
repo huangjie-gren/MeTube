@@ -33,19 +33,19 @@ export function addLike(uid,vid) {
     })
   }
 
-  export function countLike(vid) {
+  export function countLike(uid) {
     return request({
       url: wscURL + '/showMyLikes',
       method: 'get',
-      params: { vid }
+      params: { uid }
     })
   }
 
-  export function countCollect(vid) {
+  export function countCollect(uid) {
     return request({
       url: wscURL + '/showMyCollections',
       method: 'get',
-      params: { vid }
+      params: { uid }
     })
   }
 
