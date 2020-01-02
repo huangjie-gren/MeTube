@@ -100,3 +100,17 @@ export function commentLike(data) {
     data
   })
 }
+export function removeAComment(data) {
+  return request({
+    url: sjcURL + '/removecomment',
+    method: 'post',
+    data
+  })
+}
+export function removeAReply(data) {
+  return request({
+    url: sjcURL + '/removereply',
+    method: 'post',
+    data
+  })
+}

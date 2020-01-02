@@ -9,13 +9,13 @@
         <el-tab-pane label="按热度排序" name="hotSort">
           <el-row v-for="comment in comments" :key="comment.Comment.id">
             <div class="user-face">
-              <a href="">
+              <a>
                 <img :src="comment.User.avatar" alt="" class="comment_user_avatar" @click="goUser(comment.User)">
               </a>
             </div>
             <div class="con">
               <el-row class="user">
-                <a href="" @click="goUser(comment.User)">
+                <a @click="goUser(comment.User)">
                   {{ comment.User.nickname }}
                 </a>
               </el-row>
@@ -35,7 +35,7 @@
                   回复
                 </span>
                 <div class="operation">
-                  <div class="spot" />
+                  <a v-if="comment.User.id === loginUserId" @click="removeComment(comment.Comment.id)">删除评论</a>
                 </div>
               </el-row>
               <div>
@@ -45,10 +45,10 @@
                       <img :src="reply.SendUser.avatar" alt class="reply_user_avatar">
                     </a>
                     <span class="text-con">
-                      <a class="name" href="" @click="goUser(reply.SendUser)">{{ reply.SendUser.nickname }}</a>
+                      <a class="name" @click="goUser(reply.SendUser)">{{ reply.SendUser.nickname }}</a>
                       <span v-if="reply.Reply.level === 1">
                         回复
-                        <a href="" @click="goUser(reply.RecvUser)">@{{ reply.RecvUser.nickname }}</a>
+                        <a @click="goUser(reply.RecvUser)">@{{ reply.RecvUser.nickname }}</a>
                       </span>
                       {{ reply.Reply.content }}
                     </span>
@@ -67,7 +67,7 @@
                         回复
                       </span>
                       <div class="operation">
-                        <div class="spot" />
+                        <a v-if="reply.SendUser.id === loginUserId" @click="removeReply(reply.Reply.id)">删除评论</a>
                       </div>
                     </div>
                   </el-row>
@@ -88,13 +88,13 @@
         <el-tab-pane label="按时间排序" name="timeSort">
           <el-row v-for="comment in comments" :key="comment.Comment.id">
             <div class="user-face">
-              <a href="">
+              <a>
                 <img :src="comment.User.avatar" alt="" class="comment_user_avatar" @click="goUser(comment.User)">
               </a>
             </div>
             <div class="con">
               <el-row class="user">
-                <a href="" @click="goUser(comment.User)">
+                <a @click="goUser(comment.User)">
                   {{ comment.User.nickname }}
                 </a>
               </el-row>
@@ -114,7 +114,7 @@
                   回复
                 </span>
                 <div class="operation">
-                  <div class="spot" />
+                  <a v-if="comment.User.id === loginUserId" @click="removeComment(comment.Comment.id)">删除评论</a>
                 </div>
               </el-row>
               <div>
@@ -124,10 +124,10 @@
                       <img :src="reply.SendUser.avatar" alt class="reply_user_avatar">
                     </a>
                     <span class="text-con">
-                      <a class="name" href="" @click="goUser(reply.SendUser)">{{ reply.SendUser.nickname }}</a>
+                      <a class="name" @click="goUser(reply.SendUser)">{{ reply.SendUser.nickname }}</a>
                       <span v-if="reply.Reply.level === 1">
                         回复
-                        <a href="" @click="goUser(reply.RecvUser)">@{{ reply.RecvUser.nickname }}</a>
+                        <a @click="goUser(reply.RecvUser)">@{{ reply.RecvUser.nickname }}</a>
                       </span>
                       {{ reply.Reply.content }}
                     </span>
@@ -146,7 +146,7 @@
                         回复
                       </span>
                       <div class="operation">
-                        <div class="spot" />
+                        <a v-if="reply.SendUser.id === loginUserId" @click="removeReply(reply.Reply.id)">删除评论</a>
                       </div>
                     </div>
                   </el-row>
@@ -189,7 +189,7 @@
 </template>
 
 <script>
-import { addReply, getVideoComments, replyLike, commentLike } from '../../api/video'
+import { addReply, getVideoComments, replyLike, commentLike, removeAComment, removeAReply } from '../../api/video'
 import { addVideoComment } from '../../api/video'
 import { mapGetters } from 'vuex'
 export default {
@@ -211,7 +211,8 @@ export default {
       avatar_url: '',
       repliedUser: {},
       replyPlaceholder: '',
-      level: 0
+      level: 0,
+      loginUserId: 0
     }
   },
   computed: {
@@ -219,6 +220,7 @@ export default {
   },
   created() {
     this.avatar_url = this.$store.getters['avatar']
+    this.loginUserId = this.$store.getters['id']
     getVideoComments({
       'start': this.start,
       'limit': this.limit,
@@ -379,6 +381,30 @@ export default {
           uavatar: user.avatar
         }
       })
+    },
+    removeComment(id) {
+      const data = {
+        'id': id
+      }
+      removeAComment(data)
+        .then(res => {
+          alert(res.msg)
+          location.reload()
+        }).catch(err => {
+          alert(err)
+        })
+    },
+    removeReply(id) {
+      const data = {
+        'id': id
+      }
+      removeAReply(data)
+        .then(res => {
+          alert(res.msg)
+          location.reload()
+        }).catch(err => {
+          alert(err)
+        })
     }
   }
 }
@@ -485,9 +511,9 @@ export default {
   }
   .operation {
     position: relative;
-    width: 18px;
+    /*width: 18px;*/
     float: right;
-    margin-top: 5px;
+    /*margin-top: 5px;*/
     margin-right: 0;
   }
   .spot {
