@@ -82,10 +82,8 @@ export default {
   }
 };
 </script>
-<style>
-.body {
-  /* font-family: Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif; */
-}
+<style scoped>
+
 .bg {
   position: relative;
   width: 100%;

@@ -1,7 +1,9 @@
-//export const sjcURL = 'http://localhost:8081'
+
 export const sjcURL = 'http://114.115.178.1:8081'
 
-export const wscURL = 'http://localhost:8080' //'http://49.233.170.51:8080'
+export const wscURL = 'http://localhost:8080'
+
+// 'http://49.233.170.51:8080'
 
 export const crURL = 'http://114.115.149.142:8083'
 // export const crURL = 'http://localhost:8083'

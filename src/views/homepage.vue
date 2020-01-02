@@ -24,7 +24,7 @@
               @click="goVideo(video)"
             />
             <el-row :gutter="20" class="owner-info">
-              <el-col :span="6">
+              <el-col :span="6" style="padding:10px; width:56px;">
                 <img class="owner-avatar" :src="video.owneravatar" @click="goUser(video)" />
               </el-col>
               <el-col :span="18">
@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 /* eslint-disable */
 import { getVideos } from "@/api/video";
 export default {
@@ -102,7 +102,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .video-prefix {
   /* background-color: red; */
   font-size: 20px;

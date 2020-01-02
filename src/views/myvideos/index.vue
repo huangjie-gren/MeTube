@@ -154,7 +154,7 @@ export default {
 }
 .meta-title .name {
   display: inline-block;
-  max-width: 420px;
+  max-width: 440px;
   font-size: 18px;
   color: #212121;
 }
