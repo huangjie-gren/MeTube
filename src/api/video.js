@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { sjcURL, zjlURL, wscURL } from '@/utils/const'
+import { sjcURL, zjlURL } from '@/utils/const'
 
 export function upload(data) {
   return request({
@@ -27,16 +27,16 @@ export function getVideos(start, limit) {
     method: 'get'
   })
 }
-export function getVideo(videoid) {
+export function viewVideo(data) {
   return request({
-    url: sjcURL + '/getvideo/' + videoid,
-    method: 'get'
+    url: sjcURL + '/viewvideo',
+    method: 'post',
+    data
   })
 }
 export function getVideoComments(data) {
   return request({
-    // url: sjcURL + '/getvideocomments',
-    url: wscURL + '/getvideocomments',
+    url: sjcURL + '/getvideocomments',
     method: 'post',
     data
   })
@@ -76,6 +76,26 @@ export function addVideoComment(data) {
 export function addReply(data) {
   return request({
     url: sjcURL + '/reply',
+    method: 'post',
+    data
+  })
+}
+export function getVideo(video_id) {
+  return request({
+    url: sjcURL + '/getvideo/' + video_id,
+    method: 'get'
+  })
+}
+export function replyLike(data) {
+  return request({
+    url: sjcURL + '/replylike',
+    method: 'post',
+    data
+  })
+}
+export function commentLike(data) {
+  return request({
+    url: sjcURL + '/commentlike',
     method: 'post',
     data
   })

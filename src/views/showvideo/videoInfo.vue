@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import { getVideo } from '@/api/video'
+import { mapGetters } from 'vuex'
+import { viewVideo } from '../../api/video'
 export default {
   name: 'VideoInfo',
   props: {
@@ -33,8 +34,15 @@ export default {
       typeName: ''
     }
   },
+  computed: {
+    ...mapGetters(['id'])
+  },
   created() {
-    getVideo(this.vid)
+    const sendData = {
+      'video_id': parseInt(this.vid),
+      'user_id': this.$store.getters['id']
+    }
+    viewVideo(sendData)
       .then(response => {
         const { data } = response
         const { updated_at } = data
@@ -47,8 +55,8 @@ export default {
         this.title = title
         const { info } = data
         this.info = info
-        const { views } = data
-        this.views = views
+        const { view_count } = data
+        this.views = view_count
         const { typename } = data
         this.typeName = typename
       })
@@ -67,7 +75,7 @@ export default {
     line-height: 26px;
     height: 26px;
     margin-bottom: 12px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-overflow: ellipsis;
     white-space: nowrap;
   }

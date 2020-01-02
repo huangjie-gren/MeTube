@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row class="b-head">
-      <span class="results" v-text="total"></span>
+      <span class="results" v-text="total" />
       <span>评论</span>
     </el-row>
     <el-row>
@@ -9,13 +9,15 @@
         <el-tab-pane label="按热度排序" name="hotSort">
           <el-row v-for="comment in comments" :key="comment.Comment.id">
             <div class="user-face">
-              <a href="#">
-                <img :src="comment.User.avatar" alt="" class="comment_user_avatar">
+              <a href="">
+                <img :src="comment.User.avatar" alt="" class="comment_user_avatar" @click="goUser(comment.User)">
               </a>
             </div>
             <div class="con">
               <el-row class="user">
-                {{ comment.User.nickname }}
+                <a href="" @click="goUser(comment.User)">
+                  {{ comment.User.nickname }}
+                </a>
               </el-row>
               <el-row class="text">
                 {{ comment.Comment.content }}
@@ -24,56 +26,58 @@
                 <span>
                   {{ comment.Comment.comment_time }}
                 </span>
-                <span class="like">
-                  <svg-icon :icon-class="likeIcon" />
-                  {{ comment.Comment.like_count }}
+                <span title="点赞" class="like" @click="handleCommentLike(comment)">
+                  <svg-icon v-if="comment.like" :id="'like-comment-'+comment.Comment.id" icon-class="like-on" />
+                  <svg-icon v-else :id="'like-comment-'+comment.Comment.id" icon-class="like-off" />
+                  {{ comment.like_count }}
                 </span>
-                <span class="btn-hover" @click="ShowReplyArea(comment.id, null)">
+                <span class="btn-hover" @click="ShowReplyArea(comment.Comment.id, null)">
                   回复
                 </span>
                 <div class="operation">
-                  <div class="spot"></div>
+                  <div class="spot" />
                 </div>
               </el-row>
               <div>
                 <el-row v-for="reply in comment.UserReplies" :key="reply.Reply.id" class="reply-item">
-                  <a class="reply-face" style="top: 0">
-                    <img :src="reply.SendUser.avatar" alt>
-                  </a>
-                  <div class="reply-con">
-                    <div class="user">
-                      <a class="name" href="#">{{ reply.SendUser.nickname }}</a>
-                      <span class="text-con">
-                        <div v-if="reply.level===1">
-                          回复
-                          <a href="#">@{{ reply.RecvUser.nickname }}</a>
-                        </div>
-                        {{ reply.Reply.content }}
+                  <el-row>
+                    <a class="reply-face" style="top: 0">
+                      <img :src="reply.SendUser.avatar" alt class="reply_user_avatar">
+                    </a>
+                    <span class="text-con">
+                      <a class="name" href="" @click="goUser(reply.SendUser)">{{ reply.SendUser.nickname }}</a>
+                      <span v-if="reply.Reply.level === 1">
+                        回复
+                        <a href="" @click="goUser(reply.RecvUser)">@{{ reply.RecvUser.nickname }}</a>
                       </span>
+                      {{ reply.Reply.content }}
+                    </span>
+                  </el-row>
+                  <el-row>
+                    <div class="info">
+                      <span>
+                        {{ reply.Reply.reply_time }}
+                      </span>
+                      <span title="点赞" class="like" @click="handleReplyLike(reply)">
+                        <svg-icon v-if="reply.like" :id="'like-reply-'+reply.Reply.id" icon-class="like-on" />
+                        <svg-icon v-else :id="'like-reply-'+reply.Reply.id" icon-class="like-off" />
+                        {{ reply.like_count }}
+                      </span>
+                      <span class="btn-hover" @click="ShowReplyArea(comment.Comment.id, reply.SendUser)">
+                        回复
+                      </span>
+                      <div class="operation">
+                        <div class="spot" />
+                      </div>
                     </div>
-                  </div>
-                  <div class="info">
-                    <span>
-                      {{ reply.Reply.reply_time }}
-                    </span>
-                    <span class="like">
-                      <svg-icon :icon-class="likeIcon" />
-                      {{ reply.Reply.like_count }}
-                    </span>
-                    <span class="btn-hover" @click="ShowReplyArea(comment.id, reply.SendUser)">
-                      回复
-                    </span>
-                    <div class="operation">
-                      <div class="spot"></div>
-                    </div>
-                  </div>
+                  </el-row>
                 </el-row>
-                <el-row :id="'reply-area-'+comment.id" class="comment-send" hidden>
+                <el-row :id="'reply-area-'+comment.Comment.id" class="comment-send" hidden>
                   <div>
                     <img :src="avatar_url" alt class="user-face">
                   </div>
                   <div class="text-container">
-                    <textarea id="reply-text" style="width: 100%" cols="60" name="msg" rows="5" :placeholder="replyPlaceholder"></textarea>
+                    <textarea :id="'reply-text' + sortType" style="width: 100%" cols="60" name="msg" rows="5" :placeholder="replyPlaceholder" />
                     <button type="submit" class="comment-submit" @click="PostReply(comment)">发表评论</button>
                   </div>
                 </el-row>
@@ -81,16 +85,95 @@
             </div>
           </el-row>
         </el-tab-pane>
-        <el-tab-pane label="按时间排序" name="timeSort">按时间排序</el-tab-pane>
+        <el-tab-pane label="按时间排序" name="timeSort">
+          <el-row v-for="comment in comments" :key="comment.Comment.id">
+            <div class="user-face">
+              <a href="">
+                <img :src="comment.User.avatar" alt="" class="comment_user_avatar" @click="goUser(comment.User)">
+              </a>
+            </div>
+            <div class="con">
+              <el-row class="user">
+                <a href="" @click="goUser(comment.User)">
+                  {{ comment.User.nickname }}
+                </a>
+              </el-row>
+              <el-row class="text">
+                {{ comment.Comment.content }}
+              </el-row>
+              <el-row class="info">
+                <span>
+                  {{ comment.Comment.comment_time }}
+                </span>
+                <span title="点赞" class="like" @click="handleCommentLike(comment)">
+                  <svg-icon v-if="comment.like" :id="'like-comment-'+comment.Comment.id" icon-class="like-on" />
+                  <svg-icon v-else :id="'like-comment-'+comment.Comment.id" icon-class="like-off" />
+                  {{ comment.like_count }}
+                </span>
+                <span class="btn-hover" @click="ShowReplyArea(comment.Comment.id, null)">
+                  回复
+                </span>
+                <div class="operation">
+                  <div class="spot" />
+                </div>
+              </el-row>
+              <div>
+                <el-row v-for="reply in comment.UserReplies" :key="reply.Reply.id" class="reply-item">
+                  <el-row>
+                    <a class="reply-face" style="top: 0">
+                      <img :src="reply.SendUser.avatar" alt class="reply_user_avatar">
+                    </a>
+                    <span class="text-con">
+                      <a class="name" href="" @click="goUser(reply.SendUser)">{{ reply.SendUser.nickname }}</a>
+                      <span v-if="reply.Reply.level === 1">
+                        回复
+                        <a href="" @click="goUser(reply.RecvUser)">@{{ reply.RecvUser.nickname }}</a>
+                      </span>
+                      {{ reply.Reply.content }}
+                    </span>
+                  </el-row>
+                  <el-row>
+                    <div class="info">
+                      <span>
+                        {{ reply.Reply.reply_time }}
+                      </span>
+                      <span title="点赞" class="like" @click="handleReplyLike(reply)">
+                        <svg-icon v-if="reply.like" :id="'like-reply-'+reply.Reply.id" icon-class="like-on" />
+                        <svg-icon v-else :id="'like-reply-'+reply.Reply.id" icon-class="like-off" />
+                        {{ reply.like_count }}
+                      </span>
+                      <span class="btn-hover" @click="ShowReplyArea(comment.Comment.id, reply.SendUser)">
+                        回复
+                      </span>
+                      <div class="operation">
+                        <div class="spot" />
+                      </div>
+                    </div>
+                  </el-row>
+                </el-row>
+                <el-row :id="'reply-area-'+comment.Comment.id" class="comment-send" hidden>
+                  <div>
+                    <img :src="avatar_url" alt class="user-face">
+                  </div>
+                  <div class="text-container">
+                    <textarea :id="'reply-text' + sortType" style="width: 100%" cols="60" name="msg" rows="5" :placeholder="replyPlaceholder" />
+                    <button type="submit" class="comment-submit" @click="PostReply(comment)">发表评论</button>
+                  </div>
+                </el-row>
+              </div>
+            </div>
+          </el-row>
+        </el-tab-pane>
       </el-tabs>
     </el-row>
     <el-row>
       <div class="block">
-        <span class="demonstration">页数较少时的效果</span>
         <el-pagination
           layout="prev, pager, next"
-          :total="50">
-        </el-pagination>
+          :page-size="limit"
+          :total="total"
+          @current-change="handleCurrentChange"
+        />
       </div>
     </el-row>
     <el-row class="comment-send">
@@ -98,7 +181,7 @@
         <img :src="avatar_url" alt class="user-face">
       </div>
       <div class="text-container">
-        <textarea id="comment-text" style="width: 100%" cols="60" name="msg" rows="5" placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea>
+        <textarea id="comment-text" style="width: 100%" cols="60" name="msg" rows="5" placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" />
         <button type="submit" class="comment-submit" @click="PostComment">发表评论</button>
       </div>
     </el-row>
@@ -106,7 +189,7 @@
 </template>
 
 <script>
-import { addReply, getVideoComments } from '../../api/video'
+import { addReply, getVideoComments, replyLike, commentLike } from '../../api/video'
 import { addVideoComment } from '../../api/video'
 import { mapGetters } from 'vuex'
 export default {
@@ -122,11 +205,10 @@ export default {
       activeName: 'hotSort',
       comments: [],
       start: 0,
-      limit: 6,
+      limit: 3,
       total: 0,
       sortType: 0,
       avatar_url: '',
-      likeIcon: 'like-off',
       repliedUser: {},
       replyPlaceholder: '',
       level: 0
@@ -151,13 +233,102 @@ export default {
     })
   },
   methods: {
+    handleCommentLike(comment) {
+      const data = {
+        'user_id': this.$store.getters['id'],
+        'comment_id': comment.Comment.id,
+        'flag': true
+      }
+      if (!comment.like) {
+        comment.like = true
+        comment.like_count = comment.like_count + 1
+        // document.getElementById('like-comment-' + comment.Comment.id).setAttribute('title', '取消点赞')
+        // document.getElementById('like-comment-' + comment.Comment.id).setAttribute('icon-class', 'like-on')
+        commentLike(data)
+          .then(res => {
+            console.log(res.msg)
+          }).catch(error => {
+            alert(error)
+          })
+      } else {
+        data.flag = false
+        comment.like = false
+        comment.like_count = comment.like_count - 1
+        // document.getElementById('like-comment-' + comment.Comment.id).setAttribute('title', '点赞')
+        // document.getElementById('like-comment-' + comment.Comment.id).setAttribute('icon-class', 'like-off')
+        commentLike(data)
+          .then(res => {
+            console.log(res.msg)
+          }).catch(error => {
+            alert(error)
+          })
+      }
+    },
+    handleReplyLike(reply) {
+      const data = {
+        'user_id': this.$store.getters['id'],
+        'reply_id': reply.Reply.id,
+        'flag': true
+      }
+      if (!reply.like) {
+        reply.like = true
+        reply.like_count = reply.like_count + 1
+        // document.getElementById('like-reply-' + reply.Reply.id).setAttribute('title', '取消点赞')
+        // document.getElementById('like-reply-' + reply.Reply.id).setAttribute('icon-class', 'like-on')
+        replyLike(data)
+          .then(res => {
+            console.log(res.msg)
+          }).catch(error => {
+            alert(error)
+          })
+      } else {
+        data.flag = false
+        reply.like = false
+        reply.like_count = reply.like_count - 1
+        // document.getElementById('like-reply-' + reply.Reply.id).setAttribute('title', '点赞')
+        // document.getElementById('like-reply-' + reply.Reply.id).setAttribute('icon-class', 'like-off')
+        replyLike(data)
+          .then(res => {
+            console.log(res.msg)
+          }).catch(error => {
+            alert(error)
+          })
+      }
+    },
+    handleCurrentChange(val) {
+      this.start = val
+      getVideoComments({
+        'start': this.start,
+        'limit': this.limit,
+        'sort_type': this.sortType,
+        'video_id': parseInt(this.vid)
+      }).then(res => {
+        this.comments = res.data.comments
+        this.total = res.data.total
+        console.log(this.total)
+      }).catch(error => {
+        alert(error)
+      })
+    },
     handleTabClick(tab, event) {
       console.log(this.activeName)
-      console.log(tab, event)
-      // getVideoComments(this.start, this.limit, this.sortType, this.vid).then(res => {
-      //   this.comments = res.data.comments
-      //   this.total = res.data.total
-      // })
+      if (this.activeName === 'timeSort') {
+        this.sortType = 1
+      } else if (this.activeName === 'hotSort') {
+        this.sortType = 0
+      }
+      getVideoComments({
+        'start': this.start,
+        'limit': this.limit,
+        'sort_type': this.sortType,
+        'video_id': parseInt(this.vid)
+      }).then(res => {
+        this.comments = res.data.comments
+        this.total = res.data.total
+        console.log(this.total)
+      }).catch(error => {
+        alert(error)
+      })
     },
     PostComment() {
       const data = {
@@ -173,10 +344,10 @@ export default {
     },
     PostReply(comment) {
       const data = {
-        'comment_id': comment.id,
+        'comment_id': comment.Comment.id,
         'send_user_id': this.$store.getters['id'],
         'recv_user_id': comment.User.id,
-        'content': document.getElementById('reply-text').value,
+        'content': document.getElementById('reply-text' + this.sortType).value,
         'level': this.level
       }
       if (this.level === 1) {
@@ -190,11 +361,24 @@ export default {
     ShowReplyArea(comment_id, recv_user) {
       if (recv_user == null) {
         this.replyPlaceholder = '请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。'
+        this.level = 0
       } else {
         this.replyPlaceholder = '回复 ' + recv_user.nickname + ' :'
+        this.level = 1
       }
       this.repliedUser = recv_user
       document.getElementById('reply-area-' + comment_id).hidden = false
+    },
+    goUser(user) {
+      console.log('跳转到的用户ID：' + user.id)
+      this.$router.push({
+        name: 'space',
+        query: {
+          uid: user.id,
+          uname: user.nickname,
+          uavatar: user.avatar
+        }
+      })
     }
   }
 }
@@ -268,7 +452,7 @@ export default {
     position: relative;
   }
   .user {
-    font-size: 12px;
+    /*font-size: 12px;*/
     font-weight: 700;
     line-height: 18px;
     padding-bottom: 4px;
@@ -337,23 +521,14 @@ export default {
     display: inline-block;
     width: calc(100% - 34px);
   }
-  .user {
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 18px;
-    padding-bottom: 4px;
-    display: block;
-    word-wrap: break-word;
-  }
   .name {
     position: relative;
     top: -1px;
-  }
-  .text-con {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    white-space: pre-wrap;
+    font-weight: 700;
+    line-height: 18px;
+    padding-bottom: 4px;
+    /*display: block;*/
+    word-wrap: break-word;
   }
   .comment-send {
     margin: 10px 0;
