@@ -69,7 +69,7 @@ export default {
     return {
       avatar:'',
       inputsearch: "",
-      islogin: getToken() == undefined ? false : true,
+      islogin: getToken() == '' ? false : true,
       logopath: require("@/assets/logo.png")
     };
   },

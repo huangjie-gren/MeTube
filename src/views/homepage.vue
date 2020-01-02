@@ -2,15 +2,31 @@
   <div class="home">
     <div class="video-prefix">推荐视频</div>
     <div class="top">
+      <div>
+        <el-carousel indicator-position="outside" style="width:60%; margin:auto;">
+          <el-carousel-item v-for="video in videos4" :key="video.id" style="text-align:center;">
+            <!-- <h3>{{ video.title }}</h3> -->
+            <img
+              :src="video.avatar"
+              style="display: inline-block;height:300px; max-width: 100%; cursor:pointer;"
+              @click="goVideo(video)"
+            />
+          </el-carousel-item>
+        </el-carousel>
+      </div>
       <el-row :gutter="20">
         <el-col :xs="24" :sm="6" :md="6" v-for="video in videos" :key="video.id">
           <el-card class="video-card" @click.native="goVideo(video)">
-            <img class="video-avatar" :src="video.avatar" />
+            <img
+              class="video-avatar"
+              :src="video.avatar"
+              style="display: inline-block;height:200px; max-width: 100%;"
+            />
             <div>
               <div class="video-title">{{video.title}}</div>
               <div class="video-bottom clearfix">
                 <!-- <span class="video-info">{{video.info.substring(0, 40)}}</span> -->
-                <span class="video-info">{{video.info}}</span>
+                <span class="video-info">{{video.info.substring(0,15)}}</span>
               </div>
             </div>
           </el-card>
@@ -36,6 +52,7 @@ export default {
   data() {
     return {
       videos: [],
+      videos4: [],
       start: 0,
       limit: 8,
       total: 0
@@ -47,14 +64,11 @@ export default {
       this.load();
     },
     load() {
-      console.log("zairu");
       getVideos(this.start, this.limit).then(res => {
         this.videos = res.data.items.data;
         this.total = res.data.total;
-        console.log(this.videos);
+        this.videos4 = this.videos.slice(0, 4);
       });
-      console.log(this.videos);
-      console.log(this.videos[0].Title);
     },
     goVideo(video) {
       // alert(video.ID)

@@ -70,6 +70,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           });
+          location.reload()
           }).catch(err => {
             console.log(err)
           this.$message({
