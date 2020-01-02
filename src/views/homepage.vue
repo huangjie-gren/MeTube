@@ -29,7 +29,7 @@
               </el-col>
               <el-col :span="18">
                 <div class="video-title" @click="goVideo(video)">{{video.title}}</div>
-                <div class="video-upname" @click="goVideo(video)">{{video.ownername}}</div>
+                <div class="video-upname" @click="goUser(video)">{{video.ownername}}</div>
                 <div class="video-other">{{video.view}}次观看</div>
               </el-col>
             </el-row>
