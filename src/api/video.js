@@ -72,3 +72,10 @@ export function addVideoComment(data) {
     data
   })
 }
+export function addReply(data) {
+  return request({
+    url: sjcURL + '/reply',
+    method: 'post',
+    data
+  })
+}

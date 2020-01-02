@@ -25,10 +25,10 @@
                   {{ comment.Comment.comment_time }}
                 </span>
                 <span class="like">
-                  <i></i>
+                  <svg-icon :icon-class="likeIcon" />
                   {{ comment.Comment.like_count }}
                 </span>
-                <span class="btn-hover">
+                <span class="btn-hover" @click="ShowReplyArea(comment.id, null)">
                   回复
                 </span>
                 <div class="operation">
@@ -42,10 +42,12 @@
                   </a>
                   <div class="reply-con">
                     <div class="user">
-                      <a class="name" href="#"></a>
+                      <a class="name" href="#">{{ reply.SendUser.nickname }}</a>
                       <span class="text-con">
-                        回复
-                        <a href="#">@{{ reply.RecvUser.nickname }}</a>
+                        <div v-if="reply.level===1">
+                          回复
+                          <a href="#">@{{ reply.RecvUser.nickname }}</a>
+                        </div>
                         {{ reply.Reply.content }}
                       </span>
                     </div>
@@ -55,15 +57,24 @@
                       {{ reply.Reply.reply_time }}
                     </span>
                     <span class="like">
-                      <i></i>
+                      <svg-icon :icon-class="likeIcon" />
                       {{ reply.Reply.like_count }}
                     </span>
-                    <span class="btn-hover">
+                    <span class="btn-hover" @click="ShowReplyArea(comment.id, reply.SendUser)">
                       回复
                     </span>
                     <div class="operation">
                       <div class="spot"></div>
                     </div>
+                  </div>
+                </el-row>
+                <el-row :id="'reply-area-'+comment.id" class="comment-send" hidden>
+                  <div>
+                    <img :src="avatar_url" alt class="user-face">
+                  </div>
+                  <div class="text-container">
+                    <textarea id="reply-text" style="width: 100%" cols="60" name="msg" rows="5" :placeholder="replyPlaceholder"></textarea>
+                    <button type="submit" class="comment-submit" @click="PostReply(comment)">发表评论</button>
                   </div>
                 </el-row>
               </div>
@@ -87,7 +98,7 @@
         <img :src="avatar_url" alt class="user-face">
       </div>
       <div class="text-container">
-        <textarea id="comment-area" style="width: 100%" cols="60" name="msg" rows="5" placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea>
+        <textarea id="comment-text" style="width: 100%" cols="60" name="msg" rows="5" placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。"></textarea>
         <button type="submit" class="comment-submit" @click="PostComment">发表评论</button>
       </div>
     </el-row>
@@ -95,7 +106,7 @@
 </template>
 
 <script>
-import { getVideoComments } from '../../api/video'
+import { addReply, getVideoComments } from '../../api/video'
 import { addVideoComment } from '../../api/video'
 import { mapGetters } from 'vuex'
 export default {
@@ -114,7 +125,11 @@ export default {
       limit: 6,
       total: 0,
       sortType: 0,
-      avatar_url: ''
+      avatar_url: '',
+      likeIcon: 'like-off',
+      repliedUser: {},
+      replyPlaceholder: '',
+      level: 0
     }
   },
   computed: {
@@ -145,16 +160,41 @@ export default {
       // })
     },
     PostComment() {
-      alert('点！')
       const data = {
         'video_id': parseInt(this.vid),
         'user_id': this.$store.getters['id'],
-        'content': document.getElementById('comment-area').value
+        'content': document.getElementById('comment-text').value
       }
       console.log(data)
       addVideoComment(data).then(res => {
         alert(res.msg)
+        this.reload()
       })
+    },
+    PostReply(comment) {
+      const data = {
+        'comment_id': comment.id,
+        'send_user_id': this.$store.getters['id'],
+        'recv_user_id': comment.User.id,
+        'content': document.getElementById('reply-text').value,
+        'level': this.level
+      }
+      if (this.level === 1) {
+        data.recv_user_id = this.repliedUser.id
+      }
+      addReply(data).then(res => {
+        alert(res.msg)
+        this.reload()
+      })
+    },
+    ShowReplyArea(comment_id, recv_user) {
+      if (recv_user == null) {
+        this.replyPlaceholder = '请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。'
+      } else {
+        this.replyPlaceholder = '回复 ' + recv_user.nickname + ' :'
+      }
+      this.repliedUser = recv_user
+      document.getElementById('reply-area-' + comment_id).hidden = false
     }
   }
 }
