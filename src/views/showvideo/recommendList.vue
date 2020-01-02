@@ -23,6 +23,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { getVideoInfo } from '@/api/rankinglist'
 export default {
   name: 'RecommendList',

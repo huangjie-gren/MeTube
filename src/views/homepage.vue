@@ -49,6 +49,12 @@
 import { getVideos } from "@/api/video";
 export default {
   name: "home",
+  props : {
+    vid: {
+      type: String,
+      default: "-1"
+    }
+  },
   data() {
     return {
       videos: [],

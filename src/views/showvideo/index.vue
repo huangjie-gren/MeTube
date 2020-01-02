@@ -9,27 +9,15 @@
           <PlayVideo :vid="vid" />
         </el-row>
         <el-row>
-          <favor />
+          <favor :vid="vid" />
         </el-row>
-        <!--        <el-row class="title" style="" >-->
-        <!--          <el-row class="video-title">-->
-        <!--            <el-col class="tit">【登月计划】Fate/stay night深度解析Part10.正义的伙伴</el-col>-->
-        <!--          </el-row>-->
-        <!--          <el-row class="video-data" gutter="20">-->
-        <!--            <el-col class="a-crumbs" :span="1">视频类别</el-col>-->
-        <!--            <el-col class="" :span="2">2019-12-29 15:21:05</el-col>-->
-        <!--          </el-row>-->
-        <!--          <el-row class="video-data">-->
-        <!--              <el-col :span="2"> 13.7万播放</el-col>-->
-        <!--            <el-col :span="2">2238弹幕</el-col>-->
-        <!--          </el-row>-->
-        <!--        </el-row>-->
-        <!--        <el-row style=""><PlayVideo :vid="vid" /></el-row>-->
-        <!--        <el-row class="bottom" style="background-color: chartreuse">vvvv</el-row>-->
+        <el-row>
+          <Comment :vid="vid" />
+        </el-row>
       </el-col>
       <el-col :span="6" style="height:50rem">
         <el-row>
-          <Profile />
+          <Profile :vid="vid" />
         </el-row>
         <el-row>
           <RecommendList />
@@ -43,11 +31,7 @@
 /* eslint-disable */
 import PlayVideo from "./playVideo.vue";
 import { mapGetters } from "vuex";
-import { upload } from "@/api/user.js";
-import { addLike } from "@/api/like_collection";
-import { cancleLike } from "@/api/like_collection";
-import { addCollect } from "@/api/like_collection";
-import { cancleCollect } from "@/api/like_collection";
+import Comment from './comment'
 import Favor from "./favor"
 import RecommendList from './recommendList'
 import Profile from './profile'
@@ -59,84 +43,11 @@ export default {
   },
   data() {
     return {
-      uid:'',
       vid:this.$route.params.videoID,
-      likeTitle: "点赞",
-      collectionTitle: "收藏",
-      isLike: false,
-      isCollection: false,
-      collectionIcon: "collection-off",
-      likeIcon: "like-off"
     };
   },
-  created() {
-    this.uid = this.$store.getters["id"];
-    console.log("用户id"+this.uid)
-  },
-  methods: {
-    handleLike: function() {
-      //alert(this.vid)
-      if (!this.isLike) {
-        this.isLike = true;
-        this.likeIcon = "like-on";
-        this.likeTitle = "取消点赞";
-
-        addLike(this.uid,this.vid)
-        .then(response=>{
-        })
-        .catch(error => {
-          alert('add_like_error')
-      })
-
-      } else {
-        this.isLike = false;
-        this.likeIcon = "like-off";
-        this.likeTitle = "点赞";
-
-        cancleLike(this.uid,this.vid)
-        .then(response=>{
-         const { code }=response
-          console.log(code)
-        })
-        .catch(error => {
-          alert('cancle_like_error')
-      })
-      }
-    },
-    handleCollection: function() {
-
-
-
-        if (!this.isCollection) {
-
-        this.isCollection = true;
-        this.collectionIcon = "collection-on";
-        this.collectionTitle = "取消收藏";
-
-        addCollect(this.uid,this.vid)
-        .then(response=>{
-
-        })
-        .catch(error => {
-          alert('add_collect_error')
-      })
-
-      } else {
-
-        this.isCollection = false;
-        this.collectionIcon = "collection-off";
-        this.collectionTitle = "收藏";
-
-        cancleCollect(this.uid,this.vid)
-        .then(response=>{
-        })
-        .catch(error => {
-          alert('handle_collect_error')
-      })
-      }
-    }
-  },
   components:{
+    Comment,
     RecommendList,
     Profile,
     Favor,

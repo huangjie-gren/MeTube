@@ -1,67 +1,35 @@
 <template>
   <div>
-    <!-- <p>目前还没有动态</p>
-  <el-row>
-  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
-</el-row>
-
-<el-row>
-  <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="16">
-    <el-input v-model="input" placeholder="有什么想和大家分享的？" type="textarea" rows=5 class="core-style"></el-input>
-  </el-col>
-  <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
-</el-row>
-
-<el-row type="flex" justify="center">
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-button type="primary">发布</el-button>
-  <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-</el-row>
-
-<el-container>
-  <el-aside width="200px">Aside</el-aside>
-  <el-main>
-
-
-    <el-input v-model="input" placeholder="有什么想和大家分享的？" type="textarea" rows=5 ></el-input>
-    
-    <el-row height="500px">
-      <el-col :span="3"><div class="grid-content"><i class="el-icon-edit"></i></div></el-col>
-      <el-col :span="17"><div class="grid-content"></div></el-col>
-      <el-col :span="3"></el-col>
-      <el-col :span="3"><el-button type="primary" class="toolbar">发布</el-button></el-col>
-    </el-row>
-
-    <el-row>
-
-    </el-row>
-  </el-main>
-  <el-aside width="200px">Aside</el-aside>
-    </el-container>-->
-
+  
     <el-row gutter="20">
       <el-col :span="5">
-        <el-row>
-          <img :src="logopath" class="user-pic" />
-        </el-row>
+        <el-card style="height: 200px;">
+          <el-row>
+            <!-- <img :src="logopath" class="user-ava" /> -->
+            <el-col :span="3">
+                <img class="user-ava" :src="avatar" />
+              </el-col>
+
+              <el-col :span="21">
+                <el-row style="padding-left: 50px; padding-top: 15px;">
+                  {{ this.username }}
+                </el-row>
+                <el-row style="padding-left: 50px; padding-top: 20px;">
+                  <p>粉丝&nbsp;&nbsp;&nbsp;&nbsp; {{ this.followers }}</p>
+                  <p>关注&nbsp;&nbsp;&nbsp;&nbsp; {{ this.followings }}</p>
+                </el-row>
+              </el-col>
+          </el-row>
+        </el-card>
       </el-col>
 
   
     
-      <el-col :span="14" style="background-color: gray">
-        <el-row class="section-block">
-          <el-row class="core-style">
-            <el-input v-model="input" placeholder="有什么想和大家分享的？" type="textarea" rows=5 ></el-input>
-
-          </el-row>
-          <el-row class="toolbar">
-            <el-button type="primary" class="publish-btn">发布</el-button>
-          </el-row>
-        </el-row>
+      <el-col :span="14" style="background-color: white; padding: 0px;">
+        
 
         <el-row v-for="dongtai in dongtais" :key="dongtai.id">
-          <el-card>
+          <el-card style="height: 400px;">
             <el-row style="width: 100%; height: 50px;">
 
               <el-col :span="3">
@@ -70,18 +38,18 @@
 
               <el-col :span="21">
                 <el-row>
-                  究极铁憨憨
+                  {{ dongtai.username }}
                 </el-row>
                 <el-row>
-                  <font size="2" color="gray">发布于30分钟前</font>
+                  <font size="2" color="gray">{{ dongtai.release_time }}</font>
                 </el-row>
               </el-col>
 
 
             </el-row>
-            <el-row style="width: 100%; height: 200px; padding-left: 60px;">
-              <p>嘿嘿嘿</p>
-              <img :src="logopath" class="user-pic" />
+            <el-row style="width: 100%; height: 200px; padding-left: 90px;">
+              <p style="margin: 10px;">{{ dongtai.title }}</p>
+              <a :href="dongtai.url"><img :src="dongtai.avatar" class="user-pic" /></a>
             </el-row>
           </el-card>
         </el-row>
@@ -92,30 +60,85 @@
 </template>
 
 <script>
+/* eslint-disable */
+import { mapGetters } from 'vuex'
+import { showFollowers } from '@/api/friendManagement'
+import { showActivity } from '@/api/friendManagement'
+import { getUserInfo } from '@/api/friendManagement'
+import { countFollowers } from '@/api/friendManagement'
+import { countFollowings } from '@/api/friendManagement'
+
+
 export default {
+  computed: {
+    ...mapGetters(['id'])
+  },
   data() {
     return {
       // logopath: require("@/assets/logo.png"),
       logopath: 'https://metube-backend.oss-cn-beijing.aliyuncs.com/upload/f13e3e48-eea4-44a7-9e10-6ee840eb2eeb.jpg',
       input: "",
-      dongtais: [
-        {
-          id: 1,
-          msg: "aaa"
-        },
-        {
-          id: 1,
-          msg: "aaa"
-        },
-        {
-          id: 1,
-          msg: "aaa"
-        }
-      ]
+      dongtais: '',
+      username: '',
+      avatar: '',
+      followers: '',
+      followings: '',
     };
+  },
+  created(){
+    // this.uid = this.$store.getters['id']
+    this.uid = 1
+    showActivity(this.uid)
+      .then(response => {
+        const { code } = response
+        const { data } = response
+        this.dongtais = data   // 必须带this
+      })
+      .catch(error => {
+        alert('showActivity')
+      })
+
+    getUserInfo(this.uid)
+      .then(response => {
+        const { code } = response
+        const { data } = response
+        const { username } = data[0]
+        const { avatar } = data[0]
+        this.username = username
+        this.avatar = avatar
+      })
+      .catch(error => {
+        alert('getUserInfo')
+      })
+
+      countFollowers(this.uid)
+      .then(response => {
+        const { code } = response
+        const { data } = response
+        this.followers = data
+      })
+      .catch(error => {
+        alert('countFollowers')
+      })
+
+      countFollowings(this.uid)
+      .then(response => {
+        const { code } = response
+        const { data } = response
+        this.followings = data
+      })
+      .catch(error => {
+        alert('countFollowings')
+      })
+
+  },
+  methods: {
+
   }
 };
 </script>
+
+
 
 <style scoped>
 .user-ava {
@@ -254,8 +277,8 @@ body > .el-container {
   line-height: 800px;
 }
 .user-pic {
-  width: 80%;
-  height: 150px;
+  width: 70%;
+  height: 250px;
   background: center/cover no-repeat;
 }
 .section-block {

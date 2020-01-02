@@ -52,7 +52,8 @@ export default {
     }
   },
   created() {
-    this.uid = this.$store.getters['id']
+    // this.uid = this.$store.getters['id']
+    this.uid = 1
     showFollowings(this.uid)
       .then(response => {
         const { code } = response
@@ -66,7 +67,7 @@ export default {
   methods: {
     handleDelete(index, row) {
       console.log(index, row)
-      unfollow(4, row.id)
+      unfollow(this.uid, row.id)
       .then(response => {
         const { code } = response
         const { data } = response

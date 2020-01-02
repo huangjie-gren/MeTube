@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @contextmenu.prevent>
     <video
       id="myVideo"
       class="video-js vjs-default-skin vjs-big-play-centered"
@@ -8,7 +8,8 @@
       preload="auto"
       :poster="videoAvatar"
       :src="videoSourceUrl"
-      style="width:100%; height:100%; object-fit:fill"
+      style="width:100%;height:100%;object-fit:fill"
+      controlslist="nodownload"
     >您的浏览器版本不支持播放视频！</video>
   </div>
 </template>
@@ -20,7 +21,7 @@ export default {
   props: {
     vid: {
       type: String,
-      default: -1
+      default: '-1'
     }
   },
   data() {

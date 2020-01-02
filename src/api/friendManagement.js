@@ -1,10 +1,11 @@
 import request from '@/utils/request'
+import { wscURL } from '@/utils/const'
+
 /* eslint-disable */
-const preUrl = 'http://49.233.170.51:8080'
 
 export function showFollowings(id) {
   return request({
-    url: preUrl + '/showFollowings',
+    url: wscURL + '/showFollowings',
     method: 'get',
     params: { id }
   })
@@ -12,7 +13,7 @@ export function showFollowings(id) {
 
 export function showFollowers(id) {
   return request({
-    url: preUrl + '/showFollowers',
+    url: wscURL + '/showFollowers',
     method: 'get',
     params: { id }
   })
@@ -20,8 +21,40 @@ export function showFollowers(id) {
 
 export function unfollow(uid1, uid2) {
   return request({
-    url: preUrl + '/unfollow',
+    url: wscURL + '/unfollow',
     method: 'get',
     params: { uid1, uid2 }
+  })
+}
+
+export function showActivity(id) {
+  return request({
+    url: wscURL + '/showActivity',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function getUserInfo(id) {
+  return request({
+    url: wscURL + '/getUserInfo',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function countFollowers(id) {
+  return request({
+    url: wscURL + '/countFollowers',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function countFollowings(id) {
+  return request({
+    url: wscURL + '/countFollowings',
+    method: 'get',
+    params: { id }
   })
 }
