@@ -2,16 +2,20 @@
   <div>
   
     <el-row gutter="20">
+      <el-col :span="2"><div style="background: white"></div></el-col>
       <el-col :span="5">
         <el-card style="height: 200px;">
           <el-row>
             <!-- <img :src="logopath" class="user-ava" /> -->
             <el-col :span="3">
-                <img class="user-ava" :src="avatar" />
+                <img class="user-ava" :src="this.avatar" />
               </el-col>
 
               <el-col :span="21">
-                <el-row style="padding-left: 50px; padding-top: 15px;">
+                <el-row style="padding-left: 50px; padding-top: 5px;">
+                  {{ this.nickname }}
+                </el-row>
+                <el-row style="padding-left: 50px; padding-top: 0px; color: gray">
                   {{ this.username }}
                 </el-row>
                 <el-row style="padding-left: 50px; padding-top: 20px;">
@@ -54,7 +58,7 @@
           </el-card>
         </el-row>
       </el-col>
-      <el-col :span="5"></el-col>
+      <el-col :span="3"></el-col>
     </el-row>
   </div>
 </template>
@@ -64,18 +68,16 @@
 import { mapGetters } from 'vuex'
 import { showFollowers } from '@/api/friendManagement'
 import { showActivity } from '@/api/friendManagement'
-import { getUserInfo } from '@/api/friendManagement'
 import { countFollowers } from '@/api/friendManagement'
 import { countFollowings } from '@/api/friendManagement'
 
 
 export default {
   computed: {
-    ...mapGetters(['id'])
+    ...mapGetters(['id', 'username', 'nickname', 'avatar'])
   },
   data() {
     return {
-      // logopath: require("@/assets/logo.png"),
       logopath: 'https://metube-backend.oss-cn-beijing.aliyuncs.com/upload/f13e3e48-eea4-44a7-9e10-6ee840eb2eeb.jpg',
       input: "",
       dongtais: '',
@@ -83,32 +85,30 @@ export default {
       avatar: '',
       followers: '',
       followings: '',
+      uid: 1,
+      nickname: '',
     };
   },
   created(){
-    // this.uid = this.$store.getters['id']
-    this.uid = 1
+    this.uid = this.$store.getters['id']
+    this.username = this.$store.getters['username']
+    this.nickname = this.$store.getters['nickname']
+    this.avatar = this.$store.getters['avatar']
+
+    // if(this.uid == undefined){
+    //   alert('请先登录！')
+    //   this.href()
+    // }
+    if(this.uid == undefined){
+       this.uid = 1
+    }
+
+
     showActivity(this.uid)
       .then(response => {
         const { code } = response
         const { data } = response
         this.dongtais = data   // 必须带this
-      })
-      .catch(error => {
-        alert('showActivity')
-      })
-
-    getUserInfo(this.uid)
-      .then(response => {
-        const { code } = response
-        const { data } = response
-        const { username } = data[0]
-        const { avatar } = data[0]
-        this.username = username
-        this.avatar = avatar
-      })
-      .catch(error => {
-        alert('getUserInfo')
       })
 
       countFollowers(this.uid)
@@ -117,9 +117,6 @@ export default {
         const { data } = response
         this.followers = data
       })
-      .catch(error => {
-        alert('countFollowers')
-      })
 
       countFollowings(this.uid)
       .then(response => {
@@ -127,13 +124,12 @@ export default {
         const { data } = response
         this.followings = data
       })
-      .catch(error => {
-        alert('countFollowings')
-      })
 
   },
   methods: {
-
+    href(){
+        this.$router.push({ path:'/login'})
+      }
   }
 };
 </script>

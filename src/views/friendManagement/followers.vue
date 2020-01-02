@@ -45,13 +45,16 @@ export default {
   },
   data() {
     return {
-      uid:'',
+      uid: 1,
       tableData: '',
       search: ''
     }
   },
   created() {
     this.uid = this.$store.getters['id']
+    if(this.uid == undefined){
+      this.uid = -1
+    }
     showFollowers(this.uid)
       .then(response => {
         const { code } = response

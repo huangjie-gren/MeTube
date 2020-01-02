@@ -3,19 +3,27 @@ import { wscURL } from '@/utils/const'
 
 /* eslint-disable */
 
-export function showFollowings(id) {
+export function showFollowings(uid) {
   return request({
     url: wscURL + '/showFollowings',
     method: 'get',
-    params: { id }
+    params: { uid }
   })
 }
 
-export function showFollowers(id) {
+export function showFollowers(uid) {
   return request({
     url: wscURL + '/showFollowers',
     method: 'get',
-    params: { id }
+    params: { uid }
+  })
+}
+
+export function follow(uid1, uid2) {
+  return request({
+    url: wscURL + '/follow',
+    method: 'get',
+    params: { uid1, uid2 }
   })
 }
 
@@ -27,34 +35,26 @@ export function unfollow(uid1, uid2) {
   })
 }
 
-export function showActivity(id) {
+export function showActivity(uid) {
   return request({
     url: wscURL + '/showActivity',
     method: 'get',
-    params: { id }
+    params: { uid }
   })
 }
 
-export function getUserInfo(id) {
-  return request({
-    url: wscURL + '/getUserInfo',
-    method: 'get',
-    params: { id }
-  })
-}
-
-export function countFollowers(id) {
+export function countFollowers(uid) {
   return request({
     url: wscURL + '/countFollowers',
     method: 'get',
-    params: { id }
+    params: { uid }
   })
 }
 
-export function countFollowings(id) {
+export function countFollowings(uid) {
   return request({
     url: wscURL + '/countFollowings',
     method: 'get',
-    params: { id }
+    params: { uid }
   })
 }

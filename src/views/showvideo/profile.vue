@@ -25,12 +25,15 @@
 import { mapGetters } from 'vuex'
 import { showFollowers } from '@/api/friendManagement'
 import { showActivity } from '@/api/friendManagement'
-import { getUserInfo } from '@/api/friendManagement'
 import { countFollowers } from '@/api/friendManagement'
 import { countFollowings } from '@/api/friendManagement'
+import { follow } from '@/api/friendManagement'
 
   export default {
     name: 'Profile',
+    computed: {
+    ...mapGetters(['id', 'username', 'nickname', 'avatar'])
+  },
     data() {
       return{
         uid: '',
@@ -44,19 +47,13 @@ import { countFollowings } from '@/api/friendManagement'
 
     },
     created() {
-      this.uid = 1
-      getUserInfo(this.uid)
-      .then(response => {
-        const { code } = response
-        const { data } = response
-        const { username } = data[0]
-        const { avatar } = data[0]
-        this.username = username
-        this.avatar = avatar
-      })
-      .catch(error => {
-        alert('getUserInfo')
-      })
+    this.uid = this.$store.getters['id']
+    this.username = this.$store.getters['username']
+    this.nickname = this.$store.getters['nickname']
+    this.avatar = this.$store.getters['avatar']
+    if(this.uid == undefined){
+      this.uid = -1
+    }
 
       countFollowers(this.uid)
       .then(response => {
@@ -76,7 +73,7 @@ import { countFollowings } from '@/api/friendManagement'
         this.button_msg = '已关注'
         this.followers += 1
 
-        follow()
+        follow(this.id, 4) // 这里的id从哪里来
       }
     }
   }

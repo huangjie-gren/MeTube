@@ -9,14 +9,14 @@
       data.nickname.toLowerCase().includes(search.toLowerCase()))"
     style="width: 100%"
     class="list-item">
-    <el-table-column label="Avatar" prop="avatar">
+    <el-table-column align="center" label="Avatar" prop="avatar">
       <template slot-scope="scope">
         <img :src="scope.row.avatar" width="%5" class="head_pic"/>
       </template>
     </el-table-column>
-    <el-table-column label="Name" prop="username"> </el-table-column>
-    <el-table-column label="Nickname" prop="nickname"> </el-table-column>
-    <el-table-column align="right">
+    <el-table-column align="center" label="Name" prop="username"> </el-table-column>
+    <el-table-column align="center" label="Nickname" prop="nickname"> </el-table-column>
+    <el-table-column align="center">
       <template slot="header" slot-scope="scope">
         <el-input
           v-model="search"
@@ -48,12 +48,15 @@ export default {
   data() {
     return {
       tableData: '',
-      search: ''
+      search: '',
+      uid: 1,
     }
   },
   created() {
-    // this.uid = this.$store.getters['id']
-    this.uid = 1
+    this.uid = this.$store.getters['id']
+    if(this.uid == undefined){
+      this.uid = 1
+    }
     showFollowings(this.uid)
       .then(response => {
         const { code } = response
