@@ -2,7 +2,6 @@ import request from '@/utils/request'
 import { wscURL } from '@/utils/const'
 
 /* eslint-disable */
-
 export function showFollowings(uid) {
   return request({
     url: wscURL + '/showFollowings',
@@ -58,3 +57,14 @@ export function countFollowings(uid) {
     params: { uid }
   })
 }
+
+export function getOwnerInfoByVid(vid) {
+  return request({
+    url: wscURL + '/getOwnerInfoByVid',
+    method: 'get',
+    params: { vid }
+  })
+}
+
+
+

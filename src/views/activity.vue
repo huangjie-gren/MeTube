@@ -6,14 +6,13 @@
       <el-col :span="5">
         <el-card style="height: 200px;">
           <el-row>
-            <!-- <img :src="logopath" class="user-ava" /> -->
             <el-col :span="3">
-                <img class="user-ava" :src="this.avatar" />
+                <img class="user-ava" :src="this.activity_avatar" />
               </el-col>
 
               <el-col :span="21">
                 <el-row style="padding-left: 50px; padding-top: 5px;">
-                  {{ this.nickname }}
+                  {{ this.activity_nickname }}
                 </el-row>
                 <el-row style="padding-left: 50px; padding-top: 0px; color: gray">
                   {{ this.username }}
@@ -37,7 +36,7 @@
             <el-row style="width: 100%; height: 50px;">
 
               <el-col :span="3">
-                <img class="user-ava" :src="logopath" />
+                <img class="user-ava" :src="dongtai.user_avatar" />
               </el-col>
 
               <el-col :span="21">
@@ -78,47 +77,38 @@ export default {
   },
   data() {
     return {
-      logopath: 'https://metube-backend.oss-cn-beijing.aliyuncs.com/upload/f13e3e48-eea4-44a7-9e10-6ee840eb2eeb.jpg',
       input: "",
       dongtais: '',
-      username: '',
-      avatar: '',
       followers: '',
       followings: '',
-      uid: 1,
-      nickname: '',
+      activity_uid: 1,
+      activity_nickname: '',
+      activity_username: '',
+      activity_avatar: '',
     };
   },
   created(){
-    this.uid = this.$store.getters['id']
-    this.username = this.$store.getters['username']
-    this.nickname = this.$store.getters['nickname']
-    this.avatar = this.$store.getters['avatar']
-
-    // if(this.uid == undefined){
-    //   alert('请先登录！')
-    //   this.href()
-    // }
-    if(this.uid == undefined){
-       this.uid = 1
-    }
+    this.activity_uid = this.$store.getters['id']
+    this.activity_username = this.$store.getters['username']
+    this.activity_nickname = this.$store.getters['nickname']
+    this.activity_avatar = this.$store.getters['avatar']
 
 
-    showActivity(this.uid)
+    showActivity(this.activity_uid)
       .then(response => {
         const { code } = response
         const { data } = response
-        this.dongtais = data   // 必须带this
+        this.dongtais = data
       })
 
-      countFollowers(this.uid)
+      countFollowers(this.activity_uid)
       .then(response => {
         const { code } = response
         const { data } = response
         this.followers = data
       })
 
-      countFollowings(this.uid)
+      countFollowings(this.activity_uid)
       .then(response => {
         const { code } = response
         const { data } = response
@@ -127,9 +117,6 @@ export default {
 
   },
   methods: {
-    href(){
-        this.$router.push({ path:'/login'})
-      }
   }
 };
 </script>
@@ -138,23 +125,14 @@ export default {
 
 <style scoped>
 .user-ava {
-  /* display: block; */
   border-radius: 50%;
-  /* position: absolute;*/
   width: 48px;
   height: 48px;
-  /* top: 24px;
-    left: 24px; */
-  /* background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat; */
 }
 .el-card {
   width: 100%;
   height: 310px;
   padding-top: 0px;
-  /* margin-left: 88px; */
-  /* "width: 100%; height: 310px; padding-top: 0px;" */
 }
 .publish-btn {
   margin-right: 0px;

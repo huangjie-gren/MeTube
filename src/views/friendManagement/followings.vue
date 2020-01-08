@@ -54,17 +54,12 @@ export default {
   },
   created() {
     this.uid = this.$store.getters['id']
-    if(this.uid == undefined){
-      this.uid = 1
-    }
+
     showFollowings(this.uid)
       .then(response => {
         const { code } = response
         const { data } = response
-        this.tableData = data   // 必须带this
-      })
-      .catch(error => {
-        alert('created error')
+        this.tableData = data
       })
   },
   methods: {
@@ -74,10 +69,7 @@ export default {
       .then(response => {
         const { code } = response
         const { data } = response
-        this.tableData = data   // 必须带this 
-      })
-      .catch(error => {
-          alert('created error')
+        this.tableData = data
       })
     }
   }

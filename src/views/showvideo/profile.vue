@@ -4,15 +4,16 @@
           <el-row>
             <!-- <img :src="logopath" class="user-ava" /> -->
             <el-col :span="3">
-                <img class="user-ava" :src="avatar" />
+                <img class="user-ava" :src="profile_avatar" />
               </el-col>
 
               <el-col :span="21">
                 <el-row style="padding-left: 50px; padding-top: 15px;">
-                  {{ this.username }}
+                  {{ this.profile_nickname }}
                 </el-row>
+
                 <el-row style="padding-left: 50px; padding-top: 20px;">
-                  <el-button :disabled="this.button_disabled" :type="this.button_type" @click="handleFollow"> {{ this.button_msg }} {{ this.followers }}</el-button>
+                  <el-button :type="this.button_type" @click="handleFollow"> {{ this.button_msg }} {{ this.followers }}</el-button>
                 </el-row>
               </el-col>
           </el-row>
@@ -23,73 +24,103 @@
 <script>
 /* eslint-disable */
 import { mapGetters } from 'vuex'
-import { showFollowers } from '@/api/friendManagement'
+import { showFollowers, unfollow } from '@/api/friendManagement'
 import { showActivity } from '@/api/friendManagement'
 import { countFollowers } from '@/api/friendManagement'
 import { countFollowings } from '@/api/friendManagement'
 import { follow } from '@/api/friendManagement'
+import { getOwnerInfoByVid } from '@/api/friendManagement'
 
   export default {
     name: 'Profile',
+    props: {
+      vid: {
+        type: String,
+        default: '-1'
+      }
+    },
     computed: {
     ...mapGetters(['id', 'username', 'nickname', 'avatar'])
-  },
+    },
+    props: {
+      vid: {
+        type: String,
+        default: '-1'
+      }
+    },
     data() {
       return{
-        uid: '',
-        username: '',
-        avatar: '',
-        button_type: 'primary',
-        button_msg: '+ 关注',
+        profile_uid: 0,
+        profile_username: '',
+        profile_avatar: '',
+        profile_nickname: '',
+        button_type: '',
+        button_msg: '',
         button_disabled: false,
-        followers: '',
+        followers: 0,
+        follow_or_not: 0
       }
 
     },
     created() {
-    this.uid = this.$store.getters['id']
-    this.username = this.$store.getters['username']
-    this.nickname = this.$store.getters['nickname']
-    this.avatar = this.$store.getters['avatar']
-    if(this.uid == undefined){
-      this.uid = -1
-    }
+    this.current_uid = this.$store.getters['id']
 
-      countFollowers(this.uid)
+    getOwnerInfoByVid(parseInt(this.vid))
       .then(response => {
         const { code } = response
         const { data } = response
-        this.followers = data
-      })
-      .catch(error => {
-        alert('countFollowers')
-      })
+        this.profile_nickname = data.nickname
+        this.profile_avatar = data.avatar
+        this.profile_uid = data.id
 
+        countFollowers(this.profile_uid)
+          .then(response => {
+            const { code } = response
+            const { data } = response
+            this.followers = data
+        })
+
+        followOrNot(this.current_uid, this.profile_uid)
+          .then(response => {
+            const { code } = response
+            const { data } = response
+            if(data == 0){
+              this.follow_or_not = 0
+              this.button_type = 'primary'
+              this.button_msg = '+ 关注'
+            } else{
+              this.follow_or_not = 1
+              this.button_type = 'info'
+              this.button_msg = '已关注'
+            }
+          })
+      })
+  
     },
     methods: {
       handleFollow(){
-        this.button_type = 'info'
-        this.button_disabled = true
-        this.button_msg = '已关注'
-        this.followers += 1
-
-        follow(this.id, 4) // 这里的id从哪里来
+        if(this.follow_or_not == 0){
+          this.button_type = 'info'
+          this.button_msg = '已关注'
+          this.followers += 1
+          follow(this.current_uid, this.profile_uid) 
+        }else{
+          this.button_type = 'primary'
+          this.button_msg = '+ 关注'
+          this.followers -= 1
+          unfollow(this.current_uid, this.profile_uid)
+        }
+        this.follow_or_not = 1 - this.follow_or_not
       }
+      
     }
   }
 </script>
 
 <style scoped>
 .user-ava {
-  /* display: block; */
   border-radius: 50%;
-  /* position: absolute;*/
   width: 48px;
   height: 48px;
-  /* top: 24px;
-    left: 24px; */
-  /* background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat; */
 }
 </style>

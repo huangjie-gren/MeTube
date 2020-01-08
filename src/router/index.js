@@ -78,6 +78,7 @@ export const constantRoutes = [
   {
     path: '/followings',
     component: Layout,
+    redirect: '/followings',
     children: [
       {
         path: '/followings',
@@ -91,6 +92,7 @@ export const constantRoutes = [
   {
     path: '/followers',
     component: Layout,
+    redirect: '/folloers',
     children: [
       {
         path: '/followers',
