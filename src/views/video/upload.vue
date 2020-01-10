@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="welcome-line">{{ username }},欢迎你！</div>
+    <div class="welcome-line">{{ nickname }},欢迎你！</div>
     <div class="upload-form">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="视频名称">
@@ -63,7 +63,7 @@ import { mapGetters } from "vuex";
 import { uploadoss } from "@/api/video";
 export default {
   computed: {
-    ...mapGetters(["username","id"])
+    ...mapGetters(["username","nickname","id"])
   },
   data() {
     return {
@@ -76,7 +76,8 @@ export default {
         videourl: "",
         avatarurl: "",
         typename: ""
-      }
+      },
+      nickname: ""
     };
   },
   created() {

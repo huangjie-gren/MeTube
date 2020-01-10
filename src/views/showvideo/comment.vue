@@ -24,7 +24,7 @@
               </el-row>
               <el-row class="info">
                 <span>
-                  {{ comment.Comment.comment_time }}
+                  {{ convertTimeFormat(comment.Comment.comment_time) }}
                 </span>
                 <span title="点赞" class="like" @click="handleCommentLike(comment)">
                   <svg-icon v-if="comment.like" :id="'like-comment-'+comment.Comment.id" icon-class="like-on" />
@@ -56,7 +56,7 @@
                   <el-row>
                     <div class="info">
                       <span>
-                        {{ reply.Reply.reply_time }}
+                        {{ convertTimeFormat(reply.Reply.reply_time) }}
                       </span>
                       <span title="点赞" class="like" @click="handleReplyLike(reply)">
                         <svg-icon v-if="reply.like" :id="'like-reply-'+reply.Reply.id" icon-class="like-on" />
@@ -103,7 +103,7 @@
               </el-row>
               <el-row class="info">
                 <span>
-                  {{ comment.Comment.comment_time }}
+                  {{ convertTimeFormat(comment.Comment.comment_time) }}
                 </span>
                 <span title="点赞" class="like" @click="handleCommentLike(comment)">
                   <svg-icon v-if="comment.like" :id="'like-comment-'+comment.Comment.id" icon-class="like-on" />
@@ -135,7 +135,7 @@
                   <el-row>
                     <div class="info">
                       <span>
-                        {{ reply.Reply.reply_time }}
+                        {{ convertTimeFormat(reply.Reply.reply_time) }}
                       </span>
                       <span title="点赞" class="like" @click="handleReplyLike(reply)">
                         <svg-icon v-if="reply.like" :id="'like-reply-'+reply.Reply.id" icon-class="like-on" />
@@ -222,6 +222,7 @@ export default {
     this.avatar_url = this.$store.getters['avatar']
     this.loginUserId = this.$store.getters['id']
     getVideoComments({
+      'user_id': this.loginUserId,
       'start': this.start,
       'limit': this.limit,
       'sort_type': this.sortType,
@@ -237,7 +238,7 @@ export default {
   methods: {
     handleCommentLike(comment) {
       const data = {
-        'user_id': this.$store.getters['id'],
+        'user_id': this.loginUserId,
         'comment_id': comment.Comment.id,
         'flag': true
       }
@@ -268,7 +269,7 @@ export default {
     },
     handleReplyLike(reply) {
       const data = {
-        'user_id': this.$store.getters['id'],
+        'user_id': this.loginUserId,
         'reply_id': reply.Reply.id,
         'flag': true
       }
@@ -300,6 +301,7 @@ export default {
     handleCurrentChange(val) {
       this.start = val
       getVideoComments({
+        'user_id': this.loginUserId,
         'start': this.start,
         'limit': this.limit,
         'sort_type': this.sortType,
@@ -320,6 +322,7 @@ export default {
         this.sortType = 0
       }
       getVideoComments({
+        'user_id': this.loginUserId,
         'start': this.start,
         'limit': this.limit,
         'sort_type': this.sortType,
@@ -405,6 +408,10 @@ export default {
         }).catch(err => {
           alert(err)
         })
+    },
+    convertTimeFormat(t) {
+      t = t.split('T')[0] + ' ' + (t.split('T')[1]).split('+')[0];
+      return t;
     }
   }
 }

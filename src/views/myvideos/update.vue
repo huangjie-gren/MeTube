@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="welcome-line">{{ username }},欢迎你！</div>
+    <div class="welcome-line">{{ nickname }},欢迎你！</div>
     <div class="update-form">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="视频名称">
@@ -49,7 +49,7 @@ import { uploadoss } from "@/api/video";
 import { getVideoInfo } from "@/api/video";
 export default {
   computed: {
-    ...mapGetters(["username"])
+    ...mapGetters(["nickname"])
   },
   data() {
     return {
@@ -60,7 +60,8 @@ export default {
         videodescribe: "",
         avatarurl: "",
         typename: ""
-      }
+      },
+      nickname: ""
     };
   },
   created() {
