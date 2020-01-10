@@ -66,5 +66,13 @@ export function getOwnerInfoByVid(vid) {
   })
 }
 
+export function followOrNot(uid1, uid2) {
+  return request({
+    url: wscURL + '/followOrNot',
+    method: 'get',
+    params: { uid1, uid2 }
+  })
+}
+
 
 

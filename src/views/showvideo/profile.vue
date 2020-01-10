@@ -2,18 +2,15 @@
   <div>
     <el-card style="height: 150px;">
           <el-row>
-            <!-- <img :src="logopath" class="user-ava" /> -->
             <el-col :span="3">
                 <img class="user-ava" :src="profile_avatar" />
               </el-col>
-
               <el-col :span="21">
                 <el-row style="padding-left: 50px; padding-top: 15px;">
                   {{ this.profile_nickname }}
                 </el-row>
-
                 <el-row style="padding-left: 50px; padding-top: 20px;">
-                  <el-button :type="this.button_type" @click="handleFollow"> {{ this.button_msg }} {{ this.followers }}</el-button>
+                  <el-button :type="this.button_type" @click="handleFollow" :disabled="this.isDisabled"> {{ this.button_msg }} {{ this.followers }}</el-button>
                 </el-row>
               </el-col>
           </el-row>
@@ -30,6 +27,7 @@ import { countFollowers } from '@/api/friendManagement'
 import { countFollowings } from '@/api/friendManagement'
 import { follow } from '@/api/friendManagement'
 import { getOwnerInfoByVid } from '@/api/friendManagement'
+import { followOrNot } from '@/api/friendManagement'
 
   export default {
     name: 'Profile',
@@ -42,12 +40,6 @@ import { getOwnerInfoByVid } from '@/api/friendManagement'
     computed: {
     ...mapGetters(['id', 'username', 'nickname', 'avatar'])
     },
-    props: {
-      vid: {
-        type: String,
-        default: '-1'
-      }
-    },
     data() {
       return{
         profile_uid: 0,
@@ -56,10 +48,10 @@ import { getOwnerInfoByVid } from '@/api/friendManagement'
         profile_nickname: '',
         button_type: '',
         button_msg: '',
+        isDisabled: false,
         followers: 0,
         follow_or_not: 0
       }
-
     },
     created() {
     this.current_uid = this.$store.getters['id']
@@ -78,8 +70,13 @@ import { getOwnerInfoByVid } from '@/api/friendManagement'
             const { data } = response
             this.followers = data
         })
-       
-        followOrNot(this.current_uid, this.profile_uid)
+
+        if(this.current_uid == this.profile_uid){
+            this.button_type = 'info'
+            this.button_msg = '我自己'
+            this.isDisabled = true
+        } else {
+          followOrNot(this.current_uid, this.profile_uid)
           .then(response => {
             const { code } = response
             const { data } = response
@@ -93,6 +90,7 @@ import { getOwnerInfoByVid } from '@/api/friendManagement'
               this.button_msg = '已关注'
             }
           })
+        }
       })
   
     },
@@ -111,7 +109,6 @@ import { getOwnerInfoByVid } from '@/api/friendManagement'
         }
         this.follow_or_not = 1 - this.follow_or_not
       }
-      
     }
   }
 </script>

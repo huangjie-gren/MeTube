@@ -21,7 +21,7 @@
     </el-table-column>
 
     <el-table-column align="center">
-      <template slot="header" slot-scope="scope"> <!--  -->
+      <template slot="header" slot-scope="scope">
         <el-input
           v-model="search"
           size="mini"

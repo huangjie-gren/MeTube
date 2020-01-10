@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     handleDelete(index, row) {
-      console.log(index, row)
       unfollow(this.uid, row.id)
       .then(response => {
         const { code } = response
