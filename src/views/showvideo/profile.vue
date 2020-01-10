@@ -56,7 +56,6 @@ import { getOwnerInfoByVid } from '@/api/friendManagement'
         profile_nickname: '',
         button_type: '',
         button_msg: '',
-        button_disabled: false,
         followers: 0,
         follow_or_not: 0
       }
@@ -79,7 +78,7 @@ import { getOwnerInfoByVid } from '@/api/friendManagement'
             const { data } = response
             this.followers = data
         })
-
+       
         followOrNot(this.current_uid, this.profile_uid)
           .then(response => {
             const { code } = response
