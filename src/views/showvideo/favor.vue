@@ -71,6 +71,11 @@ export default {
   },
   created() {
     this.uid = this.$store.getters["id"];
+    if(this.uid == undefined){
+
+
+      return
+    }
     user_video(this.uid, this.vid)
       .then(res => {
         const { data } = res;

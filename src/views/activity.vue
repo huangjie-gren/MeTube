@@ -41,7 +41,7 @@
 
               <el-col :span="21">
                 <el-row>
-                  {{ dongtai.username }}
+                  {{ dongtai.nickname }}
                 </el-row>
                 <el-row>
                   <font size="2" color="gray">{{ dongtai.release_time }}</font>

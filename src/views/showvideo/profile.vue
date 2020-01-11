@@ -55,7 +55,7 @@ import { followOrNot } from '@/api/friendManagement'
     },
     created() {
     this.current_uid = this.$store.getters['id']
-
+    
     getOwnerInfoByVid(parseInt(this.vid))
       .then(response => {
         const { code } = response
@@ -70,8 +70,11 @@ import { followOrNot } from '@/api/friendManagement'
             const { data } = response
             this.followers = data
         })
-
-        if(this.current_uid == this.profile_uid){
+        if(this.current_uid == undefined){
+          this.button_type = 'warning'
+          this.button_msg = '粉丝数'
+          this.isDisabled = true
+        }else if(this.current_uid == this.profile_uid){
             this.button_type = 'info'
             this.button_msg = '我自己'
             this.isDisabled = true
