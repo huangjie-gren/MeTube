@@ -71,11 +71,9 @@ export default {
   },
   created() {
     this.uid = this.$store.getters["id"];
-    if(this.uid == undefined){
-
-
-      return
-    }
+    // if(this.uid == undefined){
+    //   return
+    // }
     user_video(this.uid, this.vid)
       .then(res => {
         const { data } = res;
@@ -120,7 +118,13 @@ export default {
       });
   },
   methods: {
+
     handleLike: function() {
+    
+      if(typeof(this.uid)=="undefined"){
+          this.$router.push('/login');
+      }
+      
       if (!this.isLike) {
         this.isLike = true;
         this.likeIcon = "like-on";
@@ -130,9 +134,10 @@ export default {
         addLike(this.uid, this.vid)
           .then(response => {})
           .catch(error => {
-            alert("add_like_error");
+            console.log("uid:"+this.uid);
           });
-      } else {
+      } 
+      else {
         this.isLike = false;
         this.likeIcon = "like-off";
         this.likeTitle = "点赞";
@@ -141,14 +146,18 @@ export default {
         cancleLike(this.uid, this.vid)
           .then(response => {
             const { code } = response;
-            console.log(code);
+            // console.log(code);
           })
           .catch(error => {
-            alert("cancle_like_error");
+           console.log("uid:"+this.uid);
           });
       }
     },
     handleCollection: function() {
+       if(typeof(this.uid)=="undefined"){
+          this.$router.push('/login');
+      }
+
       if (!this.isCollection) {
         this.isCollection = true;
         this.collectionIcon = "collection-on";
@@ -158,9 +167,10 @@ export default {
         addCollect(this.uid, this.vid)
           .then(response => {})
           .catch(error => {
-            alert("add_collect_error");
+            console.log("uid:"+this.uid);
           });
-      } else {
+      } 
+      else {
         this.isCollection = false;
         this.collectionIcon = "collection-off";
         this.collectionTitle = "收藏";
@@ -169,7 +179,7 @@ export default {
         cancleCollect(this.uid, this.vid)
           .then(response => {})
           .catch(error => {
-            alert("handle_collect_error");
+            console.log("uid:"+this.uid);
           });
       }
     }
