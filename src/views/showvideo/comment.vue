@@ -121,7 +121,7 @@
                 <el-row v-for="reply in comment.UserReplies" :key="reply.Reply.id" class="reply-item">
                   <el-row>
                     <a class="reply-face" style="top: 0">
-                      <img :src="reply.SendUser.avatar" alt class="reply_user_avatar">
+                      <img :src="reply.SendUser.avatar" alt class="reply_user_avatar" @click="goUser(reply.SendUser)">
                     </a>
                     <span class="text-con">
                       <a class="name" @click="goUser(reply.SendUser)">{{ reply.SendUser.nickname }}</a>
@@ -192,6 +192,8 @@
 import { addReply, getVideoComments, replyLike, commentLike, removeAComment, removeAReply } from '../../api/video'
 import { addVideoComment } from '../../api/video'
 import { mapGetters } from 'vuex'
+import { getToken} from '../../utils/auth'
+
 export default {
   name: 'Comment',
   props: {
@@ -212,14 +214,19 @@ export default {
       repliedUser: {},
       replyPlaceholder: '',
       level: 0,
-      loginUserId: 0
+      loginUserId: -1,
+      islogin: getToken() == "" || getToken() == undefined ? false : true,
     }
   },
   computed: {
     ...mapGetters(['username', 'nickname', 'id', 'avatar'])
   },
   created() {
-    this.avatar_url = this.$store.getters['avatar']
+    if(this.islogin) {
+      this.avatar_url = this.$store.getters['avatar']
+    } else {
+      this.avatar_url = "https://metube-backend.oss-cn-beijing.aliyuncs.com/true.jpeg";
+    }
     this.loginUserId = this.$store.getters['id']
     getVideoComments({
       'user_id': this.loginUserId,
@@ -237,6 +244,10 @@ export default {
   },
   methods: {
     handleCommentLike(comment) {
+      if(!this.islogin) {
+        this.$router.push({ name: "Login" });
+        return;
+      }
       const data = {
         'user_id': this.loginUserId,
         'comment_id': comment.Comment.id,
@@ -268,6 +279,10 @@ export default {
       }
     },
     handleReplyLike(reply) {
+      if(!this.islogin) {
+        this.$router.push({ name: "Login" });
+        return;
+      }
       const data = {
         'user_id': this.loginUserId,
         'reply_id': reply.Reply.id,
@@ -336,6 +351,10 @@ export default {
       })
     },
     PostComment() {
+      if(!this.islogin) {
+        this.$router.push({ name: "Login" });
+        return;
+      }
       const data = {
         'video_id': parseInt(this.vid),
         'user_id': this.$store.getters['id'],
@@ -348,6 +367,10 @@ export default {
       })
     },
     PostReply(comment) {
+      if(!this.islogin) {
+        this.$router.push({ name: "Login" });
+        return;
+      }
       const data = {
         'comment_id': comment.Comment.id,
         'send_user_id': this.$store.getters['id'],

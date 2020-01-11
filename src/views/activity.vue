@@ -99,6 +99,12 @@ export default {
         const { code } = response
         const { data } = response
         this.dongtais = data
+        for(let i = 0; i < this.dongtais.length; ++i) {
+          // console.log(this.dongtais);
+          this.dongtais[i].id = i;
+          // console.log(this.dongtais);
+          ++i;
+        }
       })
 
       countFollowers(this.activity_uid)

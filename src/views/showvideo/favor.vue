@@ -18,13 +18,13 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div :title="分享">
+        <div title="分享">
           <i class="el-icon-share"></i>
           &nbsp;&nbsp;{{num_share}}
         </div>
       </el-col>
       <el-col :span="6">
-        <div :title="更多">
+        <div title="更多">
           <i class="el-icon-more"></i>
         </div>
       </el-col>
@@ -47,6 +47,7 @@ import { countCollect } from "@/api/like_collection";
 import { user_video } from "@/api/like_collection";
 import { getVideo } from "@/api/video";
 import { truncate } from "fs";
+import { getToken } from '../../utils/auth'
 
 export default {
   name: "favor",
@@ -66,23 +67,17 @@ export default {
       num_like: 0,
       num_collect: 0,
       num_share: 0,
-      description: ""
+      description: "",
+      islogin: getToken() == "" || getToken() == undefined ? false : true,
     };
   },
   created() {
     this.uid = this.$store.getters["id"];
-    // if(this.uid == undefined){
-    //   return
-    // }
     user_video(this.uid, this.vid)
       .then(res => {
         const { data } = res;
-        if (data.like > 0) {
-          this.isLike = true;
-        }
-        if (data.collect > 0) {
-          this.isCollection = true;
-        }
+        this.isLike = data.like > 0;
+        this.isCollection = data.collect > 0;
         this.num_like = data.like_count;
         this.num_share = data.share_count;
         this.num_collect = data.collect_count;
@@ -120,11 +115,11 @@ export default {
   methods: {
 
     handleLike: function() {
-    
+
       if(typeof(this.uid)=="undefined"){
           this.$router.push('/login');
       }
-      
+
       if (!this.isLike) {
         this.isLike = true;
         this.likeIcon = "like-on";
@@ -136,7 +131,7 @@ export default {
           .catch(error => {
             console.log("uid:"+this.uid);
           });
-      } 
+      }
       else {
         this.isLike = false;
         this.likeIcon = "like-off";
@@ -169,7 +164,7 @@ export default {
           .catch(error => {
             console.log("uid:"+this.uid);
           });
-      } 
+      }
       else {
         this.isCollection = false;
         this.collectionIcon = "collection-off";

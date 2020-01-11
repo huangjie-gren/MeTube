@@ -93,7 +93,7 @@ export default {
     };
   },
   created() {
-    console.log(getToken());
+    // console.log(getToken());
     if (this.islogin) {
       this.useravatar = this.$store.getters["avatar"];
     } else {

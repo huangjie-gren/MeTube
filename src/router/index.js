@@ -62,18 +62,18 @@ export const constantRoutes = [
     }]
   },
 
-  {
-    path: '/example1',
-    component: Layout,
-    children: [
-      {
-        path: '/example1',
-        name: 'example1',
-        component: () => import('@/views/example1.vue'),
-        meta: { title: '示例', icon: 'form' }
-      }
-    ]
-  },
+  // {
+  //   path: '/example1',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: '/example1',
+  //       name: 'example1',
+  //       component: () => import('@/views/example1.vue'),
+  //       meta: { title: '示例', icon: 'form' }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/followings',
