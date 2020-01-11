@@ -10,7 +10,7 @@
     class="list-item">
     <el-table-column align="center" label="Avatar" prop="avatar">
       <template slot-scope="scope">
-        <img :src="scope.row.avatar" width="%5" class="head_pic"/>
+        <a><img :src="scope.row.avatar" width="%5" class="head_pic" @click="goUser(scope.row)"/></a>
       </template>
     </el-table-column>
 
@@ -60,6 +60,16 @@ export default {
       })
   },
   methods: {
+    goUser(user) {
+        this.$router.push({
+          name: 'space',
+          query: {
+            uid: user.id,
+            uname: user.nickname,
+            uavatar: user.avatar
+          }
+        })
+      },
   }
 }
 </script>

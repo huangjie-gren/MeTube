@@ -3,11 +3,11 @@
     <el-card style="height: 150px;">
           <el-row>
             <el-col :span="3">
-                <img class="user-ava" :src="profile_avatar" />
+                <a><img class="user-ava" :src="profile_avatar" @click="goUser()"/></a>
               </el-col>
               <el-col :span="21">
                 <el-row style="padding-left: 50px; padding-top: 15px;">
-                  {{ this.profile_nickname }}
+                  <a @click="goUser()">{{ this.profile_nickname }}</a>
                 </el-row>
                 <el-row style="padding-left: 50px; padding-top: 20px;">
                   <el-button :type="this.button_type" @click="handleFollow" :disabled="this.isDisabled"> {{ this.button_msg }} {{ this.followers }}</el-button>
@@ -98,6 +98,16 @@ import { followOrNot } from '@/api/friendManagement'
 
     },
     methods: {
+      goUser() {
+        this.$router.push({
+          name: 'space',
+          query: {
+            uid: this.profile_uid,
+            uname: this.profile_nickname,
+            uavatar: this.profile_avatar
+          }
+        })
+      },
       handleFollow(){
         if(this.follow_or_not == 0){
           this.button_type = 'info'

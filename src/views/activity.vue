@@ -7,15 +7,15 @@
         <el-card style="height: 200px;">
           <el-row>
             <el-col :span="3">
-                <img class="user-ava" :src="this.activity_avatar" />
+                <a><img class="user-ava" :src="this.activity_avatar" @click="goUserNoArg()"/></a>
               </el-col>
 
               <el-col :span="21">
                 <el-row style="padding-left: 50px; padding-top: 5px;">
-                  {{ this.activity_nickname }}
+                  <a @click="goUserNoArg()">{{ this.activity_nickname }}</a>
                 </el-row>
                 <el-row style="padding-left: 50px; padding-top: 0px; color: gray">
-                  {{ this.username }}
+                  <a @click="goUserNoArg()">{{ this.username }}</a>
                 </el-row>
                 <el-row style="padding-left: 50px; padding-top: 20px;">
                   <p>粉丝&nbsp;&nbsp;&nbsp;&nbsp; {{ this.followers }}</p>
@@ -36,12 +36,14 @@
             <el-row style="width: 100%; height: 50px;">
 
               <el-col :span="3">
-                <img class="user-ava" :src="dongtai.user_avatar" />
+                <a>
+                  <img class="user-ava" :src="dongtai.user_avatar" @click="goUser(dongtai)"/>
+                </a>
               </el-col>
 
               <el-col :span="21">
                 <el-row>
-                  {{ dongtai.nickname }}
+                  <a @click="goUser(dongtai)">{{ dongtai.nickname }}</a>
                 </el-row>
                 <el-row>
                   <span style="font-size: x-small; color: gray; ">{{ dongtai.release_time }}</span>
@@ -123,6 +125,26 @@ export default {
 
   },
   methods: {
+    goUser(user) {
+        this.$router.push({
+          name: 'space',
+          query: {
+            uid: user.uid,
+            uname: user.nickname,
+            uavatar: user.user_avatar
+          }
+        })
+      },
+      goUserNoArg(){
+        this.$router.push({
+          name: 'space',
+          query: {
+            uid: this.activity_uid,
+            uname: this.activity_nickname,
+            uavatar: this.activity_avatar
+          }
+        })
+      }
   }
 };
 </script>
