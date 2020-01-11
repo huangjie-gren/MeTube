@@ -250,6 +250,7 @@
         this.lastCommentId = comment_id;
       },
       showOnePageReply(comment) {
+        document.getElementById('more-reply-' + this.sortTypeName + '-' + comment.Comment.id).hidden = true;
         if(comment.reply_count > this.limit) document.getElementById('reply-page-' + this.sortTypeName + "-" + comment.Comment.id).hidden = false;
         getReplies({
           'user_id': this.loginUser.id,
