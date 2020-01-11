@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="welcome-line">{{ nickname }},欢迎你！</div>
+    <div class="welcome-line">{{ unickname }},欢迎你！</div>
     <div class="upload-form">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="视频名称">
@@ -67,6 +67,7 @@ export default {
   },
   data() {
     return {
+      unickname: '',
       uid:'',
       videoImageUrl: "",
       avatarImageUrl: "",
@@ -76,13 +77,12 @@ export default {
         videourl: "",
         avatarurl: "",
         typename: ""
-      },
-      nickname: ""
+      }
     };
   },
   created() {
     // this.form.nickname = "a"
-    this.nickname = this.$store.getters["nickname"];
+    this.unickname = this.$store.getters["nickname"];
     this.uid = this.$store.getters["id"];
     // this.form.username = this.$store.getters["username"];
   },

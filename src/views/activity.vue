@@ -1,7 +1,7 @@
 <template>
   <div>
-  
-    <el-row gutter="20">
+
+    <el-row :gutter="20">
       <el-col :span="2"><div style="background: white"></div></el-col>
       <el-col :span="5">
         <el-card style="height: 200px;">
@@ -26,10 +26,10 @@
         </el-card>
       </el-col>
 
-  
-    
+
+
       <el-col :span="14" style="background-color: white; padding: 0px;">
-        
+
 
         <el-row v-for="dongtai in dongtais" :key="dongtai.id">
           <el-card style="height: 400px;">
@@ -44,7 +44,7 @@
                   {{ dongtai.nickname }}
                 </el-row>
                 <el-row>
-                  <font size="2" color="gray">{{ dongtai.release_time }}</font>
+                  <span style="font-size: x-small; color: gray; ">{{ dongtai.release_time }}</span>
                 </el-row>
               </el-col>
 

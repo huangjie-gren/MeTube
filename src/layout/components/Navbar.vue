@@ -5,7 +5,7 @@
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
-    <img :src="logopath" class="logo-container" />
+    <img :src="logopath" class="logo-container"  alt=""/>
     <el-input size="small" placeholder="请输入搜索内容" v-model="inputsearch" class="search-input">
       <el-button @click.native="doSerach" slot="append" icon="el-icon-search"></el-button>
     </el-input>
@@ -13,8 +13,8 @@
       <!-- <span style="background-color:red; margin-right:1000px;">aa</span> -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
+          <img :src="useravatar+'?imageView2/1/w/80/h/80'" class="user-avatar"  alt=""/>
+          <i class="el-icon-caret-bottom"></i>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/mypage">
@@ -78,7 +78,7 @@ export default {
         query: {
           uid: this.$store.getters["id"],
           uname: this.$store.getters["nickname"],
-          uavatar: this.avatar,
+          uavatar: this.this.$store.getters["avatar"],
         }
       });
 
@@ -86,7 +86,7 @@ export default {
   },
   data() {
     return {
-      avatar: "",
+      useravatar: "",
       inputsearch: "",
       islogin: getToken() == "" || getToken() == undefined ? false : true,
       logopath: require("@/assets/logo.png")
@@ -95,9 +95,9 @@ export default {
   created() {
     console.log(getToken());
     if (this.islogin) {
-      this.avatar = this.$store.getters["avatar"];
+      this.useravatar = this.$store.getters["avatar"];
     } else {
-      this.avatar =
+      this.useravatar =
         "https://metube-backend.oss-cn-beijing.aliyuncs.com/true.jpeg";
     }
   }
