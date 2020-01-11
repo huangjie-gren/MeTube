@@ -49,3 +49,12 @@ export function addLike(uid,vid) {
     })
   }
 
+  export function user_video(uid, vid) {
+    return request({
+      url: wscURL + '/user_video',
+      method: 'get',
+      params: { uid, vid }
+    })
+  }
+
+  
