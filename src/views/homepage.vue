@@ -55,8 +55,8 @@ export default {
   name: "home",
   props: {
     vid: {
-      type: String,
-      default: "-1"
+      type: Number,
+      default: -1
     }
   },
   data() {

@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      vid:this.$route.params.videoID,
+      vid:parseInt(this.$route.params.videoID),
     };
   },
   components:{

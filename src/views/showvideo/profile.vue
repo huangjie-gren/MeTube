@@ -33,8 +33,8 @@ import { followOrNot } from '@/api/friendManagement'
     name: 'Profile',
     props: {
       vid: {
-        type: String,
-        default: '-1'
+        type: Number,
+        default: -1
       }
     },
     computed: {
@@ -55,7 +55,7 @@ import { followOrNot } from '@/api/friendManagement'
     },
     created() {
     this.current_uid = this.$store.getters['id']
-    
+
     getOwnerInfoByVid(parseInt(this.vid))
       .then(response => {
         const { code } = response
@@ -95,7 +95,7 @@ import { followOrNot } from '@/api/friendManagement'
           })
         }
       })
-  
+
     },
     methods: {
       handleFollow(){
@@ -103,7 +103,7 @@ import { followOrNot } from '@/api/friendManagement'
           this.button_type = 'info'
           this.button_msg = '已关注'
           this.followers += 1
-          follow(this.current_uid, this.profile_uid) 
+          follow(this.current_uid, this.profile_uid)
         }else{
           this.button_type = 'primary'
           this.button_msg = '+ 关注'

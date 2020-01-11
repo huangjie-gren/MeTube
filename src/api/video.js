@@ -114,3 +114,10 @@ export function removeAReply(data) {
     data
   })
 }
+export function getReplies(data) {
+  return request({
+    url: sjcURL + '/getreplies',
+    method: 'post',
+    data
+  })
+}

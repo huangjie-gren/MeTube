@@ -20,8 +20,8 @@ export default {
   name: 'PlayVideo',
   props: {
     vid: {
-      type: String,
-      default: '-1'
+      type: Number,
+      default: -1
     }
   },
   data() {

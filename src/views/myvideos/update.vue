@@ -151,7 +151,7 @@ export default {
     },
     onSubmit() {
       updateVideo({
-        vid: parseInt(this.vid),
+        vid: this.vid,
         title: this.form.videoname,
         info: this.form.videodescribe,
         avatar: this.form.avatarurl,

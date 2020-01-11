@@ -73,8 +73,10 @@ export default {
   },
   created() {
     this.uid = this.$store.getters["id"];
-    
-    user_video(typeof(this.uid)=="undefined"?'-1':this.uid, this.vid)
+    if(typeof(this.uid)=="undefined"){
+      this.uid = -1;
+    }
+    user_video(this.uid, this.vid)
       .then(res => {
         const { data } = res;
         this.isLike = data.like > 0;
@@ -117,8 +119,9 @@ export default {
 
     handleLike: function() {
 
-      if(typeof(this.uid)=="undefined"){
+      if(this.uid < 0){
           this.$router.push('/login');
+          return;
       }
       else{
       if (!this.isLike) {
@@ -151,8 +154,9 @@ export default {
       }
     },
     handleCollection: function() {
-       if(typeof(this.uid)=="undefined"){
+       if(this.uid < 0){
           this.$router.push('/login');
+          return;
       }
        else{
       if (!this.isCollection) {
