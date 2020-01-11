@@ -63,7 +63,7 @@
           style="width: 500px; font: 25px roboto,arial,sans-serif; color: #0D0D0D; cursor:pointer"
           @click.prevent="handlePlay(video.id)"
         >
-          <div>
+          <div style="overflow: hidden; -webkit-line-clamp: 2;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;">
             <span>{{video.title}}</span>
           </div>
         </div>
@@ -77,7 +77,7 @@
           <span>更新时间 {{video.updated_at}}</span>
         </div>
         <div
-          style="width: 500px; font: 15px roboto,arial,sans-serif; color: #606060; padding:8px 0px 0px"
+          style="width: 500px; font: 15px roboto,arial,sans-serif; color: #606060; padding:8px 0px 0px;overflow: hidden; -webkit-line-clamp: 2;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;"
         >
           <span>{{video.info}}</span>
         </div>

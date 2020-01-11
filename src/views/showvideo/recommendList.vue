@@ -8,7 +8,7 @@
           :src="video.avatar"></el-image>
       </div>
       <div style="height: 80px; margin-top:5px; margin-left: 8px;">
-        <div style="width: 120px; font: 16px roboto,arial,sans-serif; color: #222222; cursor:pointer; max-width: 100%; overflow-wrap: break-word; overflow: hidden;" @click.prevent="handlePlay(video.id)">
+        <div style="width: 120px; font: 16px roboto,arial,sans-serif; color: #222222; cursor:pointer; max-width: 100%; overflow: hidden; -webkit-line-clamp: 2;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;" @click.prevent="handlePlay(video.id)">
           {{ video.title }}
         </div>
         <div style="margin-top:4px; width: 120px; font: 12px roboto,arial,sans-serif; color: #999999;">
