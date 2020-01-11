@@ -73,7 +73,8 @@ export default {
   },
   created() {
     this.uid = this.$store.getters["id"];
-    user_video(this.uid, this.vid)
+    
+    user_video(typeof(this.uid)=="undefined"?'-1':this.uid, this.vid)
       .then(res => {
         const { data } = res;
         this.isLike = data.like > 0;
@@ -99,7 +100,7 @@ export default {
         }
       })
       .catch(error => {
-        alert("user_video");
+        // alert("user_video");
       });
 
     getVideo(this.vid)
@@ -109,7 +110,7 @@ export default {
         this.description = info;
       })
       .catch(error => {
-        alert("get_info_error");
+        // alert("get_info_error");
       });
   },
   methods: {
@@ -119,7 +120,7 @@ export default {
       if(typeof(this.uid)=="undefined"){
           this.$router.push('/login');
       }
-
+      else{
       if (!this.isLike) {
         this.isLike = true;
         this.likeIcon = "like-on";
@@ -129,7 +130,7 @@ export default {
         addLike(this.uid, this.vid)
           .then(response => {})
           .catch(error => {
-            console.log("uid:"+this.uid);
+            // console.log("uid:"+this.uid);
           });
       }
       else {
@@ -144,15 +145,16 @@ export default {
             // console.log(code);
           })
           .catch(error => {
-           console.log("uid:"+this.uid);
+          //  console.log("uid:"+this.uid);
           });
+      }
       }
     },
     handleCollection: function() {
        if(typeof(this.uid)=="undefined"){
           this.$router.push('/login');
       }
-
+       else{
       if (!this.isCollection) {
         this.isCollection = true;
         this.collectionIcon = "collection-on";
@@ -178,6 +180,7 @@ export default {
           });
       }
     }
+  }
   }
 };
 </script>
