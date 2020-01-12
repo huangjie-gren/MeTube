@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      tableData: '',
+      tableData: [],
       search: '',
       uid: 1,
     }
